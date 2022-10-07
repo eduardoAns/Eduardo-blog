@@ -1,4 +1,4 @@
-import { Blog, coment } from "."
+import { Blog, Coment } from "."
 
 export interface User {
     id: number|null,
@@ -10,5 +10,5 @@ export interface User {
     fechaCreacion: string,
     rol: string
     posts: Blog[]
-    coments: coment[]
+    coments: Coment[]
 }
