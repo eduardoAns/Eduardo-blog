@@ -1,4 +1,4 @@
-import { coment } from "./coment";
+import { Coment } from "./coment";
 import { Tag } from "./tag";
 
 export interface Blog {
@@ -7,7 +7,7 @@ export interface Blog {
     titulo: string,
     subtitulo:string,
     contenido: string,
-    comentarios: coment[],
+    comentarios: Coment[],
     fechaCreacion: string,
     estado: string,
     tags:Tag[],

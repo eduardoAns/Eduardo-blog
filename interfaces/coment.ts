@@ -1,5 +1,5 @@
 
-export interface coment {
+export interface Coment {
     id: number|null,
     idPost?: number,
     idUser?: number,

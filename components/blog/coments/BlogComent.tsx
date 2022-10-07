@@ -1,10 +1,7 @@
 import { Avatar, Box, Divider, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material'
 import React, { FC } from 'react'
+import { Coment } from '../../../interfaces'
 
-interface Coment {
-  user: String,
-  content: String
-}
 
 interface Props {
   coment: Coment
@@ -19,7 +16,7 @@ export const BlogComent:FC<Props> = ({coment}) => {
           <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
         </ListItemAvatar>
         <ListItemText
-          primary={coment.content}
+          primary={coment.contenido}
           secondary={
             <>
               <Typography
@@ -28,7 +25,7 @@ export const BlogComent:FC<Props> = ({coment}) => {
                 variant="body2"
                 color="text.primary"
               >
-                {`${coment.user}  `}
+                {`${coment.nombre}  `}
               </Typography>
               - 1 de abril de 2021
             </>

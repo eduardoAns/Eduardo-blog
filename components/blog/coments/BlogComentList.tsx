@@ -1,11 +1,7 @@
 import { Grid } from '@mui/material'
 import React, { FC } from 'react'
+import { Coment } from '../../../interfaces'
 import { BlogComent } from './BlogComent'
-
-interface Coment {
-  user: String,
-  content: String
-}
 
 interface Props {
   coments: Coment[]
@@ -17,7 +13,7 @@ export const BlogComentList:FC<Props> = ({coments}) => {
     <Grid item >
       {
         coments.map( coment => (
-          <BlogComent coment={coment} />
+          <BlogComent coment={coment} key={coment.id}/>
         ))}
           
 
