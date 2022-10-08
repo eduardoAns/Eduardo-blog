@@ -11,7 +11,7 @@ import { UserPost } from '../../interfaces';
 type dataForm = {
     nombre:string;
     apellido:string;
-    correo:string;
+    email:string;
     password:string;
 }
 
@@ -32,16 +32,18 @@ const hoy = new Date(tiempoTranscurrido);
 
 
 
-const crearUsuario = async ({nombre,apellido,correo,password}:dataForm) => {
+const crearUsuario = async ({nombre,apellido,email,password}:dataForm) => {
     
     const dataPost:UserPost = {
         nombre,
-        apellido,
-        correo,
+        apellidoPaterno:apellido,
+        email,
         password,
         fechaCreacion:hoy.toDateString(),
-        rol:'cliente',
-        estado:'activo'
+        idRol:2,
+        estado:'activo',
+        descripcion:"usuario activo de este blog",
+        sexo:""
     }
 
     setShowMsg(false);
@@ -84,8 +86,8 @@ const crearUsuario = async ({nombre,apellido,correo,password}:dataForm) => {
                         {...register('nombre', {
                             required:'Este campo es requerido'
                         })}
-                        error={!!errors.correo}
-                        helperText={errors.correo?.message} 
+                        error={!!errors.nombre}
+                        helperText={errors.nombre?.message} 
                         />
                     
                 </Grid>
@@ -97,8 +99,8 @@ const crearUsuario = async ({nombre,apellido,correo,password}:dataForm) => {
                         {...register('apellido', {
                             required:'Este campo es requerido'
                         })}
-                        error={!!errors.correo}
-                        helperText={errors.correo?.message}
+                        error={!!errors.apellido}
+                        helperText={errors.apellido?.message}
                         />
                 </Grid>
                 <Grid item xs={12}>
@@ -107,11 +109,11 @@ const crearUsuario = async ({nombre,apellido,correo,password}:dataForm) => {
                         type="email"
                         variant="filled" 
                         fullWidth 
-                        {...register('correo', {
+                        {...register('email', {
                             required:'Este campo es requerido'
                         })}
-                        error={!!errors.correo}
-                        helperText={errors.correo?.message}
+                        error={!!errors.email}
+                        helperText={errors.email?.message}
                         />
                 </Grid>
                 <Grid item xs={12}>

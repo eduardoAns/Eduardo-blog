@@ -8,7 +8,7 @@ import { useContext, useState } from 'react';
 import { AuthContext } from '../../context';
 
 type FormData = {
-    correo:string;
+    email:string;
     password:string;
 }
 
@@ -41,19 +41,17 @@ const { loginUser } = useContext( AuthContext );
 //     router.replace('/');
 // }
 
-const onLoginUser = async( { correo, password }: FormData ) => {
+const onLoginUser = async( { email, password }: FormData ) => {
 
     setShowError(false);
-    console.log(correo, password)
 
-    const isValidLogin = await loginUser( correo, password );
+    const isValidLogin = await loginUser( email, password );
     console.log(isValidLogin)
     if ( !isValidLogin ) {
         setShowError(true);
         setTimeout(() => setShowError(false), 3000);
         return;
     }
-
 
 
     // Todo: navegar a la pantalla que el usuario estaba
@@ -84,11 +82,11 @@ const onLoginUser = async( { correo, password }: FormData ) => {
                         label="Correo" 
                         variant="filled" 
                         fullWidth 
-                        {...register('correo', {
+                        {...register('email', {
                             required:'Este campo es requerido'
                         })}
-                        error={!!errors.correo}
-                        helperText={errors.correo?.message}
+                        error={!!errors.email}
+                        helperText={errors.email?.message}
                         />
                 </Grid>
                 <Grid item xs={12}>

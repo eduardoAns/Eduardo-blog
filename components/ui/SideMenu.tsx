@@ -3,11 +3,20 @@ import { AccountCircleOutlined, AdminPanelSettings, CategoryOutlined, Confirmati
 import { useContext, useState } from "react";
 import { UiContext } from "../../context/ui";
 import { useRouter } from "next/router";
+import { AuthContext } from "../../context";
 
 
 export const SideMenu = () => {
+
+    const rol = {
+        usuario : 1,
+        cliente: 2,
+        admin: 3
+    }
+
     const router = useRouter();
     const { isMenuOpen, toggleSideMenu } = useContext( UiContext );
+    const { user, isLoggedIn, logout} = useContext(  AuthContext );
     const [searchTerm, setSearchTerm] = useState('');
 
     const onSearchTerm = () => {
@@ -51,35 +60,43 @@ export const SideMenu = () => {
                     />
                 </ListItem>
 
-                <ListItem button>
-                    <ListItemIcon>
-                        <AccountCircleOutlined/>
-                    </ListItemIcon>
-                    <ListItemText primary={'Perfil'} />
-                </ListItem>
+                {/* Inicio cliente */}   
+                {
+                    (user?.idRol == rol.cliente || user?.idRol == rol.admin ) && (
+                        <>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <AccountCircleOutlined/>
+                                </ListItemIcon>
+                                <ListItemText primary={'Perfil'} onClick={() => navigateTo('/user/perfil')}/>
+                            </ListItem>
 
-                <ListItem button>
-                    <ListItemIcon>
-                        <AccountCircleOutlined/>
-                    </ListItemIcon>
-                    <ListItemText primary={'Agregar Post'} />
-                </ListItem>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <AccountCircleOutlined/>
+                                </ListItemIcon>
+                                <ListItemText primary={'Agregar blog'} onClick={() => navigateTo('/blog/addBlog')}/>
+                            </ListItem>
 
-                <ListItem button>
-                    <ListItemIcon>
-                        <ConfirmationNumberOutlined/>
-                    </ListItemIcon>
-                    <ListItemText primary={'Mis Posts'} />
-                </ListItem>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <ConfirmationNumberOutlined/>
+                                </ListItemIcon>
+                                <ListItemText primary={'Mis Posts'} onClick={() => navigateTo('/user/posts')}/>
+                            </ListItem>
 
-                <ListItem button>
-                    <ListItemIcon>
-                        <ConfirmationNumberOutlined/>
-                    </ListItemIcon>
-                    <ListItemText primary={'Mis Comentarios'} />
-                </ListItem>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <ConfirmationNumberOutlined/>
+                                </ListItemIcon>
+                                <ListItemText primary={'Mis Comentarios'} onClick={() => navigateTo('/user/comentarios')}/>
+                            </ListItem>
+                        </>    
+                    )
+                }
+                {/* Fin cliente */}   
 
-
+                {/* Inicio categorias para celular */}   
                 <ListItem button sx={{ display: { xs: '', sm: 'none' } }} onClick={() => navigateTo('/category/front-end')}>
                     <ListItemIcon>
                         <MaleOutlined/>
@@ -100,39 +117,60 @@ export const SideMenu = () => {
                     </ListItemIcon>
                     <ListItemText primary={'Dev-Op'} />
                 </ListItem>
+                {/* Fin  categorias para celular */}   
 
 
-                <ListItem button>
-                    <ListItemIcon>
-                        <VpnKeyOutlined/>
-                    </ListItemIcon>
-                    <ListItemText primary={'Ingresar'} onClick={() => navigateTo('/auth/login')}/>
-                </ListItem>
+                {/* Inicio ingresar/salir */}
 
-                <ListItem button>
-                    <ListItemIcon>
-                        <LoginOutlined/>
-                    </ListItemIcon>
-                    <ListItemText primary={'Salir'} />
-                </ListItem>
+                {
+                    (isLoggedIn) 
+                    ? (
+                        <ListItem button onClick={logout}>
+                            <ListItemIcon>
+                                <LoginOutlined/>
+                            </ListItemIcon>
+                            <ListItemText primary={'Salir'} />
+                        </ListItem>
+                    )
+                    : (
+                        <ListItem 
+                            button
+                            onClick={ () => navigateTo(`/auth/login?p=${ router.asPath }`) }
+                        >
+                            <ListItemIcon>
+                                <VpnKeyOutlined/>
+                            </ListItemIcon>
+                            <ListItemText primary={'Ingresar'} />
+                        </ListItem>
+                    )
+                }
+                {/* Fin ingresar/salir */}
 
 
-                {/* Admin */}
-                <Divider />
-                <ListSubheader>Admin Panel</ListSubheader>
 
-                <ListItem button>
-                    <ListItemIcon>
-                        <CategoryOutlined/>
-                    </ListItemIcon>
-                    <ListItemText primary={'Posts'} />
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <ConfirmationNumberOutlined/>
-                    </ListItemIcon>
-                    <ListItemText primary={'Usuarios'} />
-                </ListItem>
+                {/* Inicio Admin */}
+                {
+                    (user?.idRol == rol.admin) && (
+                        <>
+                            <Divider />
+                            <ListSubheader>Admin Panel</ListSubheader>
+
+                            <ListItem button onClick={ () => navigateTo('/admin/blogs') }>
+                                <ListItemIcon>
+                                    <CategoryOutlined/>
+                                </ListItemIcon>
+                                <ListItemText primary={'Posts'} />
+                            </ListItem>
+                            <ListItem button onClick={ () => navigateTo('/admin/users') }>
+                                <ListItemIcon>
+                                    <ConfirmationNumberOutlined/>
+                                </ListItemIcon>
+                                <ListItemText primary={'Usuarios'} />
+                            </ListItem>
+                        </>    
+                    )
+                }
+                {/* Fin Admin */}
             </List>
         </Box>
     </Drawer>

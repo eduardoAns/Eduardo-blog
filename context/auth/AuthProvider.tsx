@@ -30,17 +30,17 @@ export const AuthProvider:FC = ({ children }) => {
     const checkToken = async() => {
 
         const Authorization= Cookies.get('token')
-
+        console.log(Authorization)
         if ( !Authorization ) {
             return;
         }
 
         try {
             const { data } = await blogApi.get('/validate-token', {'headers':{'Authorization': Authorization}});
-            const { token, user } = data;
-            Cookies.set('token', token.jwt );
+            const user = data;
+            Cookies.set('token', user.token );
             dispatch({ type: '[Auth] - Login', payload: user });
-            console.log(data)
+            console.log(user)
         } catch (error) {
             Cookies.remove('token');
         }
@@ -48,18 +48,23 @@ export const AuthProvider:FC = ({ children }) => {
     
 
 
-    const loginUser = async( correo: string, password: string ): Promise<boolean> => {
+    const loginUser = async( email: string, password: string ): Promise<boolean> => {
         
+        console.log({
+            email,
+            password
+        })
 
         try {
-            const { data } = await blogApi.post('/login', { correo, password });
-
-            const { token, user } = data;
-            Cookies.set('token', token.jwt );
-            dispatch({ type: '[Auth] - Login', payload: user });
+            const { data } = await blogApi.post('/login', { email, password });
             console.log(data)
+            const user = data;
+            Cookies.set('token', user.token );
+            dispatch({ type: '[Auth] - Login', payload: user });
+            
             return true;
         } catch (error) {
+            console.log(error)
             return false;
         }
 
@@ -68,7 +73,7 @@ export const AuthProvider:FC = ({ children }) => {
 
     const registerUser = async( dataUser:UserPost ): Promise<{hasRegister:boolean; message: string; }> => {
         try {
-            const { data } = await blogApi.post('/usuario', dataUser);
+            await blogApi.post('/usuario', dataUser);
             return {
                 hasRegister:true,
                 message: 'Usuario creado exitosamente!'!
@@ -84,13 +89,6 @@ export const AuthProvider:FC = ({ children }) => {
 
     const logout = () => {
 
-        Cookies.remove('cart');
-        Cookies.remove('firstName');
-        Cookies.remove('lastName');
-        Cookies.remove('address');
-        Cookies.remove('address2');
-        Cookies.remove('city');
-        Cookies.remove('phone');
         Cookies.remove('token');
         router.reload();
         
