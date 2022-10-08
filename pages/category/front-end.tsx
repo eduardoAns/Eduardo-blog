@@ -5,8 +5,11 @@ import { BlogLayout } from '../../components/layouts';
 
 import { initialPosts } from '../../database/blog';
 import { BlogList } from '../../components/blog';
+import { useBlogs } from '../../hooks';
 
 const FrontEndPage: NextPage = () => {
+
+  const { blogs, isLoading } = useBlogs('/post/categoria/front-end');
 
     return (
       
@@ -15,7 +18,7 @@ const FrontEndPage: NextPage = () => {
           <Typography variant='h2' sx={{ mb: 1 }}>Todo sobre esta area</Typography>
   
           <BlogList 
-            blogs={ initialPosts}
+            blogs={ blogs}
           />
   
     

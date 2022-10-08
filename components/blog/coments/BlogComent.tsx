@@ -1,5 +1,6 @@
 import { Avatar, Box, Divider, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material'
 import React, { FC } from 'react'
+import { useUser } from '../../../hooks/useUser'
 import { Coment } from '../../../interfaces'
 
 
@@ -9,6 +10,12 @@ interface Props {
 
 
 export const BlogComent:FC<Props> = ({coment}) => {
+
+
+  const { user, isLoading } = useUser(`/usuario/${coment.idUser}`);
+  
+  const usuarioNombre = user?.nombre + ' ' + user?.apellidoPaterno;
+
   return (
     <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
       <ListItem alignItems="flex-start">
@@ -25,9 +32,9 @@ export const BlogComent:FC<Props> = ({coment}) => {
                 variant="body2"
                 color="text.primary"
               >
-                {`${coment.nombre}  `}
+                {`${usuarioNombre}  `}
               </Typography>
-              - 1 de abril de 2021
+              {coment.fechaCreacion}
             </>
           }
         />

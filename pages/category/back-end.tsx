@@ -4,9 +4,12 @@ import { Typography } from '@mui/material';
 import { BlogLayout } from '../../components/layouts';
 import { BlogList } from '../../components/blog';
 import { initialPosts } from '../../database/blog';
+import { useBlogs } from '../../hooks';
 
 const BackEndPage: NextPage = ( ) => {
   
+  const { blogs, isLoading } = useBlogs('/post/categoria/back-end');
+
 
    return (
     <BlogLayout title={'Blog - BackEnd'} pageDescription={'Encuentra blogs sobre Back-End'}>
@@ -14,7 +17,7 @@ const BackEndPage: NextPage = ( ) => {
         <Typography variant='h2' sx={{ mb: 1 }}>Todo sobre esta area</Typography>
 
         <BlogList 
-          blogs={ initialPosts}
+          blogs={ blogs}
         />
     
 

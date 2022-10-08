@@ -6,30 +6,34 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import { FC } from 'react'
 import { Card, CardActionArea, CardMedia, CardContent, Box } from '@mui/material';
+import { useUser } from '../../hooks/useUser';
+import { Blog } from '../../interfaces';
 
 
 interface Props {
-  archives: ReadonlyArray<{
-    url: string;
-    title: string;
-  }>;
-  description: string;
   social: ReadonlyArray<{
     icon: React.ElementType;
     name: string;
   }>;
-  title: string;
+  blog: Blog;
 }
 
 
 export const BlogSidebar: FC<Props> = (props) => {
-  const { description, social, title } = props;
+  const {  social, blog } = props;
+
+  const { user, isLoading } = useUser(`/usuario/${blog.idUsuario}`);
+
+  const nombreUsuario = user?.nombre + ' ' + user?.apellidoPaterno;
 
   return (
 
     <Grid container spacing={3}>
         
         <Grid item xs={12} >
+        <Typography variant='h5' component='h2' mb={1}>{`Categoria: ${blog.categoria.nombre}`}</Typography>
+        <Typography variant='h2' component='h2' mb={3}>{blog.fechaCreacion}, por {nombreUsuario}</Typography>
+
             <Box display='flex' justifyContent='center'>
             <Card sx={{ maxWidth: 300 }}>
                 
@@ -59,10 +63,10 @@ export const BlogSidebar: FC<Props> = (props) => {
                     />
                     <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
-                        {title}
+                        Sobre mi
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        {description}
+                        {user?.descripcion}
                     </Typography>
                     </CardContent>
                 </CardActionArea>

@@ -12,7 +12,7 @@ export const BlogCard: FC<Props> = ({ blog }) => {
 
     const [isHovered, setIsHovered] = useState(false);
 
-    const productImage = useMemo(() => {
+    const blogImage = useMemo(() => {
         return isHovered
           ? blog.images[1].url
           : blog.images[0].url;
@@ -27,13 +27,13 @@ export const BlogCard: FC<Props> = ({ blog }) => {
             onMouseLeave={ () => setIsHovered(false) } 
       >
           <Card>
-              <NextLink href="/blog/id" passHref prefetch={ false }>
+              <NextLink href={`/blog/${blog.id}`} passHref prefetch={ false }>
                 <Link>
                     <CardActionArea>
                         <CardMedia
                             component="img"
                             height="400"
-                            image={ productImage }
+                            image={ blogImage }
                             alt={ blog.titulo }
                         />
 
@@ -46,6 +46,17 @@ export const BlogCard: FC<Props> = ({ blog }) => {
           <Box sx={{ mt: 1 }} className='fadeIn'>
               <Typography fontWeight={700} mb={1}>{ blog.titulo}</Typography>
               <Typography fontWeight={350} mb={1}>{ blog.fechaCreacion }</Typography>
+              <Typography fontWeight={350} mb={1}>{'Categoria: '+ blog.categoria.nombre}</Typography>
+              <Box display={'flex'}>
+                <Typography fontWeight={350} mb={1}>Tags: </Typography>
+
+                {
+                    blog.tags.map( (tag) => (
+                        <Typography fontWeight={350} mb={1} ml={1}>{ tag.nombre}</Typography>
+                ))}
+              </Box>
+              
+
               <Typography
                 mb={1}
                 fontWeight={500}
@@ -58,9 +69,12 @@ export const BlogCard: FC<Props> = ({ blog }) => {
                 variant="body2">
                 { blog.contenido}
             </Typography>
+
           </Box>
 
-          <Button color='warning'>Ver mas</Button>      
+            <NextLink href={`/blog/${blog.id}`} passHref prefetch={ false }>
+                <Button color='warning'>Leer más</Button>
+            </NextLink>    
         </Grid>
     )
 }

@@ -12,7 +12,7 @@ export const BlogMain:FC<Props> = ({blog}) => {
     < >
         <Grid item xs={12}>
             <Box sx={{ mt:3 }}>
-              <Typography variant='subtitle1' mb={2}>{blog.titulo}</Typography>
+              <Typography variant='subtitle1' mb={2}>{blog.subtitulo}</Typography>
               <Typography variant='body1'>{blog.contenido }</Typography>
             </Box>
         </Grid>
