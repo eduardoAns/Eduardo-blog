@@ -52,7 +52,7 @@ export const BlogCard: FC<Props> = ({ blog }) => {
 
                 {
                     blog.tags.map( (tag) => (
-                        <Typography fontWeight={350} mb={1} ml={1}>{ tag.nombre}</Typography>
+                        <Typography fontWeight={350} mb={1} ml={1} key={tag.id}>{ tag.nombre}</Typography>
                 ))}
               </Box>
               
