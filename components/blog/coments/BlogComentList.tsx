@@ -4,7 +4,7 @@ import { Coment } from '../../../interfaces'
 import { BlogComent } from './BlogComent'
 
 interface Props {
-  coments: Coment[]
+  coments?: Coment[]
 }
 
 
@@ -12,12 +12,10 @@ export const BlogComentList:FC<Props> = ({coments}) => {
   return (
     <Grid item >
       {
-        coments.map( coment => (
+        coments?.map( coment => (
           <BlogComent coment={coment} key={coment.id}/>
         ))}
           
-
-
     </Grid>
   )
 }

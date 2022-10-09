@@ -1,12 +1,10 @@
 import { Box, Grid, Link, Typography } from '@mui/material';
 import { BlogLayout } from '../../components/layouts';
 import { BlogSlideshow, BlogSidebar, BlogMain} from '../../components/blog';
-import { initialData } from '../../database/products';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import { Coments } from '../../components/blog/coments';
-import { initialPosts } from '../../database/blog';
 import blogApi from '../../api/blogApi';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { Blog } from '../../interfaces';
@@ -25,6 +23,8 @@ interface Props {
 }
 
 const ProductPage:NextPage<Props> = ({blog}) => {
+
+
   return (
     <BlogLayout title={ blog.titulo } pageDescription={ blog.titulo }>
     
@@ -133,7 +133,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     props: {
       blog
     },
-    revalidate: 60 * 60 * 24
+    revalidate: 60*60*24
   }
 }
 

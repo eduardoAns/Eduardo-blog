@@ -15,3 +15,15 @@ export const useBlogs = (url: string, config: SWRConfiguration = {} ) => {
     }
 
 }
+
+export const useBlog = (url: string, config: SWRConfiguration = {} ) => {
+
+    const { data, error } = useSWR<Blog>(`https://blogback-production.up.railway.app/api${ url }`, config );
+
+    return {
+        blogData: data,
+        isLoading: !error && !data,
+        isError: error
+    }
+
+}

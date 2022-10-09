@@ -1,5 +1,6 @@
 import { Button, Grid, TextareaAutosize, TextField } from '@mui/material'
 import Cookies from 'js-cookie';
+import router from 'next/router';
 import React, { FC, useContext } from 'react'
 import { useForm } from 'react-hook-form';
 import blogApi from '../../../api/blogApi';
@@ -18,9 +19,6 @@ interface Props {
 const AddComent:FC<Props> = ({idBlog}) => {
 
   const { register,handleSubmit, formState: { errors } } = useForm<dataForm>();
-  const { user } = useContext( AuthContext );
-
-
 
   const crearComentario = async ({nombre,contenido}:dataForm) => {
     
@@ -55,6 +53,8 @@ const AddComent:FC<Props> = ({idBlog}) => {
     try {
       await blogApi.post('/comentario', dataPost);
       console.log('comentario creado')
+      router.reload();
+
     } catch (error) {
       console.log(error)
     }
