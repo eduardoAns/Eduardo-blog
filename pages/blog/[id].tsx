@@ -56,7 +56,7 @@ const ProductPage:NextPage<Props> = ({blog}) => {
             <Box display='flex' flexDirection='row' justifyContent='center' alignItems='center' >
             <Typography variant="h5" gutterBottom >Tags:</Typography>
                   {blog.tags.map((tag) => (
-                      <Link display="flex" variant="button" href='' key={tag.id} mb={1} ml={1}>
+                      <Link display="flex" variant="button" href={`/tag/${tag.nombre}`} key={tag.id} mb={1} ml={1}>
                       {tag.nombre}
                       </Link>
                   ))}
@@ -70,7 +70,7 @@ const ProductPage:NextPage<Props> = ({blog}) => {
           <Typography variant="h1" gutterBottom sx={{ mt: 2 }} display='flex' flexDirection='row' justifyContent='center' >Tags</Typography>
           <Box display='flex' flexDirection='row' justifyContent='center' alignItems='center' >
                 {blog.tags.map((tag) => (
-                    <Link display="flex" variant="button" href='' key={tag.id} mb={1} ml={1}>
+                    <Link display="flex" variant="button" href={`/tag/${tag.nombre}`} key={tag.id} mb={1} ml={1}>
                     {tag.nombre}
                     </Link>
                 ))}
