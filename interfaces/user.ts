@@ -1,7 +1,7 @@
 import { Blog, Coment } from "."
 
 export interface User {
-    id: number|null,
+    id: number,
     nombre: string,
     apellidoPaterno: string,
     email: string,

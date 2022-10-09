@@ -1,8 +1,8 @@
 
 export interface Coment {
-    id: number|null,
+    id?: number,
     idPost?: number,
-    idUser?: number,
+    idUser: number,
     contenido: string,
     nombre: string
     fechaCreacion: string,

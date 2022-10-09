@@ -86,7 +86,7 @@ const ProductPage:NextPage<Props> = ({blog}) => {
 
       {/* coments */}
       <Grid container spacing={3} sx={{ mt: 3 }}>
-        <Coments coments={blog.comentarios} />
+        <Coments blog={blog} />
       </Grid>
         
       
