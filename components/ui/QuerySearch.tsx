@@ -7,13 +7,14 @@ import { FullScreenLoading } from './FullScreenLoading';
 
 export const QuerySearch = () => {
     const router = useRouter()
-    let { query } = router.query as { query: string }
+    let { query = '' } = router.query as { query: string }
+    console.log(query)
     query =query.toLowerCase();
+    console.log(query)
+
 
     const { blogs, isLoading } = useBlogs(`/post/search/${query}`);
     const foundBlogs = blogs.length > 0;
-    console.log(blogs);
-
 
     const DataBlogs =   foundBlogs ?   
                         <BlogList blogs={blogs} /> : 
