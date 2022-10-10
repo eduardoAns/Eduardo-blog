@@ -7,7 +7,9 @@ import { FullScreenLoading } from './FullScreenLoading';
 
 export const QuerySearch = () => {
     const router = useRouter()
-    const { query } = router.query
+    let { query } = router.query as { query: string }
+    query =query.toLowerCase();
+
     const { blogs, isLoading } = useBlogs(`/post/search/${query}`);
     const foundBlogs = blogs.length > 0;
     console.log(blogs);

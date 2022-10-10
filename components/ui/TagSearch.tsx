@@ -7,7 +7,7 @@ import { BlogList } from '../blog/BlogList';
 
 export const TagSearch = () => {
     const router = useRouter()
-    const { name } = router.query
+    let { name } = router.query
     const { blogs, isLoading } = useBlogs(`/post/tag/${name}`);
     const foundBlogs = blogs.length > 0;
 
