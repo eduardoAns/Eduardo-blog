@@ -5,6 +5,8 @@ import { BlogLayout } from '../../components/layouts';
 import { BlogList } from '../../components/blog';
 import { initialPosts } from '../../database/blog';
 import { useBlogs } from '../../hooks';
+import { FullScreenLoading } from '../../components/ui';
+
 
 const BackEndPage: NextPage = ( ) => {
   
@@ -16,9 +18,11 @@ const BackEndPage: NextPage = ( ) => {
         <Typography variant='h1' component='h1'>Back-end</Typography>
         <Typography variant='h2' sx={{ mb: 1 }}>Todo sobre esta area</Typography>
 
-        <BlogList 
-          blogs={ blogs}
-        />
+        {
+          isLoading
+            ? <FullScreenLoading />
+            : <BlogList blogs={ blogs}/>
+        }
     
 
     </BlogLayout>

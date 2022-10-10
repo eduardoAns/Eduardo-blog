@@ -2,8 +2,7 @@ import type { NextPage } from 'next';
 import { Typography } from '@mui/material';
 
 import { BlogLayout } from '../../components/layouts';
-
-import { initialPosts } from '../../database/blog';
+import { FullScreenLoading } from '../../components/ui';
 import { BlogList } from '../../components/blog';
 import { useBlogs } from '../../hooks';
 
@@ -18,9 +17,11 @@ const DevOpPage: NextPage = () => {
           <Typography variant='h1' component='h1'>Dev-Op</Typography>
           <Typography variant='h2' sx={{ mb: 1 }}>Todo sobre esta area</Typography>
       
-          <BlogList 
-            blogs={ blogs}
-          />        
+          {
+          isLoading
+            ? <FullScreenLoading />
+            : <BlogList blogs={ blogs}/>
+          }      
       </BlogLayout>
     )
 }
