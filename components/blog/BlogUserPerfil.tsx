@@ -19,12 +19,12 @@ interface Props {
 }
 
 
-export const BlogSidebar: FC<Props> = (props) => {
+export const BlogUsePerfil: FC<Props> = (props) => {
   const {  social, blog } = props;
 
   const { user, isLoading } = useUser(`/usuario/${blog.idUsuario}`);
 
-  const nombreUsuario = user?.nombre + ' ' + user?.apellidoPaterno;
+  const nombreUsuario = user?.nombre + ' ' + user?.apellidoPaterno || '';
 
   return (
 

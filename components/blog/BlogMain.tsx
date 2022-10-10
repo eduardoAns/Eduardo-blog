@@ -16,17 +16,7 @@ export const BlogMain:FC<Props> = ({blog}) => {
               <Typography variant='body1'>{blog.contenido }</Typography>
             </Box>
         </Grid>
-        <Grid item xs={12}>
-          <Typography variant='h1' component='h2' mb={4} >Blogs relacionados</Typography>
-          <Grid container spacing={3}>
-
-            <BlogCard blog={blog} />
-            <BlogCard blog={blog} />
-            <BlogCard blog={blog} />
-
-          </Grid>    
-
-        </Grid>
+        
         
     </>
   )

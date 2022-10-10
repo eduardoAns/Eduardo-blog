@@ -6,23 +6,51 @@ import { Blog, IProduct } from '../../interfaces'
 
 interface Props {
     blog: Blog;
+    xs?: number;
+    sm?: number;
 }
 
-export const BlogCard: FC<Props> = ({ blog }) => {
+//defectBlog sirve para cargar datos mientras espera las oeticiones de BlogsRelacionados.tsx
+const DefectBlog = {
+    id: 0,
+    idUsuario: 0,
+    titulo: '',
+    subtitulo:'',
+    contenido: '',
+    comentarios: [],
+    fechaCreacion: '',
+    estado: '',
+    tags:[],
+    categoria:{
+        id: 0,
+        nombre: '',
+    },
+    images:[{
+        id: 1,
+        url: '',
+    },
+    {
+        id: 2,
+        url: '',
+    }]
+}
+export const BlogCard: FC<Props> = ({ blog=DefectBlog, xs, sm }) => {
 
+    const XS = xs || 12;
+    const SM = sm || 6;
     const [isHovered, setIsHovered] = useState(false);
 
     const blogImage = useMemo(() => {
         return isHovered
-          ? blog.images[1].url
-          : blog.images[0].url;
+          ? blog.images[1].url ||''
+          : blog.images[0].url||'';
 
     }, [isHovered, blog.images])
 
     return (
       <Grid item 
-            xs={12} 
-            sm={ 6 }
+            xs={XS} 
+            sm={SM}
             onMouseEnter={ () => setIsHovered(true) } 
             onMouseLeave={ () => setIsHovered(false) } 
       >

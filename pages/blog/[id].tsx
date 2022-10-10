@@ -1,6 +1,6 @@
 import { Box, Grid, Link, Typography } from '@mui/material';
 import { BlogLayout } from '../../components/layouts';
-import { BlogSlideshow, BlogSidebar, BlogMain} from '../../components/blog';
+import { BlogSlideshow, BlogUsePerfil, BlogMain} from '../../components/blog';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -8,6 +8,7 @@ import { Coments } from '../../components/blog/coments';
 import blogApi from '../../api/blogApi';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { Blog } from '../../interfaces';
+import { BlogsRelacionados } from '../../components/blog/BlogsRelacionados';
 
 
 const sidebar = {
@@ -30,14 +31,14 @@ const ProductPage:NextPage<Props> = ({blog}) => {
     
       <Grid container spacing={3}>
 
-        {/* sidebar */}
-        <Grid item xs={ 12 } sm={ 4 }>
+        {/* Perfil de usuario */}
+        <Grid item xs={ 12 } sm={ 6 }>
           <Box display='flex' flexDirection='column'>
 
-            {/* titulos */}
+            {/* titulo */}
             <Typography variant='h1' component='h1' mb={1}>{blog.titulo}</Typography>
 
-            <BlogSidebar
+            <BlogUsePerfil
               social={sidebar.social}
               blog={blog}
             />
@@ -46,22 +47,22 @@ const ProductPage:NextPage<Props> = ({blog}) => {
 
         {/* Slideshow y tags*/}
 
-        <Grid item xs={12} sm={ 8 } paddingRight={2}>
-          {/* Slideshow */}
-          <BlogSlideshow 
-            images={ blog.images }
-          />
-          {/* Tags pantalla grande */}
-          <Grid item xs={12} sx={{ display: { xs: 'none', sm: 'block' } }}>
-            <Box display='flex' flexDirection='row' justifyContent='center' alignItems='center' >
-            <Typography variant="h5" gutterBottom >Tags:</Typography>
-                  {blog.tags.map((tag) => (
-                      <Link display="flex" variant="button" href={`/tag/${tag.nombre}`} key={tag.id} mb={1} ml={1}>
-                      {tag.nombre}
-                      </Link>
-                  ))}
-            </Box>
-          </Grid>
+        <Grid item xs={12} sm={ 6 } paddingRight={2}>
+            {/* Slideshow */}
+            <BlogSlideshow 
+              images={ blog.images }
+            />
+            {/* Tags pantalla grande */}
+            <Grid item xs={12} sx={{ display: { xs: 'none', sm: 'block' } }}>
+              <Box display='flex' flexDirection='row' justifyContent='center' alignItems='center' >
+              <Typography variant="h5" gutterBottom >Tags:</Typography>
+                    {blog.tags.map((tag) => (
+                        <Link display="flex" variant="button" href={`/tag/${tag.nombre}`} key={tag.id} mb={1} ml={1}>
+                        {tag.nombre}
+                        </Link>
+                    ))}
+              </Box>
+            </Grid>
         </Grid>
 
         {/* Tags pantalla pequeña */}
@@ -82,6 +83,10 @@ const ProductPage:NextPage<Props> = ({blog}) => {
       {/* main */}
       <Grid container spacing={3} sx={{ mt: 3 }}>
         <BlogMain blog={ blog } />
+      </Grid>
+
+      <Grid container spacing={3} sx={{ mt: 3 }}>
+        <BlogsRelacionados />
       </Grid>
 
       {/* coments */}
