@@ -2,16 +2,16 @@ import { Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import React from 'react'
 import { useBlogs } from '../../hooks';
-import { FullScreenLoading } from '../ui';
-import { BlogList } from './BlogList';
+import { FullScreenLoading } from '.';
+import { BlogList } from '../blog/BlogList';
 
-export const BlogTagSearch = () => {
+export const TagSearch = () => {
     const router = useRouter()
     const { name } = router.query
     const { blogs, isLoading } = useBlogs(`/post/tag/${name}`);
-    const foundProducts = blogs.length > 0;
+    const foundBlogs = blogs.length > 0;
 
-    const DataBlogs =   foundProducts ?   
+    const DataBlogs =   foundBlogs ?   
                         <BlogList blogs={blogs} /> : 
                         <Typography variant='h2' sx={{ mb: 1 }}>No se encontraron blogs con este tag</Typography>
                         
