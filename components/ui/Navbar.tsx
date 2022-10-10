@@ -19,7 +19,7 @@ export const Navbar = () => {
     }
     
   return (
-    <AppBar sx={{ bgcolor: 'secondary.light' }}>
+    <AppBar sx={{ bgcolor: 'primary.light' }}>
         <Toolbar>
             <NextLink href='/' passHref>
                 <Link display='flex' alignItems='center'>
@@ -33,17 +33,17 @@ export const Navbar = () => {
             <Box sx={{ display: isSearchVisible ? 'none' : { xs: 'none', sm: 'block' } }} className="fadeIn">
                 <NextLink href='/category/front-end' passHref>
                     <Link>
-                        <Button color={asPath === '/category/front-end'?'info':'secondary'}>Front-end</Button>
+                        <Button color={asPath === '/category/front-end'?'primary':'info'} variant="text" >Front-end</Button>
                     </Link>
                 </NextLink>
                 <NextLink href='/category/back-end' passHref>
                     <Link>
-                        <Button color={asPath === '/category/back-end'?'info':'secondary'}>Back-end</Button>
+                        <Button color={asPath === '/category/back-end'?'primary':'info'} variant="text">Back-end</Button>
                     </Link>
                 </NextLink>
                 <NextLink href='/category/dev-op' passHref>
                     <Link>
-                        <Button color={asPath === '/category/dev-op'?'info':'secondary'}>Dev-Op</Button>
+                        <Button color={asPath === '/category/dev-op'?'primary':'info'} variant="text">Dev-Op</Button>
                     </Link>
                 </NextLink>
                 
@@ -106,7 +106,7 @@ export const Navbar = () => {
 
         
 
-            <Button color={'secondary'} onClick={toggleSideMenu}>
+            <Button color={'primary'} onClick={toggleSideMenu}>
                     Menú
             </Button>
 
