@@ -75,7 +75,7 @@ export const BlogCard: FC<Props> = ({ blog=DefectBlog, xs, sm }) => {
               <Typography fontWeight={700} mb={1}>{ blog.titulo}</Typography>
               <Typography fontWeight={350} mb={1}>{ blog.fechaCreacion }</Typography>
               <Typography fontWeight={350} mb={1}>{'Categoria: '+ blog.categoria.nombre}</Typography>
-              <Box display={'flex'}>
+              <Box display={'flex'} flexWrap="wrap">
                 <Typography fontWeight={350} mb={1}>Tags: </Typography>
 
                 {

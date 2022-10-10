@@ -54,7 +54,7 @@ const ProductPage:NextPage<Props> = ({blog}) => {
             />
             {/* Tags pantalla grande */}
             <Grid item xs={12} sx={{ display: { xs: 'none', sm: 'block' } }}>
-              <Box display='flex' flexDirection='row' justifyContent='center' alignItems='center' >
+              <Box display='flex' flexDirection='row' justifyContent='center' flexWrap={'wrap'} alignItems='center' >
               <Typography variant="h5" gutterBottom >Tags:</Typography>
                     {blog.tags.map((tag) => (
                         <Link display="flex" variant="button" href={`/tag/${tag.nombre}`} key={tag.id} mb={1} ml={1}>
@@ -69,7 +69,7 @@ const ProductPage:NextPage<Props> = ({blog}) => {
 
         <Grid item xs={12} sx={{ display: { xs: '', sm: 'none' } }}>
           <Typography variant="h1" gutterBottom sx={{ mt: 2 }} display='flex' flexDirection='row' justifyContent='center' >Tags</Typography>
-          <Box display='flex' flexDirection='row' justifyContent='center' alignItems='center' >
+          <Box display='flex' flexDirection='row' justifyContent='center' alignItems='center' flexWrap={'wrap'} >
                 {blog.tags.map((tag) => (
                     <Link display="flex" variant="button" href={`/tag/${tag.nombre}`} key={tag.id} mb={1} ml={1}>
                     {tag.nombre}
