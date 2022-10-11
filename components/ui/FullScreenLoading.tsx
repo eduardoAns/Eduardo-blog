@@ -1,7 +1,19 @@
 import { Box, CircularProgress, Typography } from '@mui/material'
-import React from 'react'
+import React, { FC, useState } from 'react'
+import { BlogLayout } from '../layouts';
 
-export const FullScreenLoading = () => {
+interface Props {
+  text?: string;
+}
+
+export const FullScreenLoading:FC<Props> = ({text=''}) => {
+
+  const [isVoid, setisVoid] = useState(true)
+
+  setTimeout(() => {
+    setisVoid(false)
+  }, 5000);
+
   return (
     <Box 
         display='flex' 
@@ -10,8 +22,19 @@ export const FullScreenLoading = () => {
         alignItems='center' 
         height='calc(100vh - 200px)'
     >
-        <Typography sx={{ mb: 3 }} variant="h2" fontWeight={ 200 } fontSize={ 20 }>Cargando...</Typography>
-        <CircularProgress thickness={ 2 } />
+      {
+        isVoid ?
+        (
+              <>
+                <Typography sx={{ mb: 3 }} variant="h2" fontWeight={ 200 } fontSize={ 20 }>Cargando...</Typography>
+                <CircularProgress thickness={ 2 } />  
+              </>
+        ) : ( 
+              <Typography sx={{ mb: 3 }} variant="h1" fontWeight={ 200 } fontSize={ 20 }>{text}</Typography>
+        )
+      }
+        
+
     </Box>
   )
 }

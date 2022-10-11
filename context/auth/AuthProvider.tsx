@@ -30,7 +30,6 @@ export const AuthProvider:FC = ({ children }) => {
     const checkToken = async() => {
 
         const Authorization= Cookies.get('token')
-        console.log(Authorization)
         if ( !Authorization ) {
             return;
         }

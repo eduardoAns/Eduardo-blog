@@ -82,14 +82,14 @@ export const SideMenu = () => {
                                 <ListItemIcon>
                                     <ConfirmationNumberOutlined/>
                                 </ListItemIcon>
-                                <ListItemText primary={'Mis Posts'} onClick={() => navigateTo('/user/posts')}/>
+                                <ListItemText primary={'Mis Blogs'} onClick={() => navigateTo('/user/blogs')}/>
                             </ListItem>
 
                             <ListItem button>
                                 <ListItemIcon>
                                     <ConfirmationNumberOutlined/>
                                 </ListItemIcon>
-                                <ListItemText primary={'Mis Comentarios'} onClick={() => navigateTo('/user/comentarios')}/>
+                                <ListItemText primary={'Mis Comentarios'} onClick={() => navigateTo('/user/coments')}/>
                             </ListItem>
                         </>    
                     )
