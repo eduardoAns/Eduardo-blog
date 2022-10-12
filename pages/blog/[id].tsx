@@ -31,17 +31,18 @@ const ProductPage:NextPage<Props> = ({blog}) => {
     
       <Grid container spacing={3}>
 
-        {/* Perfil de usuario */}
+        {/* Titulos Perfil de usuario */}
         <Grid item xs={ 12 } sm={ 6 }>
           <Box display='flex' flexDirection='column'>
 
             {/* titulo */}
             <Typography variant='h1' component='h1' mb={1}>{blog.titulo}</Typography>
-
-            <BlogUsePerfil
-              social={sidebar.social}
-              blog={blog}
-            />
+            <Typography variant='h5' component='h2' mb={1}>{`Categoria: ${blog.categoria.nombre}`}</Typography>
+            <Typography variant='h2' component='h2' mb={3}>{blog.fechaCreacion}, por :</Typography>
+              <BlogUsePerfil
+                social={sidebar.social}
+                blog={blog}
+              />
           </Box>
         </Grid>
 
@@ -85,6 +86,7 @@ const ProductPage:NextPage<Props> = ({blog}) => {
         <BlogMain blog={ blog } />
       </Grid>
 
+      {/* blogs relacionados */}
       <Grid container spacing={3} sx={{ mt: 3 }}>
         <BlogsRelacionados />
       </Grid>

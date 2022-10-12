@@ -1,7 +1,12 @@
 import { Box, Typography } from '@mui/material'
-import React from 'react'
+import React, { FC } from 'react'
 
-export const Error404 = () => {
+interface Props {
+  message?: string;
+}
+
+export const Error404:FC<Props> = ({message = "No se encontró la página"}) => {
+
   return (
     <Box 
         display='flex' 
@@ -11,7 +16,7 @@ export const Error404 = () => {
         sx={{ flexDirection: { xs: 'column', sm: 'row' }}}
     >
         <Typography variant='h1' component='h1' fontSize={80} fontWeight={200}>404 |</Typography>
-        <Typography marginLeft={2}>No encontramos ninguna página aquí</Typography>
+        <Typography marginLeft={2}>{message}</Typography>
     </Box>
   )
 }

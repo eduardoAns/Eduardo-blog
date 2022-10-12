@@ -11,8 +11,8 @@ const columns: GridColDef[] = [
     { field: 'fechaCreacion', headerName: 'fecha de creacion', width: 200 },
     { field: 'nombre', headerName: 'Nombre', width: 200 },
     { field: 'contenido', headerName: 'Contenido',width: 500 },
-    { field: 'idUsuario', headerName: 'idUsuario',width: 50},
-    { field: 'idPost', headerName: 'idPost',width: 50 },
+    { field: 'idUsuario', headerName: 'idUsuario',width: 150},
+    { field: 'idPost', headerName: 'idPost',width: 150 },
 ];
 
 export const ComentList = () => {
@@ -43,7 +43,7 @@ export const ComentList = () => {
         idPost: coment.idPost
     }));
                   
-    if (!foundComents) return <FullScreenLoading text='Este usuario no tiene comentarios' /> 
+    if (!foundComents) return <FullScreenLoading text='Este usuario no tiene comentarios' isError={true}/> 
 
   return (
         <Grid container className='fadeIn'>

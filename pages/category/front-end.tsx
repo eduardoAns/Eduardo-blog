@@ -16,8 +16,8 @@ const FrontEndPage: NextPage = () => {
     return (
       
       <BlogLayout title={'Blog - FrontEnd'} pageDescription={'Encuentra los mejores accesorios para mascotas aquí'}>
-          <Typography variant='h1' component='h1'>Front-End</Typography>
-          <Typography variant='h2' sx={{ mb: 1 }}>Todo sobre esta area</Typography>
+          <Typography variant='h1' component='h1' mb={2}>Front-End</Typography>
+          <Typography variant='h2' sx={{ mb: 1 }}>Encuentra todos los blos relacionados a esta area</Typography>
   
           {
           isLoading

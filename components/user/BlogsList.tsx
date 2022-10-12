@@ -40,8 +40,7 @@ const columns: GridColDef[] = [
     },
     { field: 'subtitulo', headerName: 'Subtitulo',width: 350},
     { field: 'fechaCreacion', headerName: 'fecha de creacion', width: 200 },
-    { field: 'idUsuario', headerName: 'idUsuario',width: 100},
-    { field: 'categoria', headerName: 'Categoria',width: 100},
+    { field: 'categoria', headerName: 'Categoria',width: 100}, 
     {
         field: 'check',
         headerName: 'Editar Blog',
@@ -72,7 +71,6 @@ export const BlogsList = () => {
     }
     checkToken();
     const { blogs, isLoading } = useBlogs(`/post/ByUserId/${userId}`);
-    console.log(blogs)
     const foundBlogs = blogs.length > 0;
 
     const rows = blogs!.map( blog => ({
@@ -84,23 +82,23 @@ export const BlogsList = () => {
         idUsuario: blog.idUsuario,
         categoria: blog.categoria.nombre
     }));
-                  
-    if (!foundBlogs) return <FullScreenLoading text='Este usuario no tiene blogs' /> 
+                    
+    if (!foundBlogs) return <FullScreenLoading text='Este usuario no tiene blogs' isError={true} /> 
 
-  return (
-    <Grid container className='fadeIn'>
+    return (
+        <Grid container className='fadeIn'>
             <Typography variant='h1' component='h1' mb={2}>{`blogs: ${blogs?.length}`} </Typography>
             
             <Grid item xs={12} sx={{ height:650, width: '100%' }}>
-              <DataGrid 
-                  rows={ rows }
-                  columns={ columns }
-                  pageSize={ 10 }
-                  rowsPerPageOptions={ [10] }
-              />
+                <DataGrid 
+                    rows={ rows }
+                    columns={ columns }
+                    pageSize={ 10 }
+                    rowsPerPageOptions={ [10] }
+                />
 
             </Grid> 
-            
+                
         </Grid>
-  )
+    )
 }

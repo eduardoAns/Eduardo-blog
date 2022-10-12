@@ -1,18 +1,21 @@
 import { Box, CircularProgress, Typography } from '@mui/material'
 import React, { FC, useState } from 'react'
 import { BlogLayout } from '../layouts';
+import { Error404 } from './Error404';
 
 interface Props {
   text?: string;
+  isError?: boolean;
 }
 
-export const FullScreenLoading:FC<Props> = ({text=''}) => {
+export const FullScreenLoading:FC<Props> = ({text='', isError=false}) => {
 
-  const [isVoid, setisVoid] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
+  const isError404 = isError ? <Error404 message={text} /> : <Typography variant='h1' component='h1' mb={2}>{text}</Typography>;
 
   setTimeout(() => {
-    setisVoid(false)
-  }, 5000);
+    setIsLoading(false)
+  }, 6000);
 
   return (
     <Box 
@@ -23,14 +26,14 @@ export const FullScreenLoading:FC<Props> = ({text=''}) => {
         height='calc(100vh - 200px)'
     >
       {
-        isVoid ?
+        isLoading ?
         (
               <>
                 <Typography sx={{ mb: 3 }} variant="h2" fontWeight={ 200 } fontSize={ 20 }>Cargando...</Typography>
                 <CircularProgress thickness={ 2 } />  
               </>
         ) : ( 
-              <Typography sx={{ mb: 3 }} variant="h1" fontWeight={ 200 } fontSize={ 20 }>{text}</Typography>
+              isError404
         )
       }
         

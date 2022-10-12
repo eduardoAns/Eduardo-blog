@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import React from 'react'
 import { useBlogs } from '../../hooks';
 import { BlogList } from '../blog';
+import { Error404 } from './Error404';
 import { FullScreenLoading } from './FullScreenLoading';
 
 export const QuerySearch = () => {
@@ -17,14 +18,15 @@ export const QuerySearch = () => {
     const foundBlogs = blogs.length > 0;
 
     const DataBlogs =   foundBlogs ?   
-                        <BlogList blogs={blogs} /> : 
-                        <Typography variant='h2' sx={{ mb: 1 }}>No se encontraron blogs con esta busqueda</Typography>
+                        <> <Typography variant='h2' sx={{ mb: 2 }}>Resultados</Typography>   
+                        <BlogList blogs={blogs} addMainCard={false}/> </>: 
+                        <Error404 message='No se encontraron resultados para esta busqueda'/>                      
+
                         
   return (
     <div>
             
         <Typography variant='h1' component='h1' mb={2}>Busqueda: {query}</Typography>
-        <Typography variant='h2' sx={{ mb: 2 }}>Resultados</Typography>   
     
         {
         isLoading

@@ -1,10 +1,9 @@
-import { Typography } from '@mui/material'
 import Cookies from 'js-cookie'
 import { NextPage } from 'next'
 import React from 'react'
-import { BlogLayout } from '../../components/layouts'
-import { Error404 } from '../../components/ui/Error404'
-import { BlogsList } from '../../components/user'
+import { BlogLayout } from '../../../components/layouts'
+import { Error404 } from '../../../components/ui/Error404'
+import { BlogsList } from '../../../components/user'
 
 const blogs:NextPage = () => {
 
@@ -16,8 +15,7 @@ const blogs:NextPage = () => {
     >
         {
             !Authorization ?
-            <Error404 />
-            :
+            <Error404 />:
             <BlogsList />
         }
          

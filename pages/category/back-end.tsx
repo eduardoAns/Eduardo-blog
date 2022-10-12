@@ -15,7 +15,7 @@ const BackEndPage: NextPage = ( ) => {
 
    return (
     <BlogLayout title={'Blog - BackEnd'} pageDescription={'Encuentra blogs sobre Back-End'}>
-        <Typography variant='h1' component='h1'>Back-end</Typography>
+        <Typography variant='h1' component='h1' mb={2}>Back-end</Typography>
         <Typography variant='h2' sx={{ mb: 1 }}>Todo sobre esta area</Typography>
 
         {
