@@ -39,7 +39,7 @@ export const BlogCardMain:FC<Props> = ({blog=DefectBlog}) => {
             <Link>
                 <Paper
                     sx={{
-                    height: 450,
+                    height: { xs: 700, md: 450 },
                     position: 'relative',
                     backgroundColor: 'grey.800',
                     mb: 4,
@@ -72,22 +72,26 @@ export const BlogCardMain:FC<Props> = ({blog=DefectBlog}) => {
                                 <Typography fontWeight={700} component="h1" variant="h3" color={'white'} gutterBottom>
                                     {blog.titulo}
                                 </Typography>
-                                <Typography fontWeight={700} variant="h5" color={'white'} paragraph mt={5} mb={5}>
+                                <Typography fontWeight={700} variant="h5" color={'white'} paragraph mt={5} >
                                     {blog.subtitulo}
                                 </Typography>
+                                <Box display={'flex'} flexWrap="wrap">
+                                    <Typography fontWeight={500} mb={1} color={'white'}>Tags: </Typography>
+
+                                    {
+                                        blog.tags.map( (tag) => (
+                                            <Typography fontWeight={700} ml={1} key={tag.id} color={'white'}>{ tag.nombre}</Typography>
+                                    ))}
+                                </Box>
                                 
-                                <NextLink href={`/blog/${blog.id}`} passHref>
-                                    <Link>
-                                        <Typography fontWeight={700} variant="h5" color={'white'} paragraph mt={5} mb={5}>
-                                            Leer más ...
-                                        </Typography>
-                                    </Link> 
-                                </NextLink>
-        
+                            
                             </Box>
                         </Grid>
                         <Grid item md={6} alignSelf="center">
-                            <Box>
+                            <Box sx={{
+                                    p: { xs: 3, md: 6 },
+                                    pr: { md: 0 },
+                                }}>
                                 <Typography 
                                     sx={{
                                         display: '-webkit-box',
@@ -103,14 +107,14 @@ export const BlogCardMain:FC<Props> = ({blog=DefectBlog}) => {
                                 </Typography>
                                 <Typography fontWeight={700} mb={1} color={'white'}>{ blog.fechaCreacion }</Typography>
                                 <Typography fontWeight={700} mb={1} color={'white'}>{'Categoria: '+ blog.categoria.nombre}</Typography>
-                                <Box display={'flex'} flexWrap="wrap">
-                                    <Typography fontWeight={500} mb={1} color={'white'}>Tags: </Typography>
-
-                                    {
-                                        blog.tags.map( (tag) => (
-                                            <Typography fontWeight={700} mb={1} ml={1} key={tag.id} color={'white'}>{ tag.nombre}</Typography>
-                                    ))}
-                                </Box>
+                                
+                                <NextLink href={`/blog/${blog.id}`} passHref>
+                                    <Link>
+                                        <Typography fontWeight={700} variant="h5" color={'white'} paragraph mt={5} mb={5}>
+                                            Leer más ...
+                                        </Typography>
+                                    </Link> 
+                                </NextLink>
                             </Box>
                             
                         </Grid>
