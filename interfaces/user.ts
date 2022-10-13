@@ -11,7 +11,7 @@ export interface User {
     idRol: number
     descripcion: string,
     posts: Blog[]
-    coments: Coment[]
+    comentarios: Coment[]
 }
 
 export interface UserPost {

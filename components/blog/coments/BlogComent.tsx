@@ -6,15 +6,29 @@ import { Coment } from '../../../interfaces'
 
 interface Props {
   coment: Coment
+  addName?: boolean
+}
+
+const defaultComent: Coment = {
+  id: 0,
+  idUser: 0,
+  idPost: 0,
+  contenido: '',
+  fechaCreacion: '',
+  nombre: '',
+  estado: '',
 }
 
 
-export const BlogComent:FC<Props> = ({coment}) => {
 
+export const BlogComent:FC<Props> = ({coment=defaultComent, addName=true}) => {
 
-  const { user, isLoading } = useUser(`/usuario/${coment.idUser}`);
+    const { user, isLoading } = useUser(`/usuario/${coment.idUser}`);
+
+    const usuarioNombre =addName ? user?.nombre + ' ' + user?.apellidoPaterno : '';
+
   
-  const usuarioNombre = user?.nombre + ' ' + user?.apellidoPaterno;
+  
 
   return (
     <List sx={{ width: '100%', bgcolor: 'background.paper' }}>

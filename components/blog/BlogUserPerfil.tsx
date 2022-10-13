@@ -7,7 +7,7 @@ import Link from '@mui/material/Link';
 import { FC } from 'react'
 import { Card, CardActionArea, CardMedia, CardContent, Box } from '@mui/material';
 import { useUser } from '../../hooks/useUser';
-import { Blog } from '../../interfaces';
+import { Blog, User } from '../../interfaces';
 
 
 interface Props {
@@ -18,13 +18,27 @@ interface Props {
   blog: Blog;
 }
 
+const defectUser:User = {
+    id: 0,
+    nombre: '',
+    apellidoPaterno: '',
+    password:'',
+    estado: '',
+    idRol: 0,
+    email: '',
+    fechaCreacion: '',
+    comentarios: [],
+    posts: [],
+    descripcion: '',
+}
+
 
 export const BlogUsePerfil: FC<Props> = (props) => {
   const {  social, blog } = props;
 
-  const { user, isLoading } = useUser(`/usuario/${blog.idUsuario}`);
+  const { user=defectUser, isLoading } = useUser(`/usuario/${blog.idUsuario}`);
 
-  const nombreUsuario = user?.nombre + ' ' + user?.apellidoPaterno || '';
+  const nombreUsuario = user?.nombre + ' ' + user?.apellidoPaterno ;
 
   return (
 
@@ -32,7 +46,7 @@ export const BlogUsePerfil: FC<Props> = (props) => {
         <Grid item xs={12} >
             <Box display='flex' alignItems='center' sx={{ height: '350px'}} >
                 <Grid item xs={12} >
-                    <CardActionArea component="a" href="#">
+                    <CardActionArea component="a" href={`/user/profile/${blog.idUsuario}`}>
                         <Card sx={{ display: 'flex' }}> 
                             <CardMedia
                                 component="img"

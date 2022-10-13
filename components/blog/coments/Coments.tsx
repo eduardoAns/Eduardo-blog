@@ -18,18 +18,7 @@ export const Coments:FC<Props> = ({blog}) => {
   // const { blogData, isLoading } = useBlog(`/post/${blog.id}`);
   // if (isLoading) return <Typography variant='h1'>Cargando...</Typography>
 
-  const [blogData, setData] = useState<Blog>(blog);
-  const [isLoading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    setLoading(true);
-    blogApi(`/post/${blogData.id}`)
-      .then(({data}) => {
-        setData(data)
-        console.log(data)
-        setLoading(false);
-      })
-  }, [])
+  const { blogData=blog, isLoading } = useBlog(`/post/${blog.id}`);
 
 
   return (
@@ -38,7 +27,7 @@ export const Coments:FC<Props> = ({blog}) => {
           <Typography variant='h1' component='h2' mb={4} >Comentarios</Typography>
         </Grid>
         <BlogComentList coments={blogData?.comentarios}   />
-        <AddComent idBlog = {blogData.id}/>
+        <AddComent idBlog = {blogData?.id}/>
 
     </Grid>
   )
