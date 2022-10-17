@@ -46,7 +46,6 @@ const onLoginUser = async( { email, password }: FormData ) => {
     setShowError(false);
 
     const isValidLogin = await loginUser( email, password );
-    console.log(isValidLogin)
     if ( !isValidLogin ) {
         setShowError(true);
         setTimeout(() => setShowError(false), 3000);

@@ -48,11 +48,6 @@ export const AuthProvider:FC = ({ children }) => {
 
     const loginUser = async( email: string, password: string ): Promise<boolean> => {
         
-        console.log({
-            email,
-            password
-        })
-
         try {
             const { data } = await blogApi.post('/login', { email, password });
             const user = data;

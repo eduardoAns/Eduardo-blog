@@ -84,14 +84,12 @@ export const BlogForm:FC<Props> = ({blog}) => {
         const newTag = newTagValue.trim().toLocaleLowerCase();
         setNewTagValue('');
         const currentTags = getValues('tags');
-        console.log(currentTags)
         if ( currentTags.find((tag)=>tag.nombre == newTag ) ) {
             console.log('ya existe tag')
             return;
         }
         
         currentTags.push({nombre:newTag});
-        console.log(currentTags)
     }
 
     const onDeleteTag = ( tag: string ) => {
@@ -104,19 +102,15 @@ export const BlogForm:FC<Props> = ({blog}) => {
             return;
         }
         try {
-            console.log(target.files)
             // console.log( file );
             for( const file of target.files ) {
                 const formData= new FormData();
                 formData.append('multipartFile', file);
-                console.log(file)
                 const { data } = await blogApi.post('/image/cloud', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
-                console.log(data)
                 const imageInfo:Image ={
                     id:data.public_id,
                     url:data.secure_url,
                 }
-                console.log(imageInfo)
 
                 setValue(`images`, [...getValues('images'), imageInfo], { shouldValidate: true });
             }
@@ -129,7 +123,6 @@ export const BlogForm:FC<Props> = ({blog}) => {
 
     const onDeleteImage = async ( image: Image) =>{
 
-        console.log(image)
         setValue(
             'images', 
             getValues('images').filter( ({url}) => url !== image.url ),
@@ -147,11 +140,9 @@ export const BlogForm:FC<Props> = ({blog}) => {
     const onSubmit = async (data:Blog) => {
         if ( data.images.length < 2 ) return alert('Mínimo 2 imagenes');
         const idUsuario = await checkToken();
-        console.log(idUsuario)
         const rawContentState = convertToRaw(contenido.getCurrentContent());
         const html = draftToHtml(rawContentState);
         const blog:Blog = { ...data, contenido: html, estado:'habilitado', fechaCreacion: new Date(Date.now()).toDateString(), idUsuario: idUsuario};
-        console.log(blog);
 
         try {
             const { data } = await blogApi({
@@ -159,7 +150,6 @@ export const BlogForm:FC<Props> = ({blog}) => {
                 method: blog.id ? 'PUT': 'POST',  // si tenemos un id, entonces actualizar, si no crear
                 data: blog
             });
-            console.log(data);
             router.replace('/user/blogs');
 
 
@@ -176,17 +166,18 @@ export const BlogForm:FC<Props> = ({blog}) => {
 
   return (
     <div>
+        <form onSubmit={handleSubmit(onSubmit)}>
         <Box display='flex' justifyContent='end' sx={{ mb: 1 }}>
             <Button 
                 color="secondary"
                 startIcon={ <SaveOutlined /> }
                 sx={{ width: '150px' }}
                 type="submit"
+                disabled={ isSaving }
                 >
                 Guardar
             </Button>
         </Box>
-        <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={4}>
               <Grid item xs={12}>
