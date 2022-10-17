@@ -9,7 +9,12 @@ import React, { ChangeEvent, FC, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import blogApi from '../../api/blogApi'
 import { Blog, categoria, Image } from '../../interfaces'
-
+const Editor = dynamic(
+    () => {
+      return import("react-draft-wysiwyg").then(mod => mod.Editor, e=>null as never);
+    },
+    { ssr: false }
+);
   
   const validCategorys:categoria[]  = [{
     id: 1,
@@ -324,7 +329,16 @@ export const BlogForm:FC<Props> = ({blog}) => {
                       helperText={ errors.subtitulo?.message }
                   />
                 <Typography variant='h2' component='h2' mb={2}>Contenido :</Typography>
-                
+                <Box border={"1px solid"}>
+                  <Editor
+                  editorState={contenido}
+                  toolbarClassName="toolbarClassName"
+                  wrapperClassName="wrapperClassName"
+                  editorClassName="editorClassName"
+                  onEditorStateChange={onEditorStateChange}
+                  />
+                  <textarea style={{display:'none'}} disabled value={draftToHtml(convertToRaw(contenido.getCurrentContent())) } />
+                </Box>
 
                 <button type="submit"> Submit  </button>
             </Grid>

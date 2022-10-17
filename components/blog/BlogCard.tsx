@@ -74,13 +74,17 @@ export const BlogCard: FC<Props> = ({ blog=DefectBlog, xs, sm }) => {
           <Box sx={{ mt: 1 }} className='fadeIn'>
               <Typography fontWeight={700} mb={1}>{ blog.titulo}</Typography>
               <Typography fontWeight={350} mb={1}>{ blog.fechaCreacion }</Typography>
-              <Typography fontWeight={350} mb={1}>{'Categoria: '+ blog.categoria.nombre}</Typography>
+              <Link display="flex" variant='caption' href={`/category/${blog.categoria.nombre}`} key={blog.categoria.id}>
+                <Typography fontWeight={350} mb={1}>{'Categoria: '+ blog.categoria.nombre}</Typography>
+              </Link>
               <Box display={'flex'} flexWrap="wrap">
                 <Typography fontWeight={350} mb={1}>Tags: </Typography>
 
-                {
-                    blog.tags.map( (tag) => (
-                        <Typography fontWeight={350} mb={1} ml={1} key={tag.id}>{ tag.nombre}</Typography>
+
+                {   blog.tags.map((tag) => (
+                        <Link display="flex" variant='caption' href={`/tag/${tag.nombre}`} key={tag.id} mb={1} ml={1}>
+                            <Typography fontWeight={350} ml={1} key={tag.id}>{ tag.nombre}</Typography>
+                        </Link>
                 ))}
               </Box>
               

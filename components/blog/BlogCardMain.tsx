@@ -4,7 +4,7 @@ import React, { FC } from 'react'
 import { Blog } from '../../interfaces'
 
 interface Props {
-    blog:Blog
+    blog?:Blog
 }
 
 const DefectBlog = {
