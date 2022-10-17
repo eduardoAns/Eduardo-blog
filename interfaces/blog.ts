@@ -16,6 +16,7 @@ export interface Blog {
 }
 
 export interface BlogFormulario {
+    id?: number,
     idUsuario: number,
     titulo: string,
     subtitulo:string,
@@ -23,8 +24,7 @@ export interface BlogFormulario {
     fechaCreacion: string,
     estado: string,
     categoria:categoria,
-    nombre:string
-    fechaActualizacion:string
+    fechaActualizacion?:string
 }
 
 export interface categoria {
@@ -33,6 +33,6 @@ export interface categoria {
 }
 
 export interface Image {
-    id: number,
+    id?: string,
     url: string,
 }

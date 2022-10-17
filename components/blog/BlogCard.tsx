@@ -26,11 +26,11 @@ const DefectBlog = {
         nombre: '',
     },
     images:[{
-        id: 1,
+        id: "1",
         url: '',
     },
     {
-        id: 2,
+        id: "2",
         url: '',
     }]
 }
@@ -42,8 +42,8 @@ export const BlogCard: FC<Props> = ({ blog=DefectBlog, xs, sm }) => {
 
     const blogImage = useMemo(() => {
         return isHovered
-          ? blog.images[1].url ||''
-          : blog.images[0].url||'';
+          ? blog.images[1].url
+          : blog.images[0].url;
 
     }, [isHovered, blog.images])
 
@@ -95,7 +95,7 @@ export const BlogCard: FC<Props> = ({ blog=DefectBlog, xs, sm }) => {
                     WebkitLineClamp: 3,
                 }}
                 variant="body2">
-                { blog.contenido}
+                <div dangerouslySetInnerHTML={{ __html: blog.contenido }} />
             </Typography>
 
           </Box>

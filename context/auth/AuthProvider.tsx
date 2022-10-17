@@ -39,7 +39,6 @@ export const AuthProvider:FC = ({ children }) => {
             const user = data;
             Cookies.set('token', user.token );
             dispatch({ type: '[Auth] - Login', payload: user });
-            console.log(user)
         } catch (error) {
             Cookies.remove('token');
         }
@@ -56,7 +55,6 @@ export const AuthProvider:FC = ({ children }) => {
 
         try {
             const { data } = await blogApi.post('/login', { email, password });
-            console.log(data)
             const user = data;
             Cookies.set('token', user.token );
             dispatch({ type: '[Auth] - Login', payload: user });

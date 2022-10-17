@@ -1,5 +1,5 @@
 import useSWR, { SWRConfiguration } from 'swr';
-import { Blog } from '../interfaces';
+import { Blog, BlogFormulario } from '../interfaces';
 
 
 // const fetcher = (...args: [key: string]) => fetch(...args).then(res => res.json());
@@ -27,3 +27,4 @@ export const useBlog = (url: string, config: SWRConfiguration = {} ) => {
     }
 
 }
+

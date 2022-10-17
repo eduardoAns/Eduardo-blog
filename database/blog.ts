@@ -68,11 +68,11 @@ export const initialPosts: Blog[] = [
         },
         images: [
             {
-                id: 1,
+                id: "1",
                 url: 'https://picsum.photos/200/400'
             },
             {
-                id: 2,
+                id: "2",
                 url: 'https://picsum.photos/200/300'
             }
         ]
@@ -144,11 +144,11 @@ export const initialPosts: Blog[] = [
         },
         images: [
             {
-                id: 1,
+                id: "1",
                 url: 'https://picsum.photos/200/400'
             },
             {
-                id: 2,
+                id: "2",
                 url: 'https://picsum.photos/200/300'
             }
         ]
@@ -220,11 +220,11 @@ export const initialPosts: Blog[] = [
         },
         images: [
             {
-                id: 1,
+                id: "1",
                 url: 'https://picsum.photos/200/400'
             },
             {
-                id: 2,
+                id: "2",
                 url: 'https://picsum.photos/200/300'
             }
         ]
@@ -296,11 +296,11 @@ export const initialPosts: Blog[] = [
         },
         images: [
             {
-                id: 1,
+                id: "1",
                 url: 'https://picsum.photos/200/100'
             },
             {
-                id: 2,
+                id: "2",
                 url: 'https://picsum.photos/200/300'
             }
         ]

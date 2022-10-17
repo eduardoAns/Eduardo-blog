@@ -30,8 +30,6 @@ const tiempoTranscurrido = Date.now();
 const hoy = new Date(tiempoTranscurrido);
 
 
-
-
 const crearUsuario = async ({nombre,apellido,email,password}:dataForm) => {
     
     const dataPost:UserPost = {

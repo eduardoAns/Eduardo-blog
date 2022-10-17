@@ -92,7 +92,7 @@ export const SideMenu = () => {
                                 <ListItemIcon>
                                     <AccountCircleOutlined/>
                                 </ListItemIcon>
-                                <ListItemText primary={'Agregar blog'} onClick={() => navigateTo('/blog/addBlog')}/>
+                                <ListItemText primary={'Agregar blog'} onClick={() => navigateTo('/user/blog/new')}/>
                             </ListItem>
 
                             <ListItem button>

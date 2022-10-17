@@ -9,6 +9,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import { BlogCard } from '../../../components/blog'
 import { BlogComent } from '../../../components/blog/coments'
+import coments from '../coments'
 
 interface Props {
   user: User
@@ -16,6 +17,10 @@ interface Props {
 
 
 const UserPage:NextPage<Props> = ({user}) => {
+
+  const lastComents = user.comentarios.length > 2 ? 
+                      user.comentarios.slice(user.comentarios.length-3).reverse() :
+                      user.comentarios.reverse();
 
   return (
     <BlogLayout title={'Perfil del usuario'} pageDescription={'revisa el perfil del este usuario'}>
@@ -73,12 +78,10 @@ const UserPage:NextPage<Props> = ({user}) => {
                     
                       {
                         user.comentarios.length > 0 
-                        ?
-                          <>
-                            <BlogComent coment={user.comentarios[user.comentarios.length - 1]} addName={false}/>
-                            <BlogComent coment={user.comentarios[user.comentarios.length - 2]} addName={false}/>
-                            <BlogComent coment={user.comentarios[user.comentarios.length - 3]} addName={false}/>
-                          </>
+                        ? 
+                          lastComents.map((coment) => (
+                            <BlogComent key={coment.id} coment={coment} addName={false} />
+                          ))
                         :
                           <Typography variant="body1" paragraph >
                             Este usuario no ha realizado comentarios

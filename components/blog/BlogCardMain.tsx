@@ -2,7 +2,6 @@ import { Grid, Paper, Box, Typography, Link } from '@mui/material'
 import NextLink from 'next/link'
 import React, { FC } from 'react'
 import { Blog } from '../../interfaces'
-import blogs from '../../pages/user/blogs'
 
 interface Props {
     blog:Blog
@@ -103,7 +102,7 @@ export const BlogCardMain:FC<Props> = ({blog=DefectBlog}) => {
                                     color={'white'}
                                     mb={1}
                                 > 
-                                        {blog.contenido}
+                                    <div dangerouslySetInnerHTML={{ __html: blog.contenido }} />
                                 </Typography>
                                 <Typography fontWeight={700} mb={1} color={'white'}>{ blog.fechaCreacion }</Typography>
                                 <Typography fontWeight={700} mb={1} color={'white'}>{'Categoria: '+ blog.categoria.nombre}</Typography>

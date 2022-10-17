@@ -25,7 +25,7 @@ export const BlogComent:FC<Props> = ({coment=defaultComent, addName=true}) => {
 
     const { user, isLoading } = useUser(`/usuario/${coment.idUser}`);
 
-    const usuarioNombre =addName ? user?.nombre + ' ' + user?.apellidoPaterno : '';
+    const usuarioNombre = addName ? `${user?.nombre} ${user?.apellidoPaterno}` : '';
 
   
   
