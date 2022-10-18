@@ -3,20 +3,12 @@ import { NextPage } from 'next'
 import { useRouter } from 'next/router';
 import { BlogLayout } from '../../../components/layouts'
 import React,{ useState} from 'react';
-import { EditorState, convertToRaw} from 'draft-js';
-import draftToHtml from 'draftjs-to-html';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import axios from 'axios';
-import dynamic from 'next/dynamic';
-import { Blog, BlogFormulario } from '../../../interfaces';
-import { SaveOutlined } from '@mui/icons-material';
-import register from '../../auth/register';
-import { useForm } from 'react-hook-form';
+import { Blog } from '../../../interfaces';
 import { useBlog } from '../../../hooks';
-import Cookies from 'js-cookie';
-import blogApi from '../../../api/blogApi';
 import { BlogForm } from '../../../components/blog';
 import { FullScreenLoading } from '../../../components/ui';
+import { Error404 } from '../../../components/ui/Error404';
 
 const defectBlog:Blog = {
   idUsuario: 0,
@@ -38,8 +30,12 @@ const BlogPage:NextPage = () => {
 
   const router = useRouter()
   let { id } = router.query as { id:string };
+  const { blogData=defectBlog , isLoading, isError } = useBlog(`/post/${id}`);
   
-  const { blogData=defectBlog , isLoading } = useBlog(`/post/${id}`);
+  // const blog = isError == undefined ? defectBlog : blogData;
+  
+  // if(isError == undefined && id !='new') return <Error404 />
+
 
 
 
@@ -48,7 +44,7 @@ const BlogPage:NextPage = () => {
         <Typography variant='h1' component='h1' mb={2}>añadir/editar Blog</Typography>
 
         {
-          isLoading ? <FullScreenLoading /> : <BlogForm blog={blogData} />
+          isLoading ? <FullScreenLoading /> : <BlogForm blog={blogData} isLoading={isLoading} />
         }
 
     </BlogLayout>

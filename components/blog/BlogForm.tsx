@@ -5,10 +5,11 @@ import draftToHtml from 'draftjs-to-html'
 import Cookies from 'js-cookie'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-import React, { ChangeEvent, FC, useRef, useState } from 'react'
+import React, { ChangeEvent, FC, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import blogApi from '../../api/blogApi'
 import { Blog, categoria, Image } from '../../interfaces'
+import { FullScreenLoading } from '../ui'
 const Editor = dynamic(
     () => {
       return import("react-draft-wysiwyg").then(mod => mod.Editor, e=>null as never);
@@ -45,10 +46,12 @@ const defectBlog:Blog = {
 
   interface Props {
     blog?:Blog
+    isLoading?:boolean
   }
 
 
 export const BlogForm:FC<Props> = ({blog}) => {
+    console.log("blog",blog)
 
     const checkToken = async() => {
   
@@ -64,17 +67,43 @@ export const BlogForm:FC<Props> = ({blog}) => {
         }
     }
 
+    
+    
+
     const fileInputRef = useRef<HTMLInputElement>(null)
     const router = useRouter();
-    const { register, handleSubmit, formState:{ errors }, getValues, setValue } = useForm<Blog>({
-        defaultValues:defectBlog
+    // const [isLoading, setIsLoading] = useState(true)
+
+    // useEffect(() => {
+    //     setIsLoading(true)
+    //     if(blog?.error){
+    //         setIsLoading(false)
+    //       console.log("error",blog.error)
+    //       setDataBlog(defectBlog)
+    //       console.log("useEffect",dataBlog)
+
+    //      return 
+    //     } 
+    //     setIsLoading(false)
+    //     setDataBlog(blog as Blog)
+    //     console.log("useEffect",dataBlog)
+
+    // }, [isLoading])
+
+    const { register, handleSubmit, formState:{ errors }, getValues, setValue, watch } = useForm<Blog>({
+        defaultValues:blog?.id ? blog : defectBlog
     })
+    console.log("DataBlog",watch())
+    console.log("contenido",getValues('contenido'))
+
+    
 
     let editorState:EditorState = EditorState.createEmpty();
     const [contenido=editorState, setContenido] = useState<EditorState>();
     const [ newTagValue, setNewTagValue ] = useState('');
     const [isSaving, setIsSaving] = useState(false);
 
+    
 
     const onEditorStateChange = (editorState:EditorState) => {
         setContenido(editorState);
@@ -163,7 +192,7 @@ export const BlogForm:FC<Props> = ({blog}) => {
 
 
 
-
+  // if(isLoading) return <FullScreenLoading />
   return (
     <div>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -329,6 +358,8 @@ export const BlogForm:FC<Props> = ({blog}) => {
                   onEditorStateChange={onEditorStateChange}
                   />
                   <textarea style={{display:'none'}} disabled value={draftToHtml(convertToRaw(contenido.getCurrentContent())) } />
+                  <div dangerouslySetInnerHTML={{ __html: getValues('contenido') }} />
+
                 </Box>
 
                 <button type="submit"> Submit  </button>

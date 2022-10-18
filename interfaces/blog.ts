@@ -12,7 +12,9 @@ export interface Blog {
     estado: string,
     tags:Tag[],
     categoria:categoria,
-    images:Image[]
+    images:Image[],
+    error?:string
+
 }
 
 export interface BlogFormulario {
