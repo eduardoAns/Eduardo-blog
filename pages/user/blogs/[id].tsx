@@ -31,6 +31,7 @@ const BlogPage:NextPage = () => {
   const router = useRouter()
   let { id } = router.query as { id:string };
   const { blogData=defectBlog , isLoading, isError } = useBlog(`/post/${id}`);
+
   
   // const blog = isError == undefined ? defectBlog : blogData;
   
@@ -41,7 +42,6 @@ const BlogPage:NextPage = () => {
 
   return (
     <BlogLayout title={'Blog'} pageDescription={'Encuentra datos a tu blog'}>
-        <Typography variant='h1' component='h1' mb={2}>añadir/editar Blog</Typography>
 
         {
           isLoading ? <FullScreenLoading /> : <BlogForm blog={blogData} isLoading={isLoading} />

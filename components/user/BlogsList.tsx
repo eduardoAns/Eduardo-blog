@@ -2,7 +2,7 @@ import { CardMedia, Grid, Link, Typography } from '@mui/material';
 import NextLink from 'next/link';
 import { GridColDef, DataGrid, GridValueGetterParams } from '@mui/x-data-grid';
 import Cookies from 'js-cookie';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import blogApi from '../../api/blogApi';
 import { useBlogs } from '../../hooks';
 import { FullScreenLoading } from '../ui';
@@ -69,7 +69,10 @@ export const BlogsList = () => {
             console.log(error)
         }
     }
-    checkToken();
+    useEffect(() => {
+        checkToken();  
+    }, [])
+    
     const { blogs, isLoading } = useBlogs(`/post/ByUserId/${userId}`);
     const foundBlogs = blogs.length > 0;
 

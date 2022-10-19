@@ -1,7 +1,7 @@
 import { Grid, Typography } from '@mui/material'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import Cookies from 'js-cookie';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import blogApi from '../../api/blogApi';
 import { useComent } from '../../hooks/useComent';
 import { FullScreenLoading } from '../ui';
@@ -29,7 +29,10 @@ export const ComentList = () => {
             console.log(error)
         }
     }
-    checkToken();
+    useEffect(() => {
+        checkToken()
+    }, [])
+    
     const { coments, isLoading } = useComent(`/comentario/ByUserId/${userId}`);
     console.log(coments)
     const foundComents = coments.length > 0;

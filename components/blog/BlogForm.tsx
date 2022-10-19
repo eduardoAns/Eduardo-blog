@@ -1,4 +1,4 @@
-import { SaveOutlined, UploadOutlined } from '@mui/icons-material'
+import { SaveOutlined, UploadOutlined, AddCircleOutline } from '@mui/icons-material'
 import { Box, Button, Grid, FormControl, InputLabel, Select, MenuItem, TextField, Typography, Card, CardActions, CardMedia, Chip, Divider, FormLabel } from '@mui/material'
 import { convertToRaw, EditorState } from 'draft-js'
 import draftToHtml from 'draftjs-to-html'
@@ -9,7 +9,6 @@ import React, { ChangeEvent, FC, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import blogApi from '../../api/blogApi'
 import { Blog, categoria, Image } from '../../interfaces'
-import { FullScreenLoading } from '../ui'
 const Editor = dynamic(
     () => {
       return import("react-draft-wysiwyg").then(mod => mod.Editor, e=>null as never);
@@ -66,6 +65,7 @@ export const BlogForm:FC<Props> = ({blog}) => {
             console.log(error)
         }
     }
+    
 
     
     
@@ -93,10 +93,6 @@ export const BlogForm:FC<Props> = ({blog}) => {
     const { register, handleSubmit, formState:{ errors }, getValues, setValue, watch } = useForm<Blog>({
         defaultValues:blog?.id ? blog : defectBlog
     })
-    console.log("DataBlog",watch())
-    console.log("contenido",getValues('contenido'))
-
-    
 
     let editorState:EditorState = EditorState.createEmpty();
     const [contenido=editorState, setContenido] = useState<EditorState>();
@@ -166,6 +162,11 @@ export const BlogForm:FC<Props> = ({blog}) => {
         }
     }
 
+    const getUrlImage = () => {
+        console.log("copiar url de imagen pendiene")
+
+    }
+
     const onSubmit = async (data:Blog) => {
         if ( data.images.length < 2 ) return alert('Mínimo 2 imagenes');
         const idUsuario = await checkToken();
@@ -179,6 +180,7 @@ export const BlogForm:FC<Props> = ({blog}) => {
                 method: blog.id ? 'PUT': 'POST',  // si tenemos un id, entonces actualizar, si no crear
                 data: blog
             });
+            console.log(blog?.id ? 'actualizado' : 'creado');
             router.replace('/user/blogs');
 
 
@@ -192,11 +194,11 @@ export const BlogForm:FC<Props> = ({blog}) => {
 
 
 
-  // if(isLoading) return <FullScreenLoading />
   return (
     <div>
+        <Typography variant='h1' component='h1' mb={2}>{blog?.id ? "Editar" : "Nuevo"} Blog</Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
-        <Box display='flex' justifyContent='end' sx={{ mb: 1 }}>
+        <Box display='flex' justifyContent='start' mb={2}>
             <Button 
                 color="secondary"
                 startIcon={ <SaveOutlined /> }
@@ -227,18 +229,34 @@ export const BlogForm:FC<Props> = ({blog}) => {
                     </Select>   
                 </FormControl> 
               </Grid>
-              <Grid item xs={12} mt={2}>
-                <TextField
-                    label="tags"
-                    variant="filled"
-                    fullWidth 
-                    sx={{ mb: 1 }}
-                    helperText="Presiona [spacebar] para agregar"
-                    value={ newTagValue }
-                    onChange={ ({ target }) => setNewTagValue(target.value) }
-                    onKeyUp={ ({ code })=> code === 'Space' ? onNewTag() : undefined }
-                    
-                />
+              <Grid container item xs={12} mt={2}>
+                <Grid item xs={9}>
+                    <TextField
+                        label="tags"
+                        variant="filled"
+                        fullWidth 
+                        sx={{ mb: 1 }}
+                        helperText="Presiona [spacebar] para agregar"
+                        value={ newTagValue }
+                        onChange={ ({ target }) => setNewTagValue(target.value) }
+                        onKeyUp={ ({ code })=> code === 'Space' ? onNewTag() : undefined }
+                        
+                    />
+                </Grid>
+                <Grid item xs={3} pt={1}>
+                    <Box display='flex' justifyContent='center' alignItems={"center"} >
+
+                        <Button 
+                            color="secondary"
+                            startIcon={ <AddCircleOutline /> }
+                            sx={{ width: '100px', height: '30px' }}
+                            type="button"
+                            onClick={ onNewTag }
+                        >
+                        Agregar
+                        </Button>
+                    </Box>
+                </Grid>
                 
                 <Box sx={{
                     display: 'flex',
@@ -314,6 +332,15 @@ export const BlogForm:FC<Props> = ({blog}) => {
                                                         Borrar
                                                     </Button>
                                                 </CardActions>
+                                                <CardActions>
+                                                    <Button 
+                                                        fullWidth
+                                                        color="success" 
+                                                        onClick={()=> getUrlImage()}
+                                                    >
+                                                        URL
+                                                    </Button>
+                                                </CardActions>
                                             </Card>
                                         </Grid>
                                     ))
@@ -361,8 +388,6 @@ export const BlogForm:FC<Props> = ({blog}) => {
                   <div dangerouslySetInnerHTML={{ __html: getValues('contenido') }} />
 
                 </Box>
-
-                <button type="submit"> Submit  </button>
             </Grid>
           </Grid>
         </form>

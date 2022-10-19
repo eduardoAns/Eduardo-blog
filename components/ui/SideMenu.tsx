@@ -1,6 +1,6 @@
 import { Box, Divider, Drawer, IconButton, Input, InputAdornment, List, ListItem, ListItemIcon, ListItemText, ListSubheader } from "@mui/material"
 import { AccountCircleOutlined, AdminPanelSettings, CategoryOutlined, ConfirmationNumberOutlined, EscalatorWarningOutlined, FemaleOutlined, LoginOutlined, MaleOutlined, SearchOutlined, VpnKeyOutlined } from "@mui/icons-material"
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UiContext } from "../../context/ui";
 import { useRouter } from "next/router";
 import { AuthContext } from "../../context";
@@ -44,7 +44,9 @@ export const SideMenu = () => {
             console.log(error)
         }
     }
-    checkToken();
+    useEffect(() => {
+        checkToken()
+    }, [])
 
   return (
     <Drawer
