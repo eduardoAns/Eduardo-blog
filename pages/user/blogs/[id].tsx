@@ -44,7 +44,7 @@ const BlogPage:NextPage = () => {
     <BlogLayout title={'Blog'} pageDescription={'Encuentra datos a tu blog'}>
 
         {
-          isLoading ? <FullScreenLoading /> : <BlogForm blog={blogData} isLoading={isLoading} />
+          isLoading ? <FullScreenLoading /> : <BlogForm blog={blogData} />
         }
 
     </BlogLayout>

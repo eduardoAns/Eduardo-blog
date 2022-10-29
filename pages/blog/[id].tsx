@@ -32,7 +32,7 @@ const ProductPage:NextPage<Props> = ({blog}) => {
       <Grid container spacing={3}>
 
         {/* Titulos Perfil de usuario */}
-        <Grid item xs={ 12 } sm={ 6 }>
+        <Grid item xs={ 12 } md={ 6 }>
           <Box display='flex' flexDirection='column'>
 
             {/* titulo */}
@@ -48,7 +48,7 @@ const ProductPage:NextPage<Props> = ({blog}) => {
 
         {/* Slideshow y tags*/}
 
-        <Grid item xs={12} sm={ 6 } paddingRight={2}>
+        <Grid item xs={12} md={ 6 } paddingRight={2}>
             {/* Slideshow */}
             <BlogSlideshow 
               images={ blog.images }
@@ -82,7 +82,7 @@ const ProductPage:NextPage<Props> = ({blog}) => {
       </Grid>
 
       {/* main */}
-      <Grid container spacing={3} sx={{ mt: 3 }}>
+      <Grid container spacing={3} sx={{ mt: 3 }} >
         <BlogMain blog={ blog } />
       </Grid>
 

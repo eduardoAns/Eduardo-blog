@@ -45,7 +45,6 @@ const defectBlog:Blog = {
 
   interface Props {
     blog?:Blog
-    isLoading?:boolean
   }
 
 
@@ -72,23 +71,6 @@ export const BlogForm:FC<Props> = ({blog}) => {
 
     const fileInputRef = useRef<HTMLInputElement>(null)
     const router = useRouter();
-    // const [isLoading, setIsLoading] = useState(true)
-
-    // useEffect(() => {
-    //     setIsLoading(true)
-    //     if(blog?.error){
-    //         setIsLoading(false)
-    //       console.log("error",blog.error)
-    //       setDataBlog(defectBlog)
-    //       console.log("useEffect",dataBlog)
-
-    //      return 
-    //     } 
-    //     setIsLoading(false)
-    //     setDataBlog(blog as Blog)
-    //     console.log("useEffect",dataBlog)
-
-    // }, [isLoading])
 
     const { register, handleSubmit, formState:{ errors }, getValues, setValue, watch } = useForm<Blog>({
         defaultValues:blog?.id ? blog : defectBlog
@@ -378,11 +360,11 @@ export const BlogForm:FC<Props> = ({blog}) => {
                 <Typography variant='h2' component='h2' mb={2}>Contenido :</Typography>
                 <Box border={"1px solid"}>
                   <Editor
-                  editorState={contenido}
-                  toolbarClassName="toolbarClassName"
-                  wrapperClassName="wrapperClassName"
-                  editorClassName="editorClassName"
-                  onEditorStateChange={onEditorStateChange}
+                    editorState={contenido}
+                    toolbarClassName="toolbarClassName"
+                    wrapperClassName="wrapperClassName"
+                    editorClassName="editorClassName"
+                    onEditorStateChange={onEditorStateChange}
                   />
                   <textarea style={{display:'none'}} disabled value={draftToHtml(convertToRaw(contenido.getCurrentContent())) } />
                   <div dangerouslySetInnerHTML={{ __html: getValues('contenido') }} />

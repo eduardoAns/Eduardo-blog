@@ -2,7 +2,7 @@ import { FC, useMemo, useState } from 'react';
 import NextLink from 'next/link';
 import { Grid, Card, CardActionArea, CardMedia, Box, Typography, Link, Button } from '@mui/material'
 
-import { Blog, IProduct } from '../../interfaces'
+import { Blog } from '../../interfaces'
 
 interface Props {
     blog: Blog;
@@ -74,16 +74,17 @@ export const BlogCard: FC<Props> = ({ blog=DefectBlog, xs, sm }) => {
           <Box sx={{ mt: 1 }} className='fadeIn'>
               <Typography fontWeight={700} mb={1}>{ blog.titulo}</Typography>
               <Typography fontWeight={350} mb={1}>{ blog.fechaCreacion }</Typography>
-              <Link display="flex" variant='caption' href={`/category/${blog.categoria.nombre}`} key={blog.categoria.id}>
-                <Typography fontWeight={350} mb={1}>{'Categoria: '+ blog.categoria.nombre}</Typography>
-              </Link>
+              <Box display={'flex'} >
+                <Typography fontWeight={350} sx={{mt:"2px"}}>Categoria: </Typography>
+                <Link display="flex" variant='caption' href={`/category/${blog.categoria.nombre}`} key={blog.categoria.id}>
+                    <Button variant='contained' >{blog.categoria.nombre}</Button>
+                </Link>
+              </Box>
               <Box display={'flex'} flexWrap="wrap">
-                <Typography fontWeight={350} mb={1}>Tags: </Typography>
-
-
+                <Typography fontWeight={350} sx={{mt:"2px"}}>Tags: </Typography>
                 {   blog.tags.map((tag) => (
                         <Link display="flex" variant='caption' href={`/tag/${tag.nombre}`} key={tag.id} mb={1} ml={1}>
-                            <Typography fontWeight={350} ml={1} key={tag.id}>{ tag.nombre}</Typography>
+                            <Button variant='contained' >{ tag.nombre}</Button>
                         </Link>
                 ))}
               </Box>
