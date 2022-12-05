@@ -13,9 +13,9 @@ export const BlogCardMain:FC<Props> = ({blog}) => {
     <Grid item xs={12} >
                 <Paper
                     sx={{
-                    height: { xs: 700, md: 450 },
+                    height: { xs: 750, md: 450 },
                     position: 'relative',
-                    pt: 4,
+                    pt: { xs: 0, md: 4 },
                     mb: 4,                    
                     backgroundSize: 'cover',
                     backgroundRepeat: 'no-repeat',
