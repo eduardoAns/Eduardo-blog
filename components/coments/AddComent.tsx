@@ -1,13 +1,14 @@
 import { Button, Grid, TextareaAutosize, TextField } from '@mui/material'
 import Cookies from 'js-cookie';
 import router from 'next/router';
-import React, { FC, useContext } from 'react'
+import React, { FC, useContext, useState } from 'react'
 import { useForm } from 'react-hook-form';
-import blogApi from '../../../api/blogApi';
-import { AuthContext } from '../../../context';
-import { Coment, User } from '../../../interfaces';
+import blogApi from '../../api/blogApi';
+import { AuthContext } from '../../context';
+import { ComentContext } from '../../context/coment';
+import { Coment, User } from '../../interfaces';
 
-interface dataForm {
+export interface dataForm {
   nombre:string;
   contenido:string;
 }
@@ -19,50 +20,31 @@ interface Props {
 const AddComent:FC<Props> = ({idBlog}) => {
 
   const { register,handleSubmit, formState: { errors } } = useForm<dataForm>();
+  const { postComment } = useContext( ComentContext );
+  const { userAuthorization } = useContext( AuthContext );
 
-  const crearComentario = async ({nombre,contenido}:dataForm) => {
+  const onPostComent = async ({nombre,contenido}:dataForm) => {
+    const ID_USER_ANON = 6
+    const {idUsuario} = await userAuthorization()
     
-    const Authorization= Cookies.get('token')
-    let idUsuario = 0;
-
-    if ( !Authorization ) {
-      idUsuario = 6;
-    }
-    if ( Authorization ) {
-      try {
-        const { data } = await blogApi.get('/validtoken', {'headers':{'Authorization': Authorization}});
-        const user:User = data;
-        idUsuario = user.id;
-        console.log(idUsuario)
-      } catch (error) {
-          console.log(error)
-      }
-    };
-    console.log(idUsuario)
+    const idUser = idUsuario == 0 ? ID_USER_ANON : idUsuario
 
     const dataPost:Coment = {
       nombre,
       idPost:idBlog,
-      idUser:idUsuario,
+      idUser:idUser,
       contenido,
       fechaCreacion:new Date(Date.now()).toDateString(),
       estado:'habilitado'
     }
+  
+    await postComment(dataPost)
 
-    console.log(dataPost)
-    try {
-      await blogApi.post('/comentario', dataPost);
-      console.log('comentario creado')
-      router.reload();
-
-    } catch (error) {
-      console.log(error)
-    }
 
   }
 
   return (
-    <form onSubmit={handleSubmit(crearComentario)}>
+    <form onSubmit={handleSubmit(onPostComent)}>
       <Grid item mt={3} >
           <Grid item xs={12} mb={1}>
               <TextField 

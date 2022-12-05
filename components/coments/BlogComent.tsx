@@ -1,7 +1,8 @@
 import { Avatar, Box, Divider, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material'
 import React, { FC } from 'react'
-import { useUser } from '../../../hooks/useUser'
-import { Coment } from '../../../interfaces'
+import { useUser } from '../../hooks/useUser'
+import { Coment } from '../../interfaces'
+import { FullScreenLoading } from '../ui'
 
 
 interface Props {
@@ -9,27 +10,16 @@ interface Props {
   addName?: boolean
 }
 
-const defaultComent: Coment = {
-  id: 0,
-  idUser: 0,
-  idPost: 0,
-  contenido: '',
-  fechaCreacion: '',
-  nombre: '',
-  estado: '',
-}
 
 
+export const BlogComent:FC<Props> = ({coment, addName=true}) => {
 
-export const BlogComent:FC<Props> = ({coment=defaultComent, addName=true}) => {
-
-    const { user, isLoading } = useUser(`/usuario/${coment.idUser}`);
+    const { user, isLoading } = useUser(`/usuario/${coment?.idUser}`);
 
     const usuarioNombre = addName ? `${user?.nombre} ${user?.apellidoPaterno}` : '';
 
-  
-  
-
+    if(isLoading) return <FullScreenLoading />
+    
   return (
     <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
       <ListItem alignItems="flex-start">
@@ -37,7 +27,7 @@ export const BlogComent:FC<Props> = ({coment=defaultComent, addName=true}) => {
           <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
         </ListItemAvatar>
         <ListItemText
-          primary={coment.contenido}
+          primary={coment?.contenido}
           secondary={
             <>
               <Typography
@@ -48,7 +38,7 @@ export const BlogComent:FC<Props> = ({coment=defaultComent, addName=true}) => {
               >
                 {`${usuarioNombre}  `}
               </Typography>
-              {coment.fechaCreacion}
+              {coment?.fechaCreacion}
             </>
           }
         />

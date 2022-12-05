@@ -8,7 +8,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import { BlogCard } from '../../../components/blog'
-import { BlogComent } from '../../../components/blog/coments'
+import { BlogComent } from '../../../components/coments'
 import coments from '../coments'
 
 interface Props {

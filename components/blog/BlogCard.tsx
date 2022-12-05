@@ -10,31 +10,8 @@ interface Props {
     sm?: number;
 }
 
-//defectBlog sirve para cargar datos mientras espera las oeticiones de BlogsRelacionados.tsx
-const DefectBlog = {
-    id: 0,
-    idUsuario: 0,
-    titulo: '',
-    subtitulo:'',
-    contenido: '',
-    comentarios: [],
-    fechaCreacion: '',
-    estado: '',
-    tags:[],
-    categoria:{
-        id: 0,
-        nombre: '',
-    },
-    images:[{
-        id: "1",
-        url: '',
-    },
-    {
-        id: "2",
-        url: '',
-    }]
-}
-export const BlogCard: FC<Props> = ({ blog=DefectBlog, xs, sm }) => {
+
+export const BlogCard: FC<Props> = ({ blog, xs, sm }) => {
 
     const XS = xs || 12;
     const SM = sm || 6;
@@ -51,8 +28,6 @@ export const BlogCard: FC<Props> = ({ blog=DefectBlog, xs, sm }) => {
       <Grid item 
             xs={XS} 
             sm={SM}
-            onMouseEnter={ () => setIsHovered(true) } 
-            onMouseLeave={ () => setIsHovered(false) } 
       >
           <Card>
               <NextLink href={`/blog/${blog.id}`} passHref prefetch={ false }>
@@ -63,6 +38,8 @@ export const BlogCard: FC<Props> = ({ blog=DefectBlog, xs, sm }) => {
                             height="400"
                             image={ blogImage }
                             alt={ blog.titulo }
+                            onMouseEnter={ () => setIsHovered(true) } 
+                            onMouseLeave={ () => setIsHovered(false) } 
                         />
 
                     </CardActionArea>

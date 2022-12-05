@@ -32,6 +32,8 @@ export const ComentList = () => {
     useEffect(() => {
         checkToken()
     }, [])
+
+    
     
     const { coments, isLoading } = useComent(`/comentario/ByUserId/${userId}`);
     console.log(coments)

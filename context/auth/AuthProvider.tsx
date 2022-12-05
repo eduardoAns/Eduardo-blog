@@ -1,4 +1,4 @@
-import { FC, useReducer, useEffect } from 'react';
+import { FC, useReducer, useEffect, useState } from 'react';
 import { AuthContext, authReducer } from './';
 import Cookies from 'js-cookie';
 
@@ -21,11 +21,32 @@ const AUTH_INITIAL_STATE: AuthState = {
 export const AuthProvider:FC = ({ children }) => {
 
     const [state, dispatch] = useReducer( authReducer, AUTH_INITIAL_STATE );
+    const [idUsuario, setIdUsuario] = useState<number>(0)
 
-    
     useEffect(() => {
         checkToken();
+        userAuthorization()
     }, [])
+    
+
+    const userAuthorization = async (): Promise<{idUsuario:number}> =>{
+        const Authorization= Cookies.get('token')
+
+        if ( Authorization ) {
+            try {
+                const { data } = await blogApi.get('/validtoken', {'headers':{'Authorization': Authorization}});
+                const user:User = data;
+                setIdUsuario(user.id)
+                console.log(idUsuario)
+            } catch (error) {
+                setIdUsuario(0)
+                console.log(error)
+            }
+        };
+
+        return {idUsuario}
+    }
+    
 
     const checkToken = async() => {
 
@@ -43,7 +64,6 @@ export const AuthProvider:FC = ({ children }) => {
             Cookies.remove('token');
         }
     }
-    
 
 
     const loginUser = async( email: string, password: string ): Promise<boolean> => {
@@ -95,6 +115,7 @@ export const AuthProvider:FC = ({ children }) => {
             ...state,
 
             // Methods
+            userAuthorization,
             loginUser,
             registerUser,
             logout,

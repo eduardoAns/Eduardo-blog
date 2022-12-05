@@ -54,57 +54,57 @@ export const Navbar = () => {
             <Box flex={ 1 } />
 
             {/* Pantallas pantallas grandes */}
+
             {
-                    isSearchVisible 
-                        ? (
-                            <Input
-                                
-                                color='info'
-                                sx={{ display: { xs: 'none', sm: 'flex' } } }
-                                className='fadeIn'
-                                autoFocus
-                                value={ searchTerm }
-                                onChange={ (e) => setSearchTerm( e.target.value ) }
-                                onKeyPress={ (e) => e.key === 'Enter' ? onSearchTerm() : null }
-                                type='text'
-                                placeholder="Buscar..."
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            onClick={ () => setIsSearchVisible(false) }
-                                            
-                                        >
-                                            <ClearOutlined 
-                                                color='info'
-                                            />
-                                        </IconButton>
-                                    </InputAdornment>
-                                }
-                            />
-                        )
-                    : 
+                isSearchVisible 
+                    ? 
                     (
-                        <IconButton 
-                            onClick={ () => setIsSearchVisible(true) }
-                            className="fadeIn"
-                            sx={{ display: { xs: 'none', sm: 'flex' } }}
-                        >
-                            <SearchOutlined
-                                color='info' />
-                        </IconButton>
+                        <Input
+                            
+                            color='info'
+                            sx={{ display: { xs: 'none', sm: 'flex' } } }
+                            className='fadeIn'
+                            autoFocus
+                            value={ searchTerm }
+                            onChange={ (e) => setSearchTerm( e.target.value ) }
+                            onKeyPress={ (e) => e.key === 'Enter' ? onSearchTerm() : null }
+                            type='text'
+                            placeholder="Buscar..."
+                            endAdornment={
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        onClick={ () => setIsSearchVisible(false) }
+                                        
+                                    >
+                                        <ClearOutlined 
+                                            color='info'
+                                        />
+                                    </IconButton>
+                                </InputAdornment>
+                            }
+                        />
                     )
-                }
+                : 
+                (
+                    <IconButton 
+                        onClick={ () => setIsSearchVisible(true) }
+                        className="fadeIn"
+                        sx={{ display: { xs: 'none', sm: 'flex' } }}
+                    >
+                        <SearchOutlined
+                            color='info' />
+                    </IconButton>
+                )
+            }
 
-                {/* Pantallas pequeñas */}
-                <IconButton
-                    sx={{ display: { xs: 'flex', sm: 'none' } }}
-                    onClick={ toggleSideMenu }
-                >
-                    <SearchOutlined 
-                        color='info'/>
-                </IconButton>
+            {/* Pantallas pequeñas */}
 
-        
+            <IconButton
+                sx={{ display: { xs: 'flex', sm: 'none' } }}
+                onClick={ toggleSideMenu }
+            >
+                <SearchOutlined color='info'/>
+            </IconButton>
 
             <Button color={'primary'} onClick={toggleSideMenu}>
                     Menú

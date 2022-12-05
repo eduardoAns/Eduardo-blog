@@ -1,5 +1,5 @@
 import { Box, Divider, Drawer, IconButton, Input, InputAdornment, List, ListItem, ListItemIcon, ListItemText, ListSubheader } from "@mui/material"
-import { AccountCircleOutlined, AdminPanelSettings, CategoryOutlined, ConfirmationNumberOutlined, EscalatorWarningOutlined, FemaleOutlined, LoginOutlined, MaleOutlined, SearchOutlined, VpnKeyOutlined } from "@mui/icons-material"
+import { AccountCircleOutlined, CategoryOutlined, ConfirmationNumberOutlined, EscalatorWarningOutlined, FemaleOutlined, LoginOutlined, MaleOutlined, SearchOutlined, VpnKeyOutlined } from "@mui/icons-material"
 import { useContext, useEffect, useState } from "react";
 import { UiContext } from "../../context/ui";
 import { useRouter } from "next/router";
@@ -59,7 +59,7 @@ export const SideMenu = () => {
             
             <List>
 
-            <ListItem>
+                <ListItem>
                     <Input
                         autoFocus
                         value={searchTerm}

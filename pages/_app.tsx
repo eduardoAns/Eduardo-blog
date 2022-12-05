@@ -6,6 +6,8 @@ import { lightTheme } from '../themes';
 import { UiProvider } from '../context/ui';
 import { AuthProvider } from '../context/auth';
 import { SWRConfig } from 'swr';
+import { BlogProvider } from '../context/blog';
+import { ComentProvider } from '../context/coment';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -16,10 +18,14 @@ function MyApp({ Component, pageProps }: AppProps) {
     >
       <AuthProvider>
         <UiProvider>
-          <ThemeProvider theme={ lightTheme}>
-              <CssBaseline />
-              <Component {...pageProps} />
-          </ThemeProvider>
+          <BlogProvider>
+            <ComentProvider>
+              <ThemeProvider theme={ lightTheme}>
+                  <CssBaseline />
+                  <Component {...pageProps} />
+              </ThemeProvider>
+            </ComentProvider>
+          </BlogProvider>
         </UiProvider>
       </AuthProvider>
     </SWRConfig>

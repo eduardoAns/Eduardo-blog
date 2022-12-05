@@ -10,34 +10,18 @@ import { BlogForm } from '../../../components/blog';
 import { FullScreenLoading } from '../../../components/ui';
 import { Error404 } from '../../../components/ui/Error404';
 
-const defectBlog:Blog = {
-  idUsuario: 0,
-  titulo: '',
-  subtitulo: '',
-  contenido: '',
-  fechaCreacion: '',
-  estado: '',
-  categoria: {
-    id: 0,
-    nombre: '',
-  },
-  comentarios: [],
-  tags: [],
-  images: []
-}
+
 
 const BlogPage:NextPage = () => {
 
   const router = useRouter()
   let { id } = router.query as { id:string };
-  const { blogData=defectBlog , isLoading, isError } = useBlog(`/post/${id}`);
+  const { blogData , isLoading } = useBlog(`/post/${id}`);
 
   
   // const blog = isError == undefined ? defectBlog : blogData;
   
   // if(isError == undefined && id !='new') return <Error404 />
-
-
 
 
   return (

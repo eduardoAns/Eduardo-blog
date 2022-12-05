@@ -7,34 +7,11 @@ interface Props {
     blog?:Blog
 }
 
-const DefectBlog = {
-    id: 0,
-    idUsuario: 0,
-    titulo: '',
-    subtitulo:'',
-    contenido: '',
-    comentarios: [],
-    fechaCreacion: '',
-    estado: '',
-    tags:[],
-    categoria:{
-        id: 0,
-        nombre: '',
-    },
-    images:[{
-        id: 0,
-        url: '',
-    },
-    {
-        id: 0,
-        url: '',
-    }]
-}
+export const BlogCardMain:FC<Props> = ({blog}) => {
 
-export const BlogCardMain:FC<Props> = ({blog=DefectBlog}) => {
   return (
     <Grid item xs={12} >
-        <NextLink href={`/blog/${blog.id}`} passHref prefetch={ false }>
+        <NextLink href={`/blog/${ blog?.id }`} passHref prefetch={ false }>
             <Link>
                 <Paper
                     sx={{
@@ -45,11 +22,11 @@ export const BlogCardMain:FC<Props> = ({blog=DefectBlog}) => {
                     backgroundSize: 'cover',
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: 'center',
-                    backgroundImage: `url(${blog.images[0].url})`,
+                    backgroundImage: `url(${blog?.images[0].url})`,
                     }}
                 >
                     {/* Increase the priority of the hero background image */}
-                    {<img style={{ display: 'none' }} src={blog.images[0].url} alt={blog.titulo} />}
+                    {<img style={{ display: 'none' }} src={blog?.images[0].url} alt={blog?.titulo} />}
                     <Box
                     sx={{
                         position: 'absolute',
@@ -69,16 +46,16 @@ export const BlogCardMain:FC<Props> = ({blog=DefectBlog}) => {
                                 }}
                             >
                                 <Typography fontWeight={700} component="h1" variant="h3" color={'white'} gutterBottom>
-                                    {blog.titulo}
+                                    {blog?.titulo}
                                 </Typography>
                                 <Typography fontWeight={700} variant="h5" color={'white'} paragraph mt={5} >
-                                    {blog.subtitulo}
+                                    {blog?.subtitulo}
                                 </Typography>
                                 <Box display={'flex'} flexWrap="wrap">
                                     <Typography fontWeight={500} mb={1} color={'white'}>Tags: </Typography>
 
                                     {
-                                        blog.tags.map( (tag) => (
+                                        blog?.tags.map( (tag) => (
                                             <Typography fontWeight={700} ml={1} key={tag.id} color={'white'}>{ tag.nombre}</Typography>
                                     ))}
                                 </Box>
@@ -102,12 +79,12 @@ export const BlogCardMain:FC<Props> = ({blog=DefectBlog}) => {
                                     color={'white'}
                                     mb={1}
                                 > 
-                                    <div dangerouslySetInnerHTML={{ __html: blog.contenido }} />
+                                    <div dangerouslySetInnerHTML={{ __html: blog!?.contenido }} />
                                 </Typography>
-                                <Typography fontWeight={700} mb={1} color={'white'}>{ blog.fechaCreacion }</Typography>
-                                <Typography fontWeight={700} mb={1} color={'white'}>{'Categoria: '+ blog.categoria.nombre}</Typography>
+                                <Typography fontWeight={700} mb={1} color={'white'}>{ blog?.fechaCreacion }</Typography>
+                                <Typography fontWeight={700} mb={1} color={'white'}>{'Categoria: '+ blog?.categoria.nombre}</Typography>
                                 
-                                <NextLink href={`/blog/${blog.id}`} passHref>
+                                <NextLink href={`/blog/${blog?.id}`} passHref>
                                     <Link>
                                         <Typography fontWeight={700} variant="h5" color={'white'} paragraph mt={5} mb={5}>
                                             Leer más ...

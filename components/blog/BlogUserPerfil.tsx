@@ -19,25 +19,10 @@ interface Props {
   blog: Blog;
 }
 
-const defectUser:User = {
-    id: 0,
-    nombre: '',
-    apellidoPaterno: '',
-    password:'',
-    estado: '',
-    idRol: 0,
-    email: '',
-    fechaCreacion: '',
-    comentarios: [],
-    posts: [],
-    descripcion: '',
-}
-
-
 export const BlogUsePerfil: FC<Props> = (props) => {
   const {  social, blog } = props;
 
-  const { user=defectUser, isLoading } = useUser(`/usuario/${blog.idUsuario}`);
+  const { user, isLoading } = useUser(`/usuario/${blog.idUsuario}`);
 
   if(isLoading) return <FullScreenLoading />
 

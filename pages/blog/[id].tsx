@@ -4,7 +4,7 @@ import { BlogSlideshow, BlogUsePerfil, BlogMain} from '../../components/blog';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
-import { Coments } from '../../components/blog/coments';
+import { Coments } from '../../components/coments';
 import blogApi from '../../api/blogApi';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { Blog } from '../../interfaces';
@@ -93,7 +93,7 @@ const ProductPage:NextPage<Props> = ({blog}) => {
 
       {/* coments */}
       <Grid container spacing={3} sx={{ mt: 3 }}>
-        <Coments blog={blog} />
+        <Coments idBlog={blog.id!!} />
       </Grid>
         
       

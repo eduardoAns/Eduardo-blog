@@ -21,25 +21,6 @@ const [showError, setShowError] = useState(false)
 const router = useRouter();
 const { loginUser } = useContext( AuthContext );
 
-// const login = async ({correo, password}:FormData) => {
-    
-//     setShowError(false)
-
-//     try {
-//         const {data} = await happyPetApi.post('/user/login',{correo, password})
-//         const {token, user} = data;
-//         console.log({token, user})
-
-//     } catch (error) {
-//         console.log('error en las credenciales')
-//         setShowError(true);
-//         setTimeout(() => {setShowError(false)}, 3000);
-//     }
-
-
-
-//     router.replace('/');
-// }
 
 const onLoginUser = async( { email, password }: FormData ) => {
 
@@ -53,7 +34,7 @@ const onLoginUser = async( { email, password }: FormData ) => {
     }
 
 
-    // Todo: navegar a la pantalla que el usuario estaba
+    // navegar a la pantalla que el usuario estaba
     const destination = router.query.p?.toString() || '/';
     router.replace(destination);
 

@@ -16,6 +16,7 @@ const Editor = dynamic(
     { ssr: false }
 );
   
+
   const validCategorys:categoria[]  = [{
     id: 1,
     nombre: 'front-end'
@@ -49,7 +50,6 @@ const defectBlog:Blog = {
 
 
 export const BlogForm:FC<Props> = ({blog}) => {
-    console.log("blog",blog)
 
     const checkToken = async() => {
   
@@ -65,10 +65,6 @@ export const BlogForm:FC<Props> = ({blog}) => {
         }
     }
     
-
-    
-    
-
     const fileInputRef = useRef<HTMLInputElement>(null)
     const router = useRouter();
 
@@ -95,7 +91,6 @@ export const BlogForm:FC<Props> = ({blog}) => {
             console.log('ya existe tag')
             return;
         }
-        
         currentTags.push({nombre:newTag});
     }
 
@@ -164,7 +159,6 @@ export const BlogForm:FC<Props> = ({blog}) => {
             });
             console.log(blog?.id ? 'actualizado' : 'creado');
             router.replace('/user/blogs');
-
 
         } catch (error) {
             console.log(error);
