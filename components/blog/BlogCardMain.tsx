@@ -11,14 +11,12 @@ export const BlogCardMain:FC<Props> = ({blog}) => {
 
   return (
     <Grid item xs={12} >
-        <NextLink href={`/blog/${ blog?.id }`} passHref prefetch={ false }>
-            <Link>
                 <Paper
                     sx={{
                     height: { xs: 700, md: 450 },
                     position: 'relative',
-                    backgroundColor: 'grey.800',
-                    mb: 4,
+                    pt: 4,
+                    mb: 4,                    
                     backgroundSize: 'cover',
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: 'center',
@@ -26,48 +24,55 @@ export const BlogCardMain:FC<Props> = ({blog}) => {
                     }}
                 >
                     {/* Increase the priority of the hero background image */}
-                    {<img style={{ display: 'none' }} src={blog?.images[0].url} alt={blog?.titulo} />}
-                    <Box
-                    sx={{
-                        position: 'absolute',
-                        top: 0,
-                        bottom: 0,
-                        right: 0,
-                        left: 0,
-                    }}
-                    />
-                    <Grid container>
-                        <Grid item md={6}>
+                    <Grid container sx={{
+                        opacity: 0.4,
+                        backgroundColor: 'white',
+                    }}>
+                        <Grid item md={7}>
                             <Box
                                 sx={{
                                     position: 'relative',
-                                    p: { xs: 3, md: 6 },
+                                    p: { xs: 3, md: 7 },
                                     pr: { md: 0 },
                                 }}
                             >
-                                <Typography fontWeight={700} component="h1" variant="h3" color={'white'} gutterBottom>
-                                    {blog?.titulo}
-                                </Typography>
-                                <Typography fontWeight={700} variant="h5" color={'white'} paragraph mt={5} >
+                                <NextLink href={`/blog/${blog?.id}`} passHref>
+                                    <Link>
+                                        <Typography fontWeight={700} component="h1" variant="h3" color={'secondary.light'} gutterBottom>
+                                            {blog?.titulo}
+                                        </Typography>
+                                    </Link> 
+                                </NextLink>
+                                
+                                <Typography fontWeight={700} variant="h5" color={'secondary.light'} paragraph mt={5} >
                                     {blog?.subtitulo}
                                 </Typography>
                                 <Box display={'flex'} flexWrap="wrap">
-                                    <Typography fontWeight={500} mb={1} color={'white'}>Tags: </Typography>
+                                    <Typography fontWeight={500} mb={1} color={'secondary.light'}>Tags: </Typography>
 
                                     {
                                         blog?.tags.map( (tag) => (
-                                            <Typography fontWeight={700} ml={1} key={tag.id} color={'white'}>{ tag.nombre}</Typography>
+                                            <NextLink href={`/tag/${tag.nombre}`} key={tag.id} passHref>
+                                                <Link>
+                                                    <Typography fontWeight={700} ml={1} color={'secondary.light'}>{ tag.nombre}</Typography>
+                                                </Link>
+                                            </NextLink>
                                     ))}
                                 </Box>
                                 
                             
                             </Box>
                         </Grid>
-                        <Grid item md={6} alignSelf="center">
+                        <Grid item md={5} alignSelf="center" >
                             <Box sx={{
                                     p: { xs: 3, md: 6 },
-                                    pr: { md: 0 },
-                                }}>
+                                    pr: { md: 1 },
+                                    backgroundColor:"white",
+                                    borderBottomLeftRadius: "55%",
+                                    
+                                }}
+                                
+                            >
                                 <Typography 
                                     sx={{
                                         display: '-webkit-box',
@@ -76,17 +81,23 @@ export const BlogCardMain:FC<Props> = ({blog}) => {
                                         WebkitLineClamp: 3,
                                     }}
                                     variant="subtitle1"
-                                    color={'white'}
+                                    color={'black'}
                                     mb={1}
                                 > 
                                     <div dangerouslySetInnerHTML={{ __html: blog!?.contenido }} />
+
                                 </Typography>
-                                <Typography fontWeight={700} mb={1} color={'white'}>{ blog?.fechaCreacion }</Typography>
-                                <Typography fontWeight={700} mb={1} color={'white'}>{'Categoria: '+ blog?.categoria.nombre}</Typography>
+                                
+                                <Typography fontWeight={700} mb={1} color={'black'}>{ blog?.fechaCreacion }</Typography>
                                 
                                 <NextLink href={`/blog/${blog?.id}`} passHref>
                                     <Link>
-                                        <Typography fontWeight={700} variant="h5" color={'white'} paragraph mt={5} mb={5}>
+                                        <Typography fontWeight={700} mb={1}>{'Categoria: '+ blog?.categoria.nombre}</Typography>
+                                    </Link>
+                                </NextLink>
+                                <NextLink href={`/blog/${blog?.id}`} passHref>
+                                    <Link>
+                                        <Typography fontWeight={700} variant="h5" color={'black'} paragraph mt={5} mb={5}>
                                             Leer más ...
                                         </Typography>
                                     </Link> 
@@ -96,9 +107,6 @@ export const BlogCardMain:FC<Props> = ({blog}) => {
                         </Grid>
                     </Grid>
                 </Paper>
-            </Link>
-        </NextLink>
-            
         </Grid>
   )
 }

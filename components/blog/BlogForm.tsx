@@ -1,6 +1,6 @@
 import { SaveOutlined, UploadOutlined, AddCircleOutline } from '@mui/icons-material'
 import { Box, Button, Grid, FormControl, InputLabel, Select, MenuItem, TextField, Typography, Card, CardActions, CardMedia, Chip, Divider, FormLabel } from '@mui/material'
-import { convertToRaw, EditorState } from 'draft-js'
+import { ContentState, convertFromHTML, convertToRaw, EditorState } from 'draft-js'
 import draftToHtml from 'draftjs-to-html'
 import Cookies from 'js-cookie'
 import dynamic from 'next/dynamic'
@@ -72,7 +72,11 @@ export const BlogForm:FC<Props> = ({blog}) => {
         defaultValues:blog?.id ? blog : defectBlog
     })
 
-    let editorState:EditorState = EditorState.createEmpty();
+    const blocksFromHTML = convertFromHTML(getValues('contenido'))
+    let editorState:EditorState = EditorState.createWithContent(ContentState.createFromBlockArray(
+        blocksFromHTML.contentBlocks,
+        blocksFromHTML.entityMap
+    ));
     const [contenido=editorState, setContenido] = useState<EditorState>();
     const [ newTagValue, setNewTagValue ] = useState('');
     const [isSaving, setIsSaving] = useState(false);
@@ -250,7 +254,7 @@ export const BlogForm:FC<Props> = ({blog}) => {
                                 key={tag.nombre}
                                 label={tag.nombre}
                                 onDelete={ () => onDeleteTag(tag.nombre)}
-                                color="primary"
+                                color="default"
                                 size='small'
                                 sx={{ ml: 1, mt: 1}}
                             />
@@ -359,10 +363,9 @@ export const BlogForm:FC<Props> = ({blog}) => {
                     wrapperClassName="wrapperClassName"
                     editorClassName="editorClassName"
                     onEditorStateChange={onEditorStateChange}
+                    
                   />
-                  <textarea style={{display:'none'}} disabled value={draftToHtml(convertToRaw(contenido.getCurrentContent())) } />
-                  <div dangerouslySetInnerHTML={{ __html: getValues('contenido') }} />
-
+                   <textarea style={{display:'none'}} disabled value={draftToHtml(convertToRaw(contenido.getCurrentContent()))} /> 
                 </Box>
             </Grid>
           </Grid>
