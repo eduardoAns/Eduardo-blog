@@ -48,7 +48,7 @@ const ProductPage:NextPage<Props> = ({blog}) => {
 
         {/* Slideshow y tags*/}
 
-        <Grid item xs={12} md={ 6 } paddingRight={2}>
+        <Grid item xs={12} md={ 6 }>
             {/* Slideshow */}
             <BlogSlideshow 
               images={ blog.images }
@@ -84,6 +84,7 @@ const ProductPage:NextPage<Props> = ({blog}) => {
       {/* main */}
       <Grid container spacing={3} sx={{ mt: 3 }} >
         <BlogMain blog={ blog } />
+        
       </Grid>
 
       {/* blogs relacionados */}
@@ -122,12 +123,18 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const { id = '' } = params as { id: string };
 
-  const {data} = await blogApi.get(`/post/ ${parseInt(id)}`);
-
-  const blog = data
-  
-
-  if ( !blog ) {
+  try {
+    const {data} = await blogApi.get(`/post/${id}`);
+    const blog = data
+    return {
+      props: {
+        blog
+      },
+      revalidate: 60*60*24
+    }
+  }
+  catch (e) {
+    console.log(e);
     return {
       redirect: {
         destination: '/',
@@ -135,13 +142,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       }
     }
   }
-
-  return {
-    props: {
-      blog
-    },
-    revalidate: 60*60*24
-  }
+  
 }
 
 export default ProductPage

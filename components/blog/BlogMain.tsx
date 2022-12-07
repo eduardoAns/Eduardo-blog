@@ -1,6 +1,7 @@
 import { Grid, Box, Typography } from '@mui/material'
 import React, { FC } from 'react'
 import { Blog} from '../../interfaces';
+import { BlogAllTags } from './BlogAllTags';
 import { BlogCard } from './BlogCard'
 
 interface Props {
@@ -17,6 +18,9 @@ export const BlogMain:FC<Props> = ({blog}) => {
                 <Grid item xs={12} md={8} >
                   <Typography variant='h1' mb={2}>{blog.subtitulo}</Typography>
                   <div style={{width:'100%'}} dangerouslySetInnerHTML={{ __html: blog.contenido }} />
+                </Grid>
+                <Grid item xs={12} md={4} >
+                  <BlogAllTags />
                 </Grid>
                 
                 

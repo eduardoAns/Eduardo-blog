@@ -5,4 +5,5 @@ export * from './BlogUserPerfil';
 export * from './BlogMain';
 export * from './BlogCardMain';
 export * from './BlogForm';
+export * from './BlogAllTags'
 

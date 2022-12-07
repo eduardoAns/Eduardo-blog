@@ -1,8 +1,9 @@
-import { Avatar, Box, Divider, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material'
+import { Avatar, Box, Divider, Link, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material'
 import React, { FC } from 'react'
 import { useUser } from '../../hooks/useUser'
 import { Coment } from '../../interfaces'
 import { FullScreenLoading } from '../ui'
+import NextLink from 'next/link';
 
 
 interface Props {
@@ -14,17 +15,28 @@ interface Props {
 
 export const BlogComent:FC<Props> = ({coment, addName=true}) => {
 
-    const { user, isLoading } = useUser(`/usuario/${coment?.idUser}`);
+    // const { user, isLoading } = useUser(`/usuario/${coment?.idUser}`);
 
-    const usuarioNombre = addName ? `${user?.nombre} ${user?.apellidoPaterno}` : '';
+    const ID_USER_ANON = 6
+    const usuarioNombre = addName ? `${coment.nombre}` : '';
 
-    if(isLoading) return <FullScreenLoading />
+    // if(isLoading) return <FullScreenLoading />
     
   return (
     <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+          {
+            coment.idUser != ID_USER_ANON ?
+            <NextLink href={`/user/profile/${coment.idUser}`} passHref>
+              <Link >
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+              </Link>
+            </NextLink>
+            :
+            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+
+          }
         </ListItemAvatar>
         <ListItemText
           primary={coment?.contenido}

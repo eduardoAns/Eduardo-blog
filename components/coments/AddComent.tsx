@@ -17,20 +17,23 @@ interface Props {
   idBlog?:number;
 }
 
+
 const AddComent:FC<Props> = ({idBlog}) => {
 
-  const { register,handleSubmit, formState: { errors } } = useForm<dataForm>();
+
   const { postComment } = useContext( ComentContext );
-  const { userAuthorization } = useContext( AuthContext );
+  const { userAuthorization, user } = useContext( AuthContext );
+  const { register,handleSubmit, formState: { errors }, getValues, setValue } = useForm<dataForm>();
 
   const onPostComent = async ({nombre,contenido}:dataForm) => {
     const ID_USER_ANON = 6
+    const ID_NOT_LOGIN = 0
     const {idUsuario} = await userAuthorization()
     
-    const idUser = idUsuario == 0 ? ID_USER_ANON : idUsuario
+    const idUser = idUsuario == ID_NOT_LOGIN ? ID_USER_ANON : idUsuario
 
     const dataPost:Coment = {
-      nombre,
+      nombre:user? user.nombre : nombre,
       idPost:idBlog,
       idUser:idUser,
       contenido,
@@ -38,6 +41,7 @@ const AddComent:FC<Props> = ({idBlog}) => {
       estado:'habilitado'
     }
   
+    console.log(dataPost)
     await postComment(dataPost)
 
 
@@ -46,6 +50,8 @@ const AddComent:FC<Props> = ({idBlog}) => {
   return (
     <form onSubmit={handleSubmit(onPostComent)}>
       <Grid item mt={3} >
+        {
+          !user?
           <Grid item xs={12} mb={1}>
               <TextField 
                   label="De :" 
@@ -55,13 +61,17 @@ const AddComent:FC<Props> = ({idBlog}) => {
                   {...register('nombre', {
                     required:'Este campo es requerido'
                   })}
+
                   error={!!errors.nombre}
                   helperText={errors.nombre?.message} 
               />
           </Grid>
+          : null 
+        }
+          
           <Grid item xs={12} mb={1}>
               <TextField 
-                label="Contenido" 
+                label="Contenido :" 
                 variant="filled" 
                 fullWidth 
                 size="medium"

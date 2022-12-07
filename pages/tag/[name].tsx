@@ -10,7 +10,7 @@ const tagPage:NextPage = () => {
 
     return (
         <BlogLayout title={'Blog - Tags'} pageDescription={'Encuentra blogs a travez de los tag'}>
-            <Typography variant='h1' component='h1' mb={2}>Filtrando blogs por tag</Typography>
+            <Typography variant='h1' component='h1' mb={2}>Blogs</Typography>
             <TagSearch />
         </BlogLayout>
     )

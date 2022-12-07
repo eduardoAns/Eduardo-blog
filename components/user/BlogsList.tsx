@@ -1,9 +1,7 @@
 import { CardMedia, Grid, Link, Typography } from '@mui/material';
 import NextLink from 'next/link';
 import { GridColDef, DataGrid, GridValueGetterParams } from '@mui/x-data-grid';
-import Cookies from 'js-cookie';
 import React, { useContext, useEffect, useState } from 'react'
-import blogApi from '../../api/blogApi';
 import { useBlogs } from '../../hooks';
 import { FullScreenLoading } from '../ui';
 import { AuthContext } from '../../context';
