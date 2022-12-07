@@ -9,19 +9,20 @@ import blogApi  from '../../api/blogApi';
 export interface AuthState {
     isLoggedIn: boolean;
     user?: User;
+    userId:number;
 }
 
 
 const AUTH_INITIAL_STATE: AuthState = {
     isLoggedIn: false,
     user: undefined,
+    userId:0
 }
 
 
 export const AuthProvider:FC = ({ children }) => {
 
     const [state, dispatch] = useReducer( authReducer, AUTH_INITIAL_STATE );
-    const [idUsuario, setIdUsuario] = useState<number>(0)
 
     useEffect(() => {
         checkToken();
@@ -32,14 +33,16 @@ export const AuthProvider:FC = ({ children }) => {
     const userAuthorization = async (): Promise<{idUsuario:number}> =>{
         const Authorization= Cookies.get('token')
 
+        let idUsuario:number = 0
+
         if ( Authorization ) {
             try {
                 const { data } = await blogApi.get('/validtoken', {'headers':{'Authorization': Authorization}});
                 const user:User = data;
-                setIdUsuario(user.id)
-                console.log(idUsuario)
+                idUsuario = user.id
+                dispatch({ type: '[Auth] - Autorization', payload: idUsuario });
             } catch (error) {
-                setIdUsuario(0)
+                dispatch({ type: '[Auth] - Autorization', payload: idUsuario });
                 console.log(error)
             }
         };

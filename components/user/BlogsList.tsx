@@ -2,10 +2,11 @@ import { CardMedia, Grid, Link, Typography } from '@mui/material';
 import NextLink from 'next/link';
 import { GridColDef, DataGrid, GridValueGetterParams } from '@mui/x-data-grid';
 import Cookies from 'js-cookie';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import blogApi from '../../api/blogApi';
 import { useBlogs } from '../../hooks';
 import { FullScreenLoading } from '../ui';
+import { AuthContext } from '../../context';
 
 const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 20 },
@@ -57,20 +58,15 @@ const columns: GridColDef[] = [
 export const BlogsList = () => {
 
     const [userId, setUserId] = useState<number>(0)
-    const checkToken = async() => {
+    const {userAuthorization} = useContext(AuthContext)
 
-        const Authorization= Cookies.get('token')
-        if ( !Authorization ) return
-        try {
-            const { data } = await blogApi.get('/validtoken', {'headers':{'Authorization': Authorization}});
-            const user = data;
-            setUserId(user.id)
-        } catch (error) {
-            console.log(error)
-        }
+    const getUserId = async() => {
+        const {idUsuario} = await userAuthorization()
+        setUserId(idUsuario)
     }
+    
     useEffect(() => {
-        checkToken();  
+        getUserId()
     }, [])
     
     const { blogs, isLoading } = useBlogs(`/post/ByUserId/${userId}`);
@@ -105,3 +101,7 @@ export const BlogsList = () => {
         </Grid>
     )
 }
+function useCatontext(AuthContext: any): { userAuthorization: any; } {
+    throw new Error('Function not implemented.');
+}
+

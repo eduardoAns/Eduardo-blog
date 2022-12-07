@@ -2,16 +2,16 @@ import { BlogState } from './';
 
 
 type BlogActionType = 
-| { type: 'Blog - ActionType' } 
-| { type: 'Blog - ' } 
+| { type: 'Blog - isSaving' } 
 
 
 export const BlogReducer = (state: BlogState, action: BlogActionType): BlogState => {
   switch (action.type) {
-    case 'Blog - ':
-      return { ...state};
-    case 'Blog - ActionType':
-      return { ...state };
+    case 'Blog - isSaving':
+      return { 
+        ...state,
+        isSaving: !state.isSaving
+      };
     default:
       return state;
   }

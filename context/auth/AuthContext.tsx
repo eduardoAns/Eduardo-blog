@@ -7,6 +7,7 @@ import { User, UserPost } from '../../interfaces';
 interface ContextProps {
     isLoggedIn: boolean;
     user?: User;
+    userId:number;
 
     userAuthorization:() => Promise<{idUsuario: number;}>;
     loginUser: (email: string, password: string) => Promise<boolean>;

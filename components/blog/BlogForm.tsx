@@ -2,13 +2,13 @@ import { SaveOutlined, UploadOutlined, AddCircleOutline } from '@mui/icons-mater
 import { Box, Button, Grid, FormControl, InputLabel, Select, MenuItem, TextField, Typography, Card, CardActions, CardMedia, Chip, Divider, FormLabel } from '@mui/material'
 import { ContentState, convertFromHTML, convertToRaw, EditorState } from 'draft-js'
 import draftToHtml from 'draftjs-to-html'
-import Cookies from 'js-cookie'
 import dynamic from 'next/dynamic'
-import { useRouter } from 'next/router'
-import React, { ChangeEvent, FC, useEffect, useRef, useState } from 'react'
+import React, { ChangeEvent, FC, useContext, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import blogApi from '../../api/blogApi'
+import { AuthContext, BlogContext } from '../../context'
 import { Blog, categoria, Image } from '../../interfaces'
+import { Toaster, toast } from 'react-hot-toast'
 const Editor = dynamic(
     () => {
       return import("react-draft-wysiwyg").then(mod => mod.Editor, e=>null as never);
@@ -51,38 +51,26 @@ const defectBlog:Blog = {
 
 export const BlogForm:FC<Props> = ({blog}) => {
 
-    const checkToken = async() => {
-  
-        const Authorization= Cookies.get('token')
-
-        try {
-            const { data } = await blogApi.get('/validtoken', {'headers':{'Authorization': Authorization}});
-            const user = data;
-            return user.id
-  
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    
     const fileInputRef = useRef<HTMLInputElement>(null)
-    const router = useRouter();
-
-    const { register, handleSubmit, formState:{ errors }, getValues, setValue, watch } = useForm<Blog>({
+    // REACT HOOK FORM
+    const { register, handleSubmit, formState:{ errors }, getValues, setValue } = useForm<Blog>({
         defaultValues:blog?.id ? blog : defectBlog
     })
-
+    // config Editor(DraftJs) state with content
     const blocksFromHTML = convertFromHTML(getValues('contenido'))
     let editorState:EditorState = EditorState.createWithContent(ContentState.createFromBlockArray(
         blocksFromHTML.contentBlocks,
         blocksFromHTML.entityMap
     ));
+
+    // states
+    const {userAuthorization} = useContext(AuthContext)  
+    const {postBlog, deleteBlogImage, getUrlImage,isSaving} = useContext(BlogContext)  
     const [contenido=editorState, setContenido] = useState<EditorState>();
     const [ newTagValue, setNewTagValue ] = useState('');
-    const [isSaving, setIsSaving] = useState(false);
+ 
 
-    
-
+    //methods
     const onEditorStateChange = (editorState:EditorState) => {
         setContenido(editorState);
     }
@@ -108,7 +96,6 @@ export const BlogForm:FC<Props> = ({blog}) => {
             return;
         }
         try {
-            // console.log( file );
             for( const file of target.files ) {
                 const formData= new FormData();
                 formData.append('multipartFile', file);
@@ -135,51 +122,36 @@ export const BlogForm:FC<Props> = ({blog}) => {
             { shouldValidate: true }
         );
 
-        try {
-        await blogApi.delete(`/image/cloud/${image.id}`);
-
-        } catch (error) {
-            console.log(error);
-        }
+        await deleteBlogImage(image.id!!)
     }
 
-    const getUrlImage = () => {
-        console.log("copiar url de imagen pendiene")
-
+    const onGetUrlImage = (url:string) => {
+        getUrlImage(url)
+        toast('URL copiada',{position:'bottom-left'})
     }
 
     const onSubmit = async (data:Blog) => {
         if ( data.images.length < 2 ) return alert('Mínimo 2 imagenes');
-        const idUsuario = await checkToken();
-        const rawContentState = convertToRaw(contenido.getCurrentContent());
-        const html = draftToHtml(rawContentState);
-        const blog:Blog = { ...data, contenido: html, estado:'habilitado', fechaCreacion: new Date(Date.now()).toDateString(), idUsuario: idUsuario};
-
-        try {
-            const { data } = await blogApi({
-                url: '/post',
-                method: blog.id ? 'PUT': 'POST',  // si tenemos un id, entonces actualizar, si no crear
-                data: blog
-            });
-            console.log(blog?.id ? 'actualizado' : 'creado');
-            router.replace('/user/blogs');
-
-        } catch (error) {
-            console.log(error);
-            setIsSaving(false);
-        }
-
+        const {idUsuario} = await userAuthorization();
+        const html = draftToHtml(convertToRaw(contenido.getCurrentContent()));
+        const blog:Blog = { 
+            ...data, 
+            contenido: html, 
+            estado:'habilitado', 
+            fechaCreacion: new Date(Date.now()).toDateString(), 
+            idUsuario: idUsuario
+        };
+       
+        await postBlog(blog);
 
     }
-
-
 
   return (
     <div>
         <Typography variant='h1' component='h1' mb={2}>{blog?.id ? "Editar" : "Nuevo"} Blog</Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
-        <Box display='flex' justifyContent='start' mb={2}>
-            <Button 
+          <Box display='flex' justifyContent='start' mb={2}>
+              <Button 
                 color="secondary"
                 startIcon={ <SaveOutlined /> }
                 sx={{ width: '150px' }}
@@ -187,8 +159,8 @@ export const BlogForm:FC<Props> = ({blog}) => {
                 disabled={ isSaving }
                 >
                 Guardar
-            </Button>
-        </Box>
+              </Button>
+          </Box>
           <Grid container spacing={3}>
             <Grid item xs={12} md={4}>
               <Grid item xs={12}>
@@ -264,70 +236,70 @@ export const BlogForm:FC<Props> = ({blog}) => {
               </Grid>
               <Divider sx={{ my: 2  }}/>
                         
-                        <Box display='flex' flexDirection="column">
-                            <FormLabel sx={{ mb:1}}>Imágenes</FormLabel>
-                            <Button
-                                color="secondary"
-                                fullWidth
-                                startIcon={ <UploadOutlined /> }
-                                sx={{ mb: 3 }}
-                                onClick={ () => fileInputRef.current?.click() }
-                            >
-                                Cargar imagen
-                            </Button>
-                            <input 
-                                ref={ fileInputRef }
-                                type="file"
-                                multiple
-                                accept='image/jpg, image/gif, image/jpeg, image/png'
-                                style={{ display: 'none' }}
-                                onChange={ onFilesSelected }
-                            />
+                <Box display='flex' flexDirection="column">
+                    <FormLabel sx={{ mb:1}}>Imágenes</FormLabel>
+                    <Button
+                        color="secondary"
+                        fullWidth
+                        startIcon={ <UploadOutlined /> }
+                        sx={{ mb: 3 }}
+                        onClick={ () => fileInputRef.current?.click() }
+                    >
+                        Cargar imagen
+                    </Button>
+                    <input 
+                        ref={ fileInputRef }
+                        type="file"
+                        multiple
+                        accept='image/jpg, image/gif, image/jpeg, image/png'
+                        style={{ display: 'none' }}
+                        onChange={ onFilesSelected }
+                    />
 
+                    
+                    <Chip 
+                        label="Es necesario al 2 imagenes"
+                        color='error'
+                        variant='outlined'
+                        sx={{ display: getValues('images').length < 2 ? 'flex': 'none' }}
+                    />
 
-                            <Chip 
-                                label="Es necesario al 2 imagenes"
-                                color='error'
-                                variant='outlined'
-                                sx={{ display: getValues('images').length < 2 ? 'flex': 'none' }}
-                            />
-
-                            <Grid container spacing={2}>
-                                {
-                                    getValues('images').map( (image) => (
-                                        <Grid item xs={4} sm={3} key={image.id}>
-                                            <Card>
-                                                <CardMedia 
-                                                    component='img'
-                                                    className='fadeIn'
-                                                    image={ image.url }
-                                                    alt={ image.url }
-                                                />
-                                                <CardActions>
-                                                    <Button 
-                                                        fullWidth 
-                                                        color="error"
-                                                        onClick={()=> onDeleteImage(image)}
-                                                    >
-                                                        Borrar
-                                                    </Button>
-                                                </CardActions>
-                                                <CardActions>
-                                                    <Button 
-                                                        fullWidth
-                                                        color="success" 
-                                                        onClick={()=> getUrlImage()}
-                                                    >
-                                                        URL
-                                                    </Button>
-                                                </CardActions>
-                                            </Card>
-                                        </Grid>
-                                    ))
-                                }
-                            </Grid>
-
-                        </Box>                  
+                    <Grid container spacing={2}>
+                        {
+                            getValues('images').map( (image) => (
+                                <Grid item xs={4} sm={3} key={image.id}>
+                                    <Card>
+                                        <CardMedia 
+                                            component='img'
+                                            className='fadeIn'
+                                            image={ image.url }
+                                            alt={ image.url }
+                                        />
+                                        <CardActions>
+                                            <Button 
+                                                fullWidth 
+                                                color="error"
+                                                onClick={()=> onDeleteImage(image)}
+                                            >
+                                                Borrar
+                                            </Button>
+                                        </CardActions>
+                                        <CardActions>
+                                            <Button 
+                                                fullWidth
+                                                color="success" 
+                                                onClick={()=> onGetUrlImage(image.url)}
+                                            >
+                                                URL
+                                            </Button>
+                                        </CardActions>
+                                    </Card>
+                                </Grid>
+                            ))
+                        }
+                    </Grid>
+                    <Toaster />
+                </Box>                  
             </Grid>
           
             <Grid item xs={12} md={8}>
