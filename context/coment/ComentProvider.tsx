@@ -8,10 +8,14 @@ import { ComentContext, ComentReducer } from './';
 
 export interface ComentState {
     isComment: boolean;
+    isEditComment: boolean;
+    IdClickComment:number
 }
 
 const COMENT_INITIAL_STATE: ComentState = {
     isComment: false,
+    isEditComment: false,
+    IdClickComment:0,
 }
 
 
@@ -34,7 +38,6 @@ export const ComentProvider:FC = ({ children }) => {
     }
     
     const postComment = async (dataPost:Coment) => {
-        dispatch({ type: '[COMMENT] - resetIsComment' });
 
           try {
             await blogApi.post('/comentario', dataPost);
@@ -44,7 +47,45 @@ export const ComentProvider:FC = ({ children }) => {
             console.log(error)
           }
 
-        dispatch({ type: '[COMMENT] - postComment' });
+          dispatch({ type: '[COMMENT] - commentListChange' });
+
+    }
+
+    const deleteComment = async (idComment:number) => {
+
+          try {
+            await blogApi.delete(`/comentario/${idComment}`);
+            console.log('comentario Eliminado')
+      
+          } catch (error) {
+            console.log(error)
+          }
+
+        dispatch({ type: '[COMMENT] - commentListChange' });
+    }
+
+    const setIsEditComment = () => {
+      dispatch({ type: '[COMMENT] - commentEditChange' });
+    }
+
+    const getIdClickComment = (idComment:number) => {
+        const itemBox = document.getElementById(idComment.toString())
+        const id = itemBox?.getAttribute('id')
+        dispatch({ type: '[COMMENT] - getIdClickComment', payload:Number(id)});
+    }
+
+    const editComment = async (comment:Coment) => {
+
+      try {
+        await blogApi.put('/comentario', comment);
+        console.log('comentario creado')
+  
+      } catch (error) {
+        console.log(error)
+      }
+
+    dispatch({ type: '[COMMENT] - commentListChange' });
+    dispatch({ type: '[COMMENT] - commentEditChange' });
     }
     
     return (
@@ -53,7 +94,11 @@ export const ComentProvider:FC = ({ children }) => {
 
             //methods
             postComment,
-            getComents
+            getComents,
+            deleteComment,
+            setIsEditComment,
+            getIdClickComment,
+            editComment,
         }}>
            { children }
         </ComentContext.Provider>

@@ -23,7 +23,7 @@ const AddComent:FC<Props> = ({idBlog}) => {
 
   const { postComment } = useContext( ComentContext );
   const { userAuthorization, user } = useContext( AuthContext );
-  const { register,handleSubmit, formState: { errors }, getValues, setValue } = useForm<dataForm>();
+  const { register,handleSubmit, formState: { errors } } = useForm<dataForm>();
 
   const onPostComent = async ({nombre,contenido}:dataForm) => {
     const ID_USER_ANON = 6

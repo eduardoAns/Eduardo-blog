@@ -2,23 +2,32 @@ import { ComentState } from './';
 
 
 type ComentActionType = 
-| { type: '[COMMENT] - postComment' } 
-| { type: '[COMMENT] - resetIsComment'}
+| { type: '[COMMENT] - commentListChange'}
+| { type: '[COMMENT] - commentEditChange'}
+| { type: '[COMMENT] - getIdClickComment', payload:number}
+
+
 
 
 export const ComentReducer = (state: ComentState, action: ComentActionType): ComentState => {
   switch (action.type) {
-    case '[COMMENT] - postComment':
+    case '[COMMENT] - commentListChange':
       return { 
         ...state, 
-        isComment:true
+        isComment:!state.isComment
       
       };
-    case '[COMMENT] - resetIsComment':
+    case '[COMMENT] - commentEditChange':
       return { 
         ...state, 
-        isComment:false
-      
+        isEditComment:!state.isEditComment
+        
+      };
+    case '[COMMENT] - getIdClickComment':
+      return { 
+        ...state, 
+        IdClickComment:action.payload
+        
       };
     default:
       return state;

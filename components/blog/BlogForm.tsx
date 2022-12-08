@@ -328,6 +328,7 @@ export const BlogForm:FC<Props> = ({blog}) => {
                       helperText={ errors.subtitulo?.message }
                   />
                 <Typography variant='h2' component='h2' mb={2}>Contenido :</Typography>
+                <Typography variant='h2' component='h2' mb={2}>recomendacion dimensiones para imagenes: 800 x 800</Typography>
                 <Box border={"1px solid"}>
                   <Editor
                     editorState={contenido}

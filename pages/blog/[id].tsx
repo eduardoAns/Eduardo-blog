@@ -84,20 +84,18 @@ const ProductPage:NextPage<Props> = ({blog}) => {
       {/* main */}
       <Grid container spacing={3} sx={{ mt: 3 }} >
         <BlogMain blog={ blog } />
-        
-      </Grid>
-
-      {/* blogs relacionados */}
-      <Grid container spacing={3} sx={{ mt: 3 }}>
-        <BlogsRelacionados />
       </Grid>
 
       {/* coments */}
       <Grid container spacing={3} sx={{ mt: 3 }}>
         <Coments idBlog={blog.id!!} />
       </Grid>
-        
-      
+
+      {/* blogs relacionados */}
+      <Grid container spacing={3} sx={{ mt: 3 }}>
+        <BlogsRelacionados />
+      </Grid>
+ 
     </BlogLayout>
   )
 }
