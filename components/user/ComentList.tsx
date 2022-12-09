@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext, ComentContext } from '../../context';
 import { useComent } from '../../hooks/useComent';
+import { Coment } from '../../interfaces';
 import { ActionsComent } from '../coments/ActionsComent';
 import { FullScreenLoading } from '../ui';
 
@@ -25,25 +26,14 @@ const columns: GridColDef[] = [
 
 export const ComentList = () => {
 
-    const router = useRouter();
     const [userId, setUserId] = useState<number>(0)
+    const [comments, setComments] = useState<Coment[]>()
     const {userAuthorization} = useContext(AuthContext)
+    const {isEditComment, getComents} = useContext(ComentContext)
 
-
-    const getUserId = async() => {
-        const {idUsuario} = await userAuthorization()
-        setUserId(idUsuario)
-    }
-    
-    useEffect(() => {
-        getUserId()
-    }, [])
-    
-    const { coments, isLoading } = useComent(`/comentario/ByUserId/${userId}`);
-    console.log(coments)
-    const foundComents = coments.length > 0;
-
-    const rows = coments!.map( coment => ({
+    const commentsByUserId = comments?.filter(({idUser})=> idUser == userId) 
+    const foundComents = commentsByUserId!?.length > 0;
+    const rows = commentsByUserId!?.map( coment => ({
         id: coment.id,
         nombre: coment.nombre,
         idPost:coment.idPost,
@@ -52,12 +42,32 @@ export const ComentList = () => {
         contenido: coment.contenido,
         estado:coment.estado
     }));
+
+    const getUserId = async() => {
+        const {idUsuario} = await userAuthorization()
+        setUserId(idUsuario)
+    }
+
+    const getComments = async() => {
+        const data = await getComents()
+        setComments(data)
+    }
+    
+    useEffect(() => {
+        getUserId()
+        getComments()
+    }, [])
+
+    useEffect(() => {
+            getComments()
+    }, [isEditComment])
+    
                   
     if (!foundComents) return <FullScreenLoading text='Este usuario no tiene comentarios' isError={true}/> 
 
   return (
         <Grid container className='fadeIn'>
-            <Typography variant='h1' component='h1' mb={2}>{`comentarios: ${coments?.length}`} </Typography>
+            <Typography variant='h1' component='h1' mb={2}>{`comentarios: ${comments?.length}`} </Typography>
             
             <Grid item xs={12} sx={{ height:650, width: '100%' }}>
               <DataGrid 

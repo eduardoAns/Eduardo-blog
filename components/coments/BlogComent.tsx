@@ -21,7 +21,7 @@ export const BlogComent:FC<Props> = ({coment, addName=true}) => {
     // const { user, isLoading } =  useUser(`/usuario/${coment?.idUser}`);
     const [userId, setUserId] = useState<number>(0)
     const { userAuthorization} = useContext(AuthContext)
-    const {isEditComment, IdClickComment} = useContext(ComentContext)
+    const {isChangeEditComment, IdClickComment} = useContext(ComentContext)
 
     const ID_USER_ANON = 6
     const usuarioNombre = addName ? `${coment.nombre}` : '';
@@ -55,13 +55,13 @@ export const BlogComent:FC<Props> = ({coment, addName=true}) => {
           }
         </ListItemAvatar>
         {
-          isEditComment && IdClickComment === coment.id ?
+          isChangeEditComment && IdClickComment === coment.id ?
           null
           : 
           <ListItemText
             primary={coment?.contenido}
             secondary={
-              <>
+              <Box display={'flex'} mt={1} flexDirection={{xs: 'column', md: 'row' }} gap={{xs:0, md:1}}>
                 <Typography
                   sx={{ display: 'inline' }}
                   component="span"
@@ -70,10 +70,18 @@ export const BlogComent:FC<Props> = ({coment, addName=true}) => {
                 >
                   {`${usuarioNombre}  `}
                 </Typography>
-                {coment?.fechaCreacion}
+                <Typography
+                  sx={{ display: 'inline' }}
+                  component="span"
+                  variant="body2"
+                  color="text.primary"
+                >
+                  {coment?.fechaCreacion}
+                </Typography>
                 
-              </>
+              </Box>
             }
+            
           />
         }
           

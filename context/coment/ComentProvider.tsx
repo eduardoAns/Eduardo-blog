@@ -7,15 +7,16 @@ import { Coment, User } from '../../interfaces';
 import { ComentContext, ComentReducer } from './';
 
 export interface ComentState {
-    isComment: boolean;
-    isEditComment: boolean;
-    
+    isUpdateListComent: boolean;
+    isChangeEditComment: boolean;
+    isEditComment:boolean;
     IdClickComment:number
 }
 
 const COMENT_INITIAL_STATE: ComentState = {
-    isComment: false,
-    isEditComment: false,
+    isUpdateListComent: false,
+    isChangeEditComment: false,
+    isEditComment:false,
     IdClickComment:0,
 }
 
@@ -48,7 +49,7 @@ export const ComentProvider:FC = ({ children }) => {
             console.log(error)
           }
 
-          dispatch({ type: '[COMMENT] - commentListChange' });
+          dispatch({ type: '[COMMENT] - updateListComment' });
 
     }
 
@@ -62,11 +63,11 @@ export const ComentProvider:FC = ({ children }) => {
             console.log(error)
           }
 
-        dispatch({ type: '[COMMENT] - commentListChange' });
+        dispatch({ type: '[COMMENT] - updateListComment' });
     }
 
-    const setIsEditComment = () => {
-      dispatch({ type: '[COMMENT] - commentEditChange' });
+    const setIsChangeEditComment = () => {
+      dispatch({ type: '[COMMENT] - changeEditComment' });
     }
 
     const getIdClickComment = (idComment:number) => {
@@ -79,14 +80,16 @@ export const ComentProvider:FC = ({ children }) => {
 
       try {
         await blogApi.put('/comentario', comment);
-        console.log('comentario creado')
+        console.log('comentario Editado')
   
       } catch (error) {
         console.log(error)
       }
 
-    dispatch({ type: '[COMMENT] - commentListChange' });
-    dispatch({ type: '[COMMENT] - commentEditChange' });
+      dispatch({ type: '[COMMENT] - updateListComment' });
+      dispatch({ type: '[COMMENT] - changeEditComment' });
+      dispatch({ type: '[COMMENT] - editComment' });
+
     }
     
     return (
@@ -97,7 +100,7 @@ export const ComentProvider:FC = ({ children }) => {
             postComment,
             getComents,
             deleteComment,
-            setIsEditComment,
+            setIsChangeEditComment,
             getIdClickComment,
             editComment,
         }}>

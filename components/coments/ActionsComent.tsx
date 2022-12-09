@@ -16,7 +16,7 @@ interface dataForm {
 
 export const ActionsComent:FC<Props> = ({comment}) => {
 
-    const {deleteComment, isEditComment, setIsEditComment, IdClickComment, getIdClickComment, editComment} = useContext(ComentContext)
+    const {deleteComment, isChangeEditComment, setIsChangeEditComment, IdClickComment, getIdClickComment, editComment} = useContext(ComentContext)
     const { register,handleSubmit, formState: { errors } } = useForm<dataForm>({
         defaultValues:{contenido:comment.contenido}
     });
@@ -35,13 +35,13 @@ export const ActionsComent:FC<Props> = ({comment}) => {
     }
 
     const changeEditComment = () => {
-        setIsEditComment()
+        setIsChangeEditComment()
         getIdClickComment(comment.id!!)
     }
 
   return (
     <>
-        { isEditComment && IdClickComment === comment.id ?
+        { isChangeEditComment && IdClickComment === comment.id ?
         <>
             <form onSubmit={handleSubmit(onEditComment)} style={{width:'100%'}}>
             <Grid xs={12}>
@@ -59,9 +59,26 @@ export const ActionsComent:FC<Props> = ({comment}) => {
                             helperText={errors.contenido?.message} 
                         />
                     </Grid> 
-                    <Grid xs={4} sx={{display:'flex', width:'100%', justifyContent:'end', alignItems:'end' ,flexDirection: {xs: 'column', md: 'row' }}}>
-                        <Button type='submit' color='success' variant='text' sx={{display:'flex', width:'4.5rem'}}> guardar cambios</Button>
-                        <Button color='secondary' variant='text' onClick={changeEditComment} sx={{display:'flex', justifyContent:'center'}}> volver</Button>
+                    <Grid 
+                        xs={4} 
+                        sx={{display:'flex', width:'100%', justifyContent:'end', alignItems:'end' ,flexDirection: {xs: 'column', md: 'row' }}}
+                    >
+                        <Button 
+                            type='submit' 
+                            color='success' 
+                            variant='text' 
+                            sx={{display:'flex', width:'4.5rem'}}
+                        > 
+                            guardar cambios
+                        </Button>
+                        <Button 
+                            color='secondary' 
+                            variant='text' 
+                            onClick={changeEditComment} 
+                            sx={{display:'flex', justifyContent:'center'}}
+                        > 
+                            volver
+                        </Button>
                     </Grid>
                 </ListItem>
             </Grid>
@@ -69,9 +86,28 @@ export const ActionsComent:FC<Props> = ({comment}) => {
         </>
             :
             <Grid>
-                <ListItem sx={{display:'flex', width:'20%', flexDirection: {xs: 'column', md: 'row' }}} id={comment.id?.toString()}>
-                    <Button color='success' variant='text' onClick={changeEditComment}  sx={{display:'flex', justifyContent:'center'}} disabled = {isEditComment && IdClickComment !== comment.id ? true : false} > Editar</Button>
-                    <Button color='error' variant='text' onClick={onDeleteComment} sx={{display:'flex', justifyContent:'center'}} disabled = {isEditComment && IdClickComment !== comment.id ? true : false}> Eliminar</Button>
+                <ListItem 
+                    sx={{display:'flex', width:'100%', flexDirection: {xs: 'column', md: 'row' }}} 
+                    id={comment.id?.toString()}
+                >
+                    <Button 
+                        color='success' 
+                        variant='text' 
+                        onClick={changeEditComment}  
+                        sx={{display:'flex', justifyContent:'center'}} 
+                        disabled = {isChangeEditComment && IdClickComment !== comment.id ? true : false} 
+                    > 
+                        Editar
+                    </Button>
+                    <Button 
+                        color='error' 
+                        variant='text' 
+                        onClick={onDeleteComment} 
+                        sx={{display:'flex', justifyContent:'center'}} 
+                        disabled = {isChangeEditComment && IdClickComment !== comment.id ? true : false}
+                    > 
+                        Eliminar
+                    </Button>
                 </ListItem>
             </Grid>
         }

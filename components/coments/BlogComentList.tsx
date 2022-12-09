@@ -13,7 +13,7 @@ interface Props {
 
 export const BlogComentList:FC<Props> = ({idBlog}) => {
 
-  const { isComment, getComents } = useContext( ComentContext );
+  const { isUpdateListComent, getComents } = useContext( ComentContext );
   const [coments, setComentarios] = useState<Coment[]>([])
   const onGetComents = async () =>{
     const data = await getComents()
@@ -23,9 +23,8 @@ export const BlogComentList:FC<Props> = ({idBlog}) => {
   const comentsByIdBlog:Coment[] = coments.filter(({idPost})=> idPost == idBlog )
   
   useEffect(() => {
-    console.log("actualizando comentarios")
     onGetComents()
-  }, [isComment])
+  }, [isUpdateListComent])
 
   
   return (
