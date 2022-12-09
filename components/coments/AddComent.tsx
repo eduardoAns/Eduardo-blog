@@ -1,12 +1,11 @@
-import { Button, Grid, TextareaAutosize, TextField } from '@mui/material'
-import Cookies from 'js-cookie';
-import router from 'next/router';
-import React, { FC, useContext, useState } from 'react'
+import { Button, Grid, TextField } from '@mui/material'
+import React, { FC, useContext } from 'react'
 import { useForm } from 'react-hook-form';
-import blogApi from '../../api/blogApi';
 import { AuthContext } from '../../context';
 import { ComentContext } from '../../context/coment';
-import { Coment, User } from '../../interfaces';
+import { Coment } from '../../interfaces';
+import { Toaster, toast } from 'react-hot-toast'
+
 
 export interface dataForm {
   nombre:string;
@@ -41,14 +40,16 @@ const AddComent:FC<Props> = ({idBlog}) => {
       estado:'habilitado'
     }
   
-    console.log(dataPost)
     await postComment(dataPost)
+    toast('Comentario agregado',{position:'bottom-left'})
+
 
 
   }
 
   return (
     <form onSubmit={handleSubmit(onPostComent)}>
+      <Toaster />
       <Grid item mt={3} >
         {
           !user?

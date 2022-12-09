@@ -9,6 +9,7 @@ import { ComentContext, ComentReducer } from './';
 export interface ComentState {
     isComment: boolean;
     isEditComment: boolean;
+    
     IdClickComment:number
 }
 
