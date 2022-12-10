@@ -37,3 +37,11 @@
 .hidden {
   display: none!important;
 }
+
+div .contenido-img img{
+  background-color: aqua;
+  max-width:100% !important; 
+  height:auto !important;
+  margin: auto !important;
+}
+

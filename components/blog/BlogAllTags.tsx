@@ -21,8 +21,8 @@ export const BlogAllTags:FC = () => {
     }, [])
     
   return (
-    <Box display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'} >
-        <Box justifyContent={'center'} mb={2}>
+    <Box display={'flex'} flexDirection={'column'} alignItems={{xs:'start', md:'center'}} >
+        <Box justifyContent={'center'} mb={{xs:8, md:4}} >
             <Typography variant='h1'>Te puede interesar:</Typography>
         </Box>
         <Grid container >

@@ -1,4 +1,4 @@
-import { Grid, Paper, Box, Typography, Link } from '@mui/material'
+import { Grid, Paper, Box, Typography, Link, Button } from '@mui/material'
 import NextLink from 'next/link'
 import React, { FC } from 'react'
 import { Blog } from '../../interfaces'
@@ -48,14 +48,17 @@ export const BlogCardMain:FC<Props> = ({blog}) => {
                             {blog?.subtitulo}
                         </Typography>
                         <Box display={'flex'} flexWrap="wrap">
-                            <Typography fontWeight={500} mb={1} color={'secondary.light'}>Tags: </Typography>
+                            <Typography fontWeight={500} pt={0.5} color={'secondary.light'}>Tags: </Typography>
 
                             {
                                 blog?.tags.map( (tag) => (
                                     <NextLink href={`/tag/${tag.nombre}`} key={tag.id} passHref>
                                         <Link>
-                                            <Typography fontWeight={700} ml={1} color={'secondary.light'}>{ tag.nombre}</Typography>
+                                            <Button variant='text' color='inherit'>
+                                                <Typography fontWeight={700} ml={1} color={'secondary.light'}>{ tag.nombre}</Typography>
+                                            </Button>
                                         </Link>
+                                        
                                     </NextLink>
                             ))}
                         </Box>
@@ -90,18 +93,23 @@ export const BlogCardMain:FC<Props> = ({blog}) => {
                             
                             <Typography fontWeight={700} mb={1} color={'black'}>{ blog?.fechaCreacion }</Typography>
                             
-                            <NextLink href={`/blog/${blog?.id}`} passHref>
+                            <NextLink href={`/category/${blog?.categoria.nombre}`} passHref>
                                 <Link>
                                     <Typography fontWeight={700} mb={1}>{'Categoria: '+ blog?.categoria.nombre}</Typography>
                                 </Link>
                             </NextLink>
-                            <NextLink href={`/blog/${blog?.id}`} passHref>
-                                <Link>
-                                    <Typography fontWeight={700} variant="h5" color={'black'} paragraph mt={5} mb={5}>
-                                        Leer más ...
-                                    </Typography>
-                                </Link> 
-                            </NextLink>
+                            <Box my={4}>
+                                <NextLink href={`/blog/${blog?.id}`} passHref>
+                                    <Link >
+                                        <Button variant='outlined' color='inherit'>
+                                            <Typography fontWeight={700} variant="h5" color={'black'} >
+                                                Leer más ...
+                                            </Typography>
+                                        </Button>
+                                    </Link> 
+                                </NextLink>
+                            </Box>
+                            
                         </Box> 
                     </Grid>
                 </Grid>
