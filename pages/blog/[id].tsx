@@ -128,7 +128,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       props: {
         blog
       },
-      revalidate: 60*60*24
+      revalidate: 60*60
     }
   }
   catch (e) {

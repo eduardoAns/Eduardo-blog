@@ -1,15 +1,13 @@
-import { Box, Card, CardActionArea, CardContent, CardMedia, Grid, Link, Paper, Stack, Typography } from '@mui/material'
+import { Box, Card, CardActionArea, CardContent, CardMedia, Grid, Paper, Typography } from '@mui/material'
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import blogApi from '../../../api/blogApi'
 import { BlogLayout } from '../../../components/layouts'
-import { Coment, User } from '../../../interfaces'
-import GitHubIcon from '@mui/icons-material/GitHub';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
+import {User } from '../../../interfaces'
 import { BlogCard } from '../../../components/blog'
 import { BlogComent } from '../../../components/coments'
-import coments from '../coments'
+import { useRouter } from 'next/router';
+import { ComentContext } from '../../../context'
 
 interface Props {
   user: User
@@ -18,9 +16,26 @@ interface Props {
 
 const UserPage:NextPage<Props> = ({user}) => {
 
-  const lastComents = user.comentarios.length > 2 ? 
-                      user.comentarios.slice(user.comentarios.length-3).reverse() :
-                      user.comentarios.reverse();
+  const {isEditComment} = useContext(ComentContext)
+  const router = useRouter()
+
+  useEffect(() => {
+    if(isEditComment){
+      router.reload()
+    }
+  }, [isEditComment])
+
+  const lastComents = user.comentarios.length > 2 
+                      ? 
+                      user.comentarios.slice(user.comentarios.length-3).reverse() 
+                      :
+                      user.comentarios.reverse()
+  
+  
+  
+
+
+  
 
   return (
     <BlogLayout title={'Perfil del usuario'} pageDescription={'revisa el perfil del este usuario'}>
@@ -71,7 +86,7 @@ const UserPage:NextPage<Props> = ({user}) => {
                   </Grid>
                 </Grid>
                 <Grid item container xs={12} >
-                  <Box display={"flex"} flexDirection="column">
+                  <Box display={"flex"} flexDirection="column" width={'100%'}>
                     <Typography variant="h6" gutterBottom component="div">
                       Ultimos comentarios
                     </Typography>
@@ -80,7 +95,9 @@ const UserPage:NextPage<Props> = ({user}) => {
                         user.comentarios.length > 0 
                         ? 
                           lastComents.map((coment) => (
-                            <BlogComent key={coment.id} coment={coment} addName={false} />
+                            <Box width={'100%'} key={coment.id}>
+                              <BlogComent coment={coment} addName={false} />
+                            </Box>
                           ))
                         :
                           <Typography variant="body1" paragraph >

@@ -12,7 +12,6 @@ const coments:NextPage = () => {
   return (
 
     <BlogLayout 
-      // title={`Productos`} 
       title={`Comentarios`} pageDescription={'Encuentra todos tus comentarios'}    
     >
        {

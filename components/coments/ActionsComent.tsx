@@ -16,6 +16,7 @@ interface dataForm {
 
 export const ActionsComent:FC<Props> = ({comment}) => {
 
+    
     const {deleteComment, isChangeEditComment, setIsChangeEditComment, IdClickComment, getIdClickComment, editComment} = useContext(ComentContext)
     const { register,handleSubmit, formState: { errors } } = useForm<dataForm>({
         defaultValues:{contenido:comment.contenido}
@@ -48,7 +49,6 @@ export const ActionsComent:FC<Props> = ({comment}) => {
                 <ListItem sx={{display:'flex', width:'100%'}}>
                     <Grid xs={8} sx={{backgroundColor:'azure'}}>
                         <TextField 
-                            label="Contenido :" 
                             variant="filled" 
                             fullWidth 
                             multiline
@@ -61,7 +61,7 @@ export const ActionsComent:FC<Props> = ({comment}) => {
                     </Grid> 
                     <Grid 
                         xs={4} 
-                        sx={{display:'flex', width:'100%', justifyContent:'end', alignItems:'end' ,flexDirection: {xs: 'column', md: 'row' }}}
+                        sx={{display:'flex', width:'100%', justifyContent:'end', alignItems:'end' ,flexDirection:'column'}}
                     >
                         <Button 
                             type='submit' 
@@ -87,7 +87,7 @@ export const ActionsComent:FC<Props> = ({comment}) => {
             :
             <Grid>
                 <ListItem 
-                    sx={{display:'flex', width:'100%', flexDirection: {xs: 'column', md: 'row' }}} 
+                    sx={{display:'flex', width:'100%', flexDirection:'column'}} 
                     id={comment.id?.toString()}
                 >
                     <Button 

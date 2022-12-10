@@ -83,32 +83,32 @@ export const SideMenu = () => {
                 {
                     (user?.idRol == rol.cliente || user?.idRol == rol.admin ) && (
                         <>
-                            <ListItem button>
+                            <ListItem button onClick={() => navigateTo(`/user/profile/${userId}`)}>
                                 <ListItemIcon>
                                     <AccountCircleOutlined/>
                                 </ListItemIcon>
-                                <ListItemText primary={'Perfil'} onClick={() => navigateTo(`/user/profile/${userId}`)}/>
+                                <ListItemText primary={'Perfil'} />
                             </ListItem>
 
-                            <ListItem button>
+                            <ListItem button onClick={() => navigateTo('/user/blogs/new')}>
                                 <ListItemIcon>
                                     <AccountCircleOutlined/>
                                 </ListItemIcon>
-                                <ListItemText primary={'Agregar blog'} onClick={() => navigateTo('/user/blogs/new')}/>
+                                <ListItemText primary={'Agregar blog'} />
                             </ListItem>
 
-                            <ListItem button>
+                            <ListItem button onClick={() => navigateTo('/user/blogs')}>
                                 <ListItemIcon>
                                     <ConfirmationNumberOutlined/>
                                 </ListItemIcon>
-                                <ListItemText primary={'Mis Blogs'} onClick={() => navigateTo('/user/blogs')}/>
+                                <ListItemText primary={'Mis Blogs'} />
                             </ListItem>
 
-                            <ListItem button>
+                            <ListItem button onClick={() => navigateTo('/user/coments')}>
                                 <ListItemIcon>
                                     <ConfirmationNumberOutlined/>
                                 </ListItemIcon>
-                                <ListItemText primary={'Mis Comentarios'} onClick={() => navigateTo('/user/coments')}/>
+                                <ListItemText primary={'Mis Comentarios'} />
                             </ListItem>
                         </>    
                     )

@@ -10,18 +10,19 @@ import { FullScreenLoading } from '../ui';
 
 const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 20 },
-    { field: 'fechaCreacion', headerName: 'fecha de creacion', width: 150 },
-    { field: 'contenido', headerName: 'Contenido',width: 400 },
+    { field: 'contenido', headerName: 'Contenido',width: 250 },
     { 
         field: 'Actions', 
         headerName: 'Acciones',
-        width: 600,
+        width: 450,
         renderCell: ({ row }: GridValueGetterParams ) => {
             return (
                 <ActionsComent comment={row}/>
             )
         }
     },
+    { field: 'fechaCreacion', headerName: 'fecha de creacion', width: 150 },
+
 ];
 
 export const ComentList = () => {
@@ -59,7 +60,7 @@ export const ComentList = () => {
     }, [])
 
     useEffect(() => {
-            getComments()
+        getComments()
     }, [isEditComment])
     
                   
@@ -72,6 +73,7 @@ export const ComentList = () => {
             <Grid item xs={12} sx={{ height:650, width: '100%' }}>
               <DataGrid 
                   rows={ rows }
+                  rowHeight={75}
                   columns={ columns }
                   pageSize={ 10 }
                   rowsPerPageOptions={ [10] }
