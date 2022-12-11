@@ -2,6 +2,7 @@ import { FC } from 'react';
 import Head from 'next/head';
 
 import { Navbar, SideMenu } from '../ui';
+import { Box, Container } from '@mui/material';
 
 
 interface Props {
@@ -39,9 +40,10 @@ export const BlogLayout:FC<Props> = ({ children, title, pageDescription, imageFu
         <main style={{
             margin: '80px auto',
             maxWidth: '1440px',
-            padding: '0px 30px'
         }}>
-            { children }
+            <Box maxWidth={'100%'} px={{xs:'2rem', md:'4rem'}}>
+                { children }
+            </Box>
         </main>
 
         {/* Footer */}
