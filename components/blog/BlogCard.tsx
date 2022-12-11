@@ -50,7 +50,7 @@ export const BlogCard: FC<Props> = ({ blog, xs, sm }) => {
             </Card>
 
             <Box 
-                minHeight={'20rem'}
+                minHeight={{xs:'22rem', md:'20rem'}}
                 boxShadow='initial'
                 height="100%"
                 className='fadeIn'

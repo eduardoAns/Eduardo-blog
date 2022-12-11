@@ -13,7 +13,7 @@ export const BlogCardMain:FC<Props> = ({blog}) => {
     <Grid item xs={12} >
         <Paper
             sx={{
-            height: { xs: 700, md: 450 },
+            height: { xs: 750, md: 450 },
             position: 'relative',
             mb: 4,                    
             backgroundSize: 'cover',
@@ -43,7 +43,7 @@ export const BlogCardMain:FC<Props> = ({blog}) => {
                         flexDirection='column'  
                     >
                         <NextLink href={`/blog/${blog?.id}`} passHref>
-                            <Link >
+                            <Link underline='always' >
                                 <Typography fontWeight={700} component="h1" variant="h3" color={'secondary.light'} gutterBottom>
                                     {blog?.titulo}
                                 </Typography>
