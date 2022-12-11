@@ -66,13 +66,10 @@ export const BlogCardMain:FC<Props> = ({blog}) => {
                     
                     </Box>
                 </Grid>
-                    <Grid item md={5} alignSelf="center" >
+                    <Grid item md={5} width='100%'>
                         <Box sx={{
                                 p: { xs: 3, md: 6 },
                                 pr: { md: 1 },
-                                backgroundColor:"white",
-                                borderBottomLeftRadius: "55%",
-                                
                             }}
                             
                         >

@@ -18,6 +18,8 @@ export const BlogList: FC<Props> = ({ blogs, addMainCard=true }) => {
         const lastBlogsData = addMainCard ? blogs.reverse().slice(1) : blogs.reverse()
         setLastBlogs(lastBlogsData)
     }, [])
+
+    
     
     
 
