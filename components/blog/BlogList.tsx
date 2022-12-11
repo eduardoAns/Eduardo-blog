@@ -10,18 +10,10 @@ interface Props {
 
 export const BlogList: FC<Props> = ({ blogs, addMainCard=true }) => {
 
-    const [mainBlog, setMainBlog] = useState<Blog>()
-    const [lastBlogs, setLastBlogs] = useState<Blog[]>([])
-
-    useEffect(() => {
-        setMainBlog(blogs[blogs.length - 1])
-        const lastBlogsData = addMainCard ? blogs.reverse().slice(1) : blogs.reverse()
-        setLastBlogs(lastBlogsData)
-    }, [])
-
-    
-    
-    
+    const lastBlogsData:Blog[] = addMainCard ? blogs.reverse().slice(1) : blogs.reverse()
+    const [mainBlog] = useState<Blog>(blogs[blogs.length - 1])
+    const [lastBlogs] = useState<Blog[]>(lastBlogsData)
+    console.log(lastBlogs)
 
   return (
     <Grid container  spacing={4}>
