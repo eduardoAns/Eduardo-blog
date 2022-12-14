@@ -7,7 +7,7 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import { Coments } from '../../components/coments';
 import blogApi from '../../api/blogApi';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
-import { Blog } from '../../interfaces';
+import { Blog, Tag } from '../../interfaces';
 import { BlogsRelacionados } from '../../components/blog/BlogsRelacionados';
 
 
@@ -20,10 +20,11 @@ const sidebar = {
 };
 
 interface Props {
-  blog: Blog
+  blog: Blog;
+  allTags:Tag[];
 }
 
-const ProductPage:NextPage<Props> = ({blog}) => {
+const ProductPage:NextPage<Props> = ({blog, allTags}) => {
 
 
   return (
@@ -83,7 +84,7 @@ const ProductPage:NextPage<Props> = ({blog}) => {
 
       {/* main */}
       <Grid container spacing={3} sx={{ mt: 3 }} >
-        <BlogMain blog={ blog } />
+        <BlogMain blog={ blog } allTags={allTags}/>
       </Grid>
 
       {/* coments */}
@@ -122,13 +123,18 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { id = '' } = params as { id: string };
 
   try {
-    const {data} = await blogApi.get(`/post/${id}`);
-    const blog = data
+    const datablog = await blogApi.get(`/post/${id}`);
+    const blog = datablog.data
+
+    const dataAllTags = await blogApi.get('/tag')
+    const allTags = dataAllTags.data
+
     return {
       props: {
-        blog
+        blog,
+        allTags
       },
-      revalidate: 60*60
+      revalidate: 60
     }
   }
   catch (e) {

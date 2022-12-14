@@ -16,27 +16,12 @@ interface Props {
 
 const UserPage:NextPage<Props> = ({user}) => {
 
-  const {isEditComment} = useContext(ComentContext)
-  const router = useRouter()
-
-  useEffect(() => {
-    if(isEditComment){
-      router.reload()
-    }
-  }, [isEditComment])
-
   const lastComents = user.comentarios.length > 2 
                       ? 
                       user.comentarios.slice(user.comentarios.length-3).reverse() 
                       :
                       user.comentarios.reverse()
   
-  
-  
-
-
-  
-
   return (
     <BlogLayout title={'Perfil del usuario'} pageDescription={'revisa el perfil del este usuario'}>
       <Typography variant="h1" component="h1" gutterBottom>
@@ -96,7 +81,7 @@ const UserPage:NextPage<Props> = ({user}) => {
                         ? 
                           lastComents.map((coment) => (
                             <Box width={'100%'} key={coment.id}>
-                              <BlogComent coment={coment} addName={false} />
+                              <BlogComent coment={coment} addName={false} addActions={false}/>
                             </Box>
                           ))
                         :
@@ -107,9 +92,6 @@ const UserPage:NextPage<Props> = ({user}) => {
                       }
 
                   </Box>
-                  
-                  
-
                 </Grid>
             </Box>
 
@@ -181,7 +163,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     props: {
       user
     },
-    revalidate: 60*60*24
+    revalidate: 60
   }
 }
 

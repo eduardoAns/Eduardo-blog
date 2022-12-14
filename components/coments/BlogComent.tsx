@@ -12,11 +12,12 @@ import { ActionsComent } from './ActionsComent'
 interface Props {
   coment: Coment
   addName?: boolean
+  addActions?: boolean
 }
 
 
 
-export const BlogComent:FC<Props> = ({coment, addName=true}) => {
+export const BlogComent:FC<Props> = ({coment, addName=true, addActions=true}) => {
 
     // const { user, isLoading } =  useUser(`/usuario/${coment?.idUser}`);
     const [userId, setUserId] = useState<number>(0)
@@ -88,7 +89,7 @@ export const BlogComent:FC<Props> = ({coment, addName=true}) => {
 
         
         {
-          coment.idUser == userId ?
+          coment.idUser == userId && addActions ?
           <ActionsComent comment={coment} />
           : null
         }

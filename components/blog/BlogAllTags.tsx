@@ -4,21 +4,12 @@ import React, { FC, useEffect, useState } from 'react'
 import blogApi from '../../api/blogApi';
 import { Tag } from '../../interfaces';
 
+interface Props {
+    allTags:Tag[]
+}
 
-export const BlogAllTags:FC = () => {
+export const BlogAllTags:FC<Props> = ({allTags}) => {
 
-    const [tags, setTags] = useState<Tag[]>()
-
-    const getTags = async () => {
-        const {data} = await blogApi.get('/tag')
-        console.log(data)
-        setTags(data)
-    }
-
-    useEffect(() => {
-      getTags()
-    
-    }, [])
     
   return (
     <Box display={'flex'} flexDirection={'column'} alignItems={{xs:'start', md:'center'}} >
@@ -27,8 +18,8 @@ export const BlogAllTags:FC = () => {
         </Box>
         <Grid container >
 
-            {tags &&
-                tags.map(tag => (
+            {allTags &&
+                allTags.map(tag => (
                     <Grid item xs={4} md={12} key={tag.id} mb={1}>
                         <NextLink href={`/tag/${ tag.nombre }`} passHref>
                             <Link underline='always'>

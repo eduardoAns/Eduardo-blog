@@ -29,17 +29,17 @@ export const BlogCardMain:FC<Props> = ({blog}) => {
             <Grid container sx={{
                 opacity: 0.4,
                 backgroundColor: 'white',
-                height:{xs: '100%', md:'80%'}
+                height:{xs: '100%', md:'75%'}
             }}>
                 <Grid item md={7}>
                     <Box
                         height={'100%'}
                         sx={{
-                            p: { xs: 3, md: 6 },
+                            px: { xs: 3, md: 6 },
                             pr: { md: 0 },
                         }}
                         display='flex'
-                        justifyContent='space-evenly'
+                        justifyContent={{xs:'space-around', md:'space-evenly'}}
                         flexDirection='column'  
                     >
                         <NextLink href={`/blog/${blog?.id}`} passHref>
@@ -74,11 +74,11 @@ export const BlogCardMain:FC<Props> = ({blog}) => {
                 </Grid>
                 <Grid item md={5} width='100%'>
                     <Box sx={{
-                            p: { xs: 3, md: 6 },
+                            px: { xs: 3, md: 6 },
                         }}
                         height={'100%'}
                         display='flex'
-                        justifyContent='space-evenly'
+                        justifyContent={{xs:'space-around', md:'space-evenly'}}
                         flexDirection='column' 
                     >
                         <Typography 

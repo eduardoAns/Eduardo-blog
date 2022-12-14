@@ -1,14 +1,15 @@
 import { Grid, Box, Typography } from '@mui/material'
 import React, { FC } from 'react'
-import { Blog} from '../../interfaces';
+import { Blog, Coment, Tag} from '../../interfaces';
 import { BlogAllTags } from './BlogAllTags';
 import { BlogCard } from './BlogCard'
 
 interface Props {
     blog: Blog;
+    allTags:Tag[]
 }
 
-export const BlogMain:FC<Props> = ({blog}) => {
+export const BlogMain:FC<Props> = ({blog, allTags}) => {
   return (
     < >
         <Grid item xs={12}>
@@ -20,7 +21,7 @@ export const BlogMain:FC<Props> = ({blog}) => {
                 </Box>
               </Grid>
               <Grid item xs={12} md={4} >
-                <BlogAllTags />
+                <BlogAllTags allTags={allTags}/>
               </Grid>
               
             </Grid>

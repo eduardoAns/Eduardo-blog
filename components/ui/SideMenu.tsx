@@ -4,8 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { UiContext } from "../../context/ui";
 import { useRouter } from "next/router";
 import { AuthContext } from "../../context";
-import Cookies from "js-cookie";
-import blogApi from "../../api/blogApi";
+
 
 
 export const SideMenu = () => {
@@ -18,7 +17,7 @@ export const SideMenu = () => {
 
     const router = useRouter();
     const { isMenuOpen, toggleSideMenu } = useContext( UiContext );
-    const { user, isLoggedIn, logout} = useContext(  AuthContext );
+    const { user,userId ,isLoggedIn, logout} = useContext(  AuthContext );
     const [searchTerm, setSearchTerm] = useState('');
 
     const onSearchTerm = () => {
@@ -30,23 +29,6 @@ export const SideMenu = () => {
         toggleSideMenu();
         router.push(url);
     }
-
-    const [userId, setUserId] = useState<number>(0)
-    const checkToken = async() => {
-
-        const Authorization= Cookies.get('token')
-        if ( !Authorization ) return
-        try {
-            const { data } = await blogApi.get('/validtoken', {'headers':{'Authorization': Authorization}});
-            const user = data;
-            setUserId(user.id)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    useEffect(() => {
-        checkToken()
-    }, [])
 
   return (
     <Drawer
