@@ -2,7 +2,7 @@ import { FC, useReducer, useEffect, useState } from 'react';
 import { AuthContext, authReducer } from './';
 import Cookies from 'js-cookie';
 
-import { User, UserPost } from '../../interfaces';
+import { User, UserForm } from '../../interfaces';
 import router from 'next/router';
 import blogApi  from '../../api/blogApi';
 
@@ -86,7 +86,7 @@ export const AuthProvider:FC = ({ children }) => {
     }
 
 
-    const registerUser = async( dataUser:UserPost ): Promise<{hasRegister:boolean; message: string; }> => {
+    const registerUser = async( dataUser:UserForm ): Promise<{hasRegister:boolean; message: string; }> => {
         try {
             await blogApi.post('/usuario', dataUser);
             return {

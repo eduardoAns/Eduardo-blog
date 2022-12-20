@@ -1,13 +1,15 @@
-import { Box, Card, CardActionArea, CardContent, CardMedia, Grid, Paper, Typography } from '@mui/material'
+import { Box, Button, Card, CardActionArea, CardContent, CardMedia, Grid, Paper, Typography } from '@mui/material'
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import React, { useState, useEffect, useContext } from 'react'
 import blogApi from '../../../api/blogApi'
 import { BlogLayout } from '../../../components/layouts'
 import {User } from '../../../interfaces'
-import { BlogCard } from '../../../components/blog'
+import { BlogCard, BlogUsePerfil } from '../../../components/blog'
 import { BlogComent } from '../../../components/coments'
 import { useRouter } from 'next/router';
-import { ComentContext } from '../../../context'
+import { AuthContext, ComentContext } from '../../../context'
+import { ProfileEditModal } from '../../../components/user'
+import { useUser } from '../../../hooks/useUser'
 
 interface Props {
   user: User
@@ -15,6 +17,8 @@ interface Props {
 
 
 const UserPage:NextPage<Props> = ({user}) => {
+  const {userId} = useContext(AuthContext)
+  const { user:userData, isLoading } = useUser(`/usuario/${user.id}`);
 
   const lastComents = user.comentarios.length > 2 
                       ? 
@@ -22,38 +26,20 @@ const UserPage:NextPage<Props> = ({user}) => {
                       :
                       user.comentarios.reverse()
   
+                    
+  
   return (
     <BlogLayout title={'Perfil del usuario'} pageDescription={'revisa el perfil del este usuario'}>
+      {
+        user.id == userId && !isLoading ? <ProfileEditModal initialUser={userData!!}/> : null
+      }
       <Typography variant="h1" component="h1" gutterBottom>
-        Perfil del usuario
+          Perfil del usuario
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
             <Box display='flex' flexDirection={"column"}>
-                <Grid item xs={12} >
-                    <CardActionArea component="a" href="#">
-                        <Card sx={{ display: 'flex' }}> 
-                            <CardMedia
-                                component="img"
-                                sx={{ width: 160 }}
-                                image={"/products/1740113-00-A_1.jpg"}
-                                alt={"image"}
-                            />
-                            <CardContent sx={{ flex: 1 }}>
-                                <Typography component="h2" variant="h5">
-                                {user.nombre + ' ' + user.apellidoPaterno}
-                                </Typography>
-                                <Typography variant="subtitle1" color="text.secondary">
-                                {user.email}
-                                </Typography>
-                                <Typography variant="body1" paragraph>
-                                {user.descripcion}
-                                </Typography>
-                                
-                            </CardContent>
-                        </Card>
-                    </CardActionArea>
-                </Grid>
+                <BlogUsePerfil social={[]} idUsuario={userId} />
                 <Grid item container xs={12} mt={2} mb={2}>
                   <Grid item xs={12} sm={6} >
                     <Paper elevation={3} sx={{ p: 2, bgcolor: 'background.paper' }}>
@@ -88,13 +74,10 @@ const UserPage:NextPage<Props> = ({user}) => {
                           <Typography variant="body1" paragraph >
                             Este usuario no ha realizado comentarios
                           </Typography>
-                        
                       }
-
                   </Box>
                 </Grid>
             </Box>
-
         </Grid>
         <Grid item xs={12} sm={6}>
                 <Grid item xs={12} >
@@ -112,12 +95,8 @@ const UserPage:NextPage<Props> = ({user}) => {
                         </Typography>
                     }
                   </Box>
-                    
-                    
                 </Grid>
-
         </Grid>
-    
       </Grid>
     </BlogLayout>
   )

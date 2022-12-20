@@ -1,5 +1,4 @@
-import Cookies from 'js-cookie';
-import router from 'next/router';
+
 import { FC, useEffect, useReducer, useState } from 'react';
 import blogApi from '../../api/blogApi';
 import { dataForm } from '../../components/coments/AddComent';

@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { AuthContext } from '../../context';
-import { UserPost } from '../../interfaces';
+import { UserForm } from '../../interfaces';
 
 
 type dataForm = {
@@ -32,7 +32,7 @@ const hoy = new Date(tiempoTranscurrido);
 
 const crearUsuario = async ({nombre,apellido,email,password}:dataForm) => {
     
-    const dataPost:UserPost = {
+    const dataPost:UserForm = {
         nombre,
         apellidoPaterno:apellido,
         email,

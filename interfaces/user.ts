@@ -14,7 +14,8 @@ export interface User {
     comentarios: Coment[]
 }
 
-export interface UserPost {
+export interface UserForm {
+    id?: number
     nombre: string,
     apellidoPaterno: string,
     email: string,
@@ -24,5 +25,4 @@ export interface UserPost {
     fechaCreacion: string,
     idRol: number
     descripcion: string
-
 }

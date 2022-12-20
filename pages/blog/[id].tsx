@@ -42,7 +42,7 @@ const ProductPage:NextPage<Props> = ({blog, allTags}) => {
             <Typography variant='h2' component='h2' mb={3}>{blog.fechaCreacion}, por :</Typography>
               <BlogUsePerfil
                 social={sidebar.social}
-                blog={blog}
+                idUsuario={blog.idUsuario}
               />
           </Box>
         </Grid>

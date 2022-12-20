@@ -12,17 +12,16 @@ import { FullScreenLoading } from '../ui';
 
 
 interface Props {
-  social: ReadonlyArray<{
+  social?: ReadonlyArray<{
     icon: React.ElementType;
     name: string;
   }>;
-  blog: Blog;
+  idUsuario: number;
 }
 
 export const BlogUsePerfil: FC<Props> = (props) => {
-  const {  social, blog } = props;
-
-  const { user, isLoading } = useUser(`/usuario/${blog.idUsuario}`);
+  const {  social, idUsuario } = props;
+  const { user, isLoading } = useUser(`/usuario/${idUsuario}`);
 
   if(isLoading) return <FullScreenLoading />
 
@@ -31,7 +30,7 @@ export const BlogUsePerfil: FC<Props> = (props) => {
     <Grid container spacing={3}>
         <Grid item xs={12} >
             <Box display='flex'  sx={{ height: 'auto'}} >
-                <CardActionArea component="a" href={`/user/profile/${blog.idUsuario}`}>
+                <CardActionArea component="a" href={`/user/profile/${idUsuario}`}>
                     <Card> 
                         <Box display={{md:"flex"}}  >
                             <CardMedia
@@ -51,7 +50,7 @@ export const BlogUsePerfil: FC<Props> = (props) => {
                                 {user?.descripcion}
                                 </Typography>
                                 <Box display='flex' flexDirection='row' flexWrap={"wrap"} justifyContent='center' mb={1}>
-                                    {social.map((network) => (
+                                    {social?.map((network) => (
                                         <Link
                                         display="block"
                                         variant="body1"
