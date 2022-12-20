@@ -1,7 +1,7 @@
 
 
 import { createContext } from 'react';
-import { User, UserPost } from '../../interfaces';
+import { User, UserForm } from '../../interfaces';
 
 
 interface ContextProps {
@@ -11,7 +11,7 @@ interface ContextProps {
 
     userAuthorization:() => Promise<{idUsuario: number;}>;
     loginUser: (email: string, password: string) => Promise<boolean>;
-    registerUser: (dataUser:UserPost) => Promise<{hasRegister:boolean; message: string; }>;
+    registerUser: (dataUser:UserForm) => Promise<{hasRegister:boolean; message: string; }>;
     logout: () => void
 }
 
