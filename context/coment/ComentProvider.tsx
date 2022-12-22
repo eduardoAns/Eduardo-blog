@@ -1,21 +1,18 @@
 
-import { FC, useEffect, useReducer, useState } from 'react';
+import { FC, useReducer } from 'react';
 import blogApi from '../../api/blogApi';
-import { dataForm } from '../../components/coments/AddComent';
 import { Coment, User } from '../../interfaces';
 import { ComentContext, ComentReducer } from './';
 
 export interface ComentState {
     isUpdateListComent: boolean;
     isChangeEditComment: boolean;
-    isEditComment:boolean;
     IdClickComment:number
 }
 
 const COMENT_INITIAL_STATE: ComentState = {
     isUpdateListComent: false,
     isChangeEditComment: false,
-    isEditComment:false,
     IdClickComment:0,
 }
 
@@ -38,17 +35,22 @@ export const ComentProvider:FC = ({ children }) => {
         return coments
     }
     
-    const postComment = async (dataPost:Coment) => {
+    const postComment = async (dataPost:Coment):Promise<{message: string}> => {
 
           try {
             await blogApi.post('/comentario', dataPost);
-            console.log('comentario creado')
+            dispatch({ type: '[COMMENT] - updateListComment' });
+            return {
+              message:'comentario agregado '
+            }
       
           } catch (error) {
             console.log(error)
+            return {
+              message:'error al agregar comentario'
+            }
           }
 
-          dispatch({ type: '[COMMENT] - updateListComment' });
 
     }
 
@@ -56,13 +58,12 @@ export const ComentProvider:FC = ({ children }) => {
 
           try {
             await blogApi.delete(`/comentario/${idComment}`);
-            console.log('comentario Eliminado')
-      
+            dispatch({ type: '[COMMENT] - updateListComment' });
+
           } catch (error) {
             console.log(error)
           }
 
-        dispatch({ type: '[COMMENT] - updateListComment' });
     }
 
     const setIsChangeEditComment = () => {
@@ -80,14 +81,12 @@ export const ComentProvider:FC = ({ children }) => {
       try {
         await blogApi.put('/comentario', comment);
         console.log('comentario Editado')
+        dispatch({ type: '[COMMENT] - updateListComment' });
+        dispatch({ type: '[COMMENT] - changeEditComment' });
   
       } catch (error) {
         console.log(error)
       }
-
-      dispatch({ type: '[COMMENT] - updateListComment' });
-      dispatch({ type: '[COMMENT] - changeEditComment' });
-      dispatch({ type: '[COMMENT] - editComment' });
 
     }
     

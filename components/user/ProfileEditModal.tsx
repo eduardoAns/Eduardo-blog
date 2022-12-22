@@ -1,9 +1,9 @@
 import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions } from '@mui/material';
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
-import blogApi from '../../api/blogApi';
 import { User, UserForm } from '../../interfaces';
 import { Toaster, toast } from 'react-hot-toast'
+import { UserContext } from '../../context/user';
 
 
 interface Props {
@@ -12,17 +12,14 @@ interface Props {
 
 export const ProfileEditModal:FC<Props> = ({initialUser}) => {
     const [open, setOpen] = useState(false);
-    const { register, handleSubmit, formState:{ errors }, getValues, setValue } = useForm<User>({
+    const {editUser} = useContext(UserContext)
+    const { register, handleSubmit, formState:{ errors }} = useForm<User>({
         defaultValues:initialUser
     })
     
-    const handleClickOpen = () => {
-      setOpen(true);
-    };
-  
-    const handleClose = () => {
-      setOpen(false);
-    };
+    const handleClickModal = () => {
+      setOpen(!open)
+    }
 
     const onSubmit = async({nombre, apellidoPaterno, descripcion}:User) => {
 
@@ -39,31 +36,22 @@ export const ProfileEditModal:FC<Props> = ({initialUser}) => {
           sexo:"",
       }
 
-      console.log(dataUser)
-
-      try {
-        await blogApi.put('/usuario', dataUser);
-        console.log('usuario editado')
-
-      } catch (error) {
-        console.log(error);
-      }
-
+      await editUser(dataUser)
       toast('Usuario editado',{position:'bottom-left'})
 
     }
       
-    return (
+    return ( 
       <div>
-        <Button variant="outlined" onClick={handleClickOpen} color="primary">
+        <Button variant="outlined" onClick={handleClickModal} color="primary">
             Editar
         </Button>
-        <Dialog open={open} onClose={handleClose}>
+        <Dialog open={open} onClose={handleClickModal}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <DialogTitle>Editar Usuario</DialogTitle>
             <DialogContent>
               <DialogContentText>
-                Cambiar tu nombre o descripcion.
+                Puedes cambiar tu nombre o descripcion.
               </DialogContentText>
               <TextField
                 autoFocus
@@ -112,8 +100,8 @@ export const ProfileEditModal:FC<Props> = ({initialUser}) => {
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleClose} >Cancel</Button>
-              <Button onClick={handleClose} type='submit'>Editar</Button>
+              <Button onClick={handleClickModal} >Cancel</Button>
+              <Button onClick={handleClickModal} type='submit'>Editar</Button>
             </DialogActions>
           </form>
         </Dialog>

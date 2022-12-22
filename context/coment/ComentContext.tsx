@@ -5,11 +5,10 @@ import { Coment } from '../../interfaces';
 interface ContextProps {
     isUpdateListComent: boolean;
     isChangeEditComment:boolean;
-    isEditComment:boolean;
     IdClickComment:number;
 
     //methods
-    postComment: (dataPost: Coment) => Promise<void>;
+    postComment: (dataPost: Coment) => Promise<{message: string}>;
     getComents: () => Promise<Coment[]>;
     deleteComment: (idComment: number) => Promise<void>;
     setIsChangeEditComment: () => void;

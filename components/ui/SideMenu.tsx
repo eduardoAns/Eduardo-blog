@@ -1,10 +1,9 @@
 import { Box, Divider, Drawer, IconButton, Input, InputAdornment, List, ListItem, ListItemIcon, ListItemText, ListSubheader } from "@mui/material"
-import { AccountCircleOutlined, CategoryOutlined, ConfirmationNumberOutlined, EscalatorWarningOutlined, FemaleOutlined, LoginOutlined, MaleOutlined, SearchOutlined, VpnKeyOutlined } from "@mui/icons-material"
+import { AccountCircleOutlined,AddCircleOutline, SourceOutlined, AutoAwesomeMosaicOutlined , SpeakerNotesOutlined, CategoryOutlined, ConfirmationNumberOutlined, EscalatorWarningOutlined, FemaleOutlined, LoginOutlined, MaleOutlined, SearchOutlined, VpnKeyOutlined } from "@mui/icons-material"
 import { useContext, useEffect, useState } from "react";
 import { UiContext } from "../../context/ui";
 import { useRouter } from "next/router";
 import { AuthContext } from "../../context";
-
 
 
 export const SideMenu = () => {
@@ -17,8 +16,20 @@ export const SideMenu = () => {
 
     const router = useRouter();
     const { isMenuOpen, toggleSideMenu } = useContext( UiContext );
-    const { user,userId ,isLoggedIn, logout} = useContext(  AuthContext );
+    const [userId, setUserId] = useState<number>()
+    const { user,userAuthorization ,isLoggedIn, logout} = useContext(  AuthContext );
     const [searchTerm, setSearchTerm] = useState('');
+
+
+    useEffect(() => {
+      getUserId()
+    }, [])
+    
+
+    const getUserId = async () => {
+        const {idUsuario} = await userAuthorization()
+        setUserId(idUsuario);
+    }
 
     const onSearchTerm = () => {
         if( searchTerm.trim().length === 0 ) return;
@@ -29,6 +40,8 @@ export const SideMenu = () => {
         toggleSideMenu();
         router.push(url);
     }
+
+    
 
   return (
     <Drawer
@@ -74,21 +87,21 @@ export const SideMenu = () => {
 
                             <ListItem button onClick={() => navigateTo('/user/blogs/new')}>
                                 <ListItemIcon>
-                                    <AccountCircleOutlined/>
+                                    <AddCircleOutline/>
                                 </ListItemIcon>
                                 <ListItemText primary={'Agregar blog'} />
                             </ListItem>
 
                             <ListItem button onClick={() => navigateTo('/user/blogs')}>
                                 <ListItemIcon>
-                                    <ConfirmationNumberOutlined/>
+                                    <SourceOutlined />
                                 </ListItemIcon>
                                 <ListItemText primary={'Mis Blogs'} />
                             </ListItem>
 
                             <ListItem button onClick={() => navigateTo('/user/coments')}>
                                 <ListItemIcon>
-                                    <ConfirmationNumberOutlined/>
+                                    <SpeakerNotesOutlined/>
                                 </ListItemIcon>
                                 <ListItemText primary={'Mis Comentarios'} />
                             </ListItem>
@@ -98,23 +111,25 @@ export const SideMenu = () => {
                 {/* Fin cliente */}   
 
                 {/* Inicio categorias para celular */}   
+                <Divider sx={{ display: { xs: '', sm: 'none' } }}/>
+                <ListSubheader sx={{ display: { xs: '', sm: 'none' } }}>Categorias</ListSubheader>
                 <ListItem button sx={{ display: { xs: '', sm: 'none' } }} onClick={() => navigateTo('/category/front-end')}>
                     <ListItemIcon>
-                        <MaleOutlined/>
+                        <AutoAwesomeMosaicOutlined/>
                     </ListItemIcon>
                     <ListItemText primary={'Front-end'} />
                 </ListItem>
 
                 <ListItem button sx={{ display: { xs: '', sm: 'none' } }} onClick={() => navigateTo('/category/back-end')}>
-                    <ListItemIcon>
-                        <FemaleOutlined/>
+                    <ListItemIcon >
+                        <AutoAwesomeMosaicOutlined sx={{transform:'scaleX(-1)'}}/>
                     </ListItemIcon>
                     <ListItemText primary={'Back-End'} />
                 </ListItem>
 
                 <ListItem button sx={{ display: { xs: '', sm: 'none' } }} onClick={() => navigateTo('/category/dev-op')}>
                     <ListItemIcon>
-                        <EscalatorWarningOutlined/>
+                        <AutoAwesomeMosaicOutlined sx={{transform:'rotate(90deg)'}}/>
                     </ListItemIcon>
                     <ListItemText primary={'Dev-Op'} />
                 </ListItem>
@@ -126,12 +141,16 @@ export const SideMenu = () => {
                 {
                     (isLoggedIn) 
                     ? (
-                        <ListItem button onClick={logout}>
-                            <ListItemIcon>
-                                <LoginOutlined/>
-                            </ListItemIcon>
-                            <ListItemText primary={'Salir'} />
-                        </ListItem>
+                        <>
+                            <Divider sx={{ display: { xs: '', sm: 'none' } }}/>
+                            <ListSubheader sx={{ display: { xs: '', sm: 'none' } }}>Logout</ListSubheader>
+                            <ListItem button onClick={logout}>
+                                <ListItemIcon>
+                                    <LoginOutlined/>
+                                </ListItemIcon>
+                                <ListItemText primary={'Salir'} />
+                            </ListItem>
+                        </>
                     )
                     : (
                         <ListItem 

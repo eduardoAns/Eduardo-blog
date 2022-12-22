@@ -99,7 +99,5 @@ export const BlogsList = () => {
         </Grid>
     )
 }
-function useCatontext(AuthContext: any): { userAuthorization: any; } {
-    throw new Error('Function not implemented.');
-}
+
 

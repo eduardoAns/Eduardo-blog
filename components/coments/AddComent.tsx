@@ -22,7 +22,7 @@ const AddComent:FC<Props> = ({idBlog}) => {
 
   const { postComment } = useContext( ComentContext );
   const { userAuthorization, user } = useContext( AuthContext );
-  const { register,handleSubmit, formState: { errors } } = useForm<dataForm>();
+  const { register,handleSubmit, formState: { errors }, setValue } = useForm<dataForm>();
 
   const onPostComent = async ({nombre,contenido}:dataForm) => {
     const ID_USER_ANON = 6
@@ -40,10 +40,10 @@ const AddComent:FC<Props> = ({idBlog}) => {
       estado:'habilitado'
     }
   
-    await postComment(dataPost)
-    toast('Comentario agregado',{position:'bottom-left'})
-
-
+    const {message} = await postComment(dataPost)
+    toast(message,{position:'bottom-left'})
+    setValue('contenido', '')
+    setValue('nombre', '')
 
   }
 

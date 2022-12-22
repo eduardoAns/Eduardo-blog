@@ -1,15 +1,32 @@
-import { Grid, Typography } from '@mui/material'
+import { Grid, Link, Typography } from '@mui/material'
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext, ComentContext } from '../../context';
+import { useBlog } from '../../hooks';
 import { useComent } from '../../hooks/useComent';
 import { Coment } from '../../interfaces';
 import { ActionsComent } from '../coments/ActionsComent';
 import { FullScreenLoading } from '../ui';
+import NextLink from 'next/link';
+
 
 const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 20 },
+    { 
+        field: 'Blog', 
+        headerName: 'Blog', 
+        width:150,
+        renderCell: ({ row }: GridValueGetterParams ) => {
+            return (
+                <NextLink href={`/blog/${ row.idPost }`} passHref>
+                    <Link underline='always' target={'_blank'}>
+                        Ir al blog
+                    </Link>
+                </NextLink>
+            )
+        }
+    },
+    
     { field: 'contenido', headerName: 'Contenido',width: 250 },
     { 
         field: 'Actions', 
@@ -28,13 +45,10 @@ const columns: GridColDef[] = [
 export const ComentList = () => {
 
     const [userId, setUserId] = useState<number>(0)
-    const [comments, setComments] = useState<Coment[]>()
     const {userAuthorization} = useContext(AuthContext)
-    const {isEditComment, getComents} = useContext(ComentContext)
-
-    const commentsByUserId = comments?.filter(({idUser})=> idUser == userId) 
-    const foundComents = commentsByUserId!?.length > 0;
-    const rows = commentsByUserId!?.map( coment => ({
+    const { coments, isLoading } = useComent(`/comentario/ByUserId/${userId}`, { refreshInterval: 1000 });
+    const foundComents= coments.length > 0;
+    const rows = coments!?.map( coment => ({
         id: coment.id,
         nombre: coment.nombre,
         idPost:coment.idPost,
@@ -49,26 +63,15 @@ export const ComentList = () => {
         setUserId(idUsuario)
     }
 
-    const getComments = async() => {
-        const data = await getComents()
-        setComments(data)
-    }
-    
     useEffect(() => {
         getUserId()
-        getComments()
     }, [])
-
-    useEffect(() => {
-        getComments()
-    }, [isEditComment])
-    
                   
     if (!foundComents) return <FullScreenLoading text='Este usuario no tiene comentarios' isError={true}/> 
 
   return (
         <Grid container className='fadeIn'>
-            <Typography variant='h1' component='h1' mb={2}>{`comentarios: ${comments?.length}`} </Typography>
+            <Typography variant='h1' component='h1' mb={2}>{`comentarios: ${coments?.length}`} </Typography>
             
             <Grid item xs={12} sx={{ height:650, width: '100%' }}>
               <DataGrid 

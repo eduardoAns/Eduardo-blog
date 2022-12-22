@@ -8,6 +8,7 @@ import { AuthProvider } from '../context/auth';
 import { SWRConfig } from 'swr';
 import { BlogProvider } from '../context/blog';
 import { ComentProvider } from '../context/coment';
+import { UserProvider } from '../context/user';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -18,14 +19,16 @@ function MyApp({ Component, pageProps }: AppProps) {
     >
       <AuthProvider>
         <UiProvider>
-          <BlogProvider>
-            <ComentProvider>
-              <ThemeProvider theme={ lightTheme}>
-                  <CssBaseline />
-                  <Component {...pageProps} />
-              </ThemeProvider>
-            </ComentProvider>
-          </BlogProvider>
+          <UserProvider>
+            <BlogProvider>
+              <ComentProvider>
+                <ThemeProvider theme={ lightTheme}>
+                    <CssBaseline />
+                    <Component {...pageProps} />
+                </ThemeProvider>
+              </ComentProvider>
+            </BlogProvider>
+          </UserProvider>
         </UiProvider>
       </AuthProvider>
     </SWRConfig>

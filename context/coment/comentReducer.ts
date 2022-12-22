@@ -5,10 +5,6 @@ type ComentActionType =
 | { type: '[COMMENT] - updateListComment'}
 | { type: '[COMMENT] - changeEditComment'}
 | { type: '[COMMENT] - getIdClickComment', payload:number}
-| { type: '[COMMENT] - editComment'}
-
-
-
 
 
 export const ComentReducer = (state: ComentState, action: ComentActionType): ComentState => {
@@ -29,12 +25,6 @@ export const ComentReducer = (state: ComentState, action: ComentActionType): Com
       return { 
         ...state, 
         IdClickComment:action.payload
-        
-      };
-    case '[COMMENT] - editComment':
-      return { 
-        ...state, 
-        isEditComment:!state.isEditComment
         
       };
     default:

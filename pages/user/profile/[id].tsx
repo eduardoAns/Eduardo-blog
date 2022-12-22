@@ -10,6 +10,8 @@ import { useRouter } from 'next/router';
 import { AuthContext, ComentContext } from '../../../context'
 import { ProfileEditModal } from '../../../components/user'
 import { useUser } from '../../../hooks/useUser'
+import { UserContext } from '../../../context/user'
+import { ProfileBlogList } from '../../../components/user/ProfileBlogList'
 
 interface Props {
   user: User
@@ -39,7 +41,7 @@ const UserPage:NextPage<Props> = ({user}) => {
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
             <Box display='flex' flexDirection={"column"}>
-                <BlogUsePerfil social={[]} idUsuario={userId} />
+                <BlogUsePerfil social={[]} idUsuario={user.id} />
                 <Grid item container xs={12} mt={2} mb={2}>
                   <Grid item xs={12} sm={6} >
                     <Paper elevation={3} sx={{ p: 2, bgcolor: 'background.paper' }}>
@@ -82,13 +84,13 @@ const UserPage:NextPage<Props> = ({user}) => {
         <Grid item xs={12} sm={6}>
                 <Grid item xs={12} >
                   <Box display={"flex"} flexDirection="column">
-                    <Typography variant="h6" gutterBottom component="div">
-                      Ultima publicacion
+                    <Typography variant="h4" gutterBottom component="div">
+                      publicaciones
                     </Typography>
                     {
                       user.posts.length > 0
                       ?
-                        <BlogCard blog={user.posts[user.posts.length - 1]} sm={12}/>
+                        <ProfileBlogList blogs={user.posts}/>
                       :
                         <Typography variant="body1" paragraph>
                           Este usuario no ha realizado publicaciones

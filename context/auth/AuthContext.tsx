@@ -11,7 +11,6 @@ interface ContextProps {
 
     userAuthorization:() => Promise<{idUsuario: number;}>;
     loginUser: (email: string, password: string) => Promise<boolean>;
-    registerUser: (dataUser:UserForm) => Promise<{hasRegister:boolean; message: string; }>;
     logout: () => void
 }
 

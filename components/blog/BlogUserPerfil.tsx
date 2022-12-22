@@ -4,11 +4,12 @@ import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
-import { FC } from 'react'
+import { FC, useContext, useEffect } from 'react'
 import { Card, CardActionArea, CardMedia, CardContent, Box } from '@mui/material';
 import { useUser } from '../../hooks/useUser';
 import { Blog, User } from '../../interfaces';
 import { FullScreenLoading } from '../ui';
+import { UserContext } from '../../context/user';
 
 
 interface Props {
@@ -21,8 +22,8 @@ interface Props {
 
 export const BlogUsePerfil: FC<Props> = (props) => {
   const {  social, idUsuario } = props;
-  const { user, isLoading } = useUser(`/usuario/${idUsuario}`);
-
+  const { user, isLoading } = useUser(`/usuario/${idUsuario}`, { refreshInterval: 1000 });
+    
   if(isLoading) return <FullScreenLoading />
 
   return (

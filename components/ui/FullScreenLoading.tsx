@@ -15,7 +15,7 @@ export const FullScreenLoading:FC<Props> = ({text='', isError=false}) => {
 
   setTimeout(() => {
     setIsLoading(false)
-  }, 6000);
+  }, 10000);
 
   return (
     <Box 

@@ -4,8 +4,8 @@ import { AuthLayout } from '../../components/layouts'
 import { useForm } from 'react-hook-form';
 import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { AuthContext } from '../../context';
 import { UserForm } from '../../interfaces';
+import { UserContext } from '../../context/user';
 
 
 type dataForm = {
@@ -22,9 +22,7 @@ const { register, handleSubmit, setError, formState: { errors } } = useForm<data
 const [showMsg, setShowMsg] = useState(false)
 const [msg, setMsg] = useState('')
 const [isRegister, setIsRegister] = useState(false)
-
-
-const { registerUser } = useContext( AuthContext );
+const { registerUser } = useContext( UserContext );
 
 const tiempoTranscurrido = Date.now();
 const hoy = new Date(tiempoTranscurrido);

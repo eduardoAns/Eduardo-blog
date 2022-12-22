@@ -86,29 +86,10 @@ export const AuthProvider:FC = ({ children }) => {
     }
 
 
-    const registerUser = async( dataUser:UserForm ): Promise<{hasRegister:boolean; message: string; }> => {
-        try {
-            await blogApi.post('/usuario', dataUser);
-            return {
-                hasRegister:true,
-                message: 'Usuario creado exitosamente!'!
-            }
-
-        } catch (error) {
-            return {
-                hasRegister:false,
-                message: 'Correo en uso, intente con otro'
-            }
-        }
-    }
-
     const logout = () => {
 
         Cookies.remove('token');
         router.reload();
-        
-        
-
     }
 
 
@@ -120,7 +101,6 @@ export const AuthProvider:FC = ({ children }) => {
             // Methods
             userAuthorization,
             loginUser,
-            registerUser,
             logout,
 
         }}>
