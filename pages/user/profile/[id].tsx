@@ -41,7 +41,9 @@ const UserPage:NextPage<Props> = ({user}) => {
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
             <Box display='flex' flexDirection={"column"}>
-                <BlogUsePerfil social={[]} idUsuario={user.id} />
+
+                <BlogUsePerfil idUsuario={user.id} />
+
                 <Grid item container xs={12} mt={2} mb={2}>
                   <Grid item xs={12} sm={6} >
                     <Paper elevation={3} sx={{ p: 2, bgcolor: 'background.paper' }}>

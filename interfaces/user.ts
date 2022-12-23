@@ -8,10 +8,12 @@ export interface User {
     password: string,
     estado: string,
     fechaCreacion: string,
-    idRol: number
+    idRol: number,
     descripcion: string,
-    posts: Blog[]
-    comentarios: Coment[]
+    posts: Blog[],
+    comentarios: Coment[],
+    avatar:AvatarI[],
+    socialMedias:SocialMedia[]
 }
 
 export interface UserForm {
@@ -25,4 +27,17 @@ export interface UserForm {
     fechaCreacion: string,
     idRol: number
     descripcion: string
+}
+
+export interface AvatarI {
+    id: string,
+    url:string,
+    idUsuario:number,
+}
+
+export interface SocialMedia {
+    id:number,
+    url:string,
+    nombre:string,
+    idUsuario:number,
 }

@@ -15,7 +15,7 @@ const DevOpPage: NextPage = () => {
   const blogList = foundBlogs ? <BlogList blogs={ blogs} /> : <Error404 message='No se encontraron blogs en esta categoria'/>
 
     return (
-      <BlogLayout title={'Blog - DevOp'} pageDescription={'Encuentra los mejores juguetes para mascotas aqui'}>
+      <BlogLayout title={'Blog - DevOp'} pageDescription={'Encuentra los mejores blog sobre devop'}>
           <Typography variant='h1' component='h1' mb={2}>Dev-Op</Typography>
           <Typography variant='h2' sx={{ mb: 1 }}>Todo sobre esta area</Typography>
       

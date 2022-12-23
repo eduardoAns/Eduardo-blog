@@ -1,12 +1,12 @@
-import { Avatar, Box, Divider, Link, List, ListItem, ListItemAvatar, ListItemText, ListItemButton, Typography, Grid, TextField } from '@mui/material'
-import React, { FC, useContext, useEffect, useRef, useState } from 'react'
-import { useUser } from '../../hooks/useUser'
+import { Avatar, Box, Divider, Link, List, ListItem, ListItemAvatar, ListItemText, Typography, } from '@mui/material'
+import React, { FC, useContext, useEffect, useState } from 'react'
 import { Coment } from '../../interfaces'
 import { FullScreenLoading } from '../ui'
 import NextLink from 'next/link';
-import { flexbox } from '@mui/system'
 import { AuthContext, ComentContext } from '../../context'
 import { ActionsComent } from './ActionsComent'
+import { AvatarI } from '../../interfaces';
+import blogApi from '../../api/blogApi';
 
 
 interface Props {
@@ -19,22 +19,28 @@ interface Props {
 
 export const BlogComent:FC<Props> = ({coment, addName=true, addActions=true}) => {
 
-    // const { user, isLoading } =  useUser(`/usuario/${coment?.idUser}`);
-    const [userId, setUserId] = useState<number>(0)
-    const { userAuthorization} = useContext(AuthContext)
-    const {isChangeEditComment, IdClickComment} = useContext(ComentContext)
-
     const ID_USER_ANON = 6
     const usuarioNombre = addName ? `${coment.nombre}` : '';
-
+    
+    const [userId, setUserId] = useState<number>(0)
+    const [avatar, setAvatar] = useState<AvatarI>()
+    const { userAuthorization} = useContext(AuthContext)
+    const {isChangeEditComment, IdClickComment} = useContext(ComentContext)
 
     const getUserId = async() => {
         const {idUsuario} = await userAuthorization()
         setUserId(idUsuario)
     }
+
+    const getAvatar = async() => {
+       const {data} = await blogApi.get(`/avatar/byUserId/${coment.idUser}`)
+       console.log('dataAvatar', data)
+       setAvatar(data)
+    }
     
     useEffect(() => {
-        getUserId()
+      getUserId()
+      getAvatar()
     }, [])
 
     // if(isLoading) return <FullScreenLoading />
@@ -42,16 +48,16 @@ export const BlogComent:FC<Props> = ({coment, addName=true, addActions=true}) =>
   return (
     <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
       <ListItem alignItems="flex-start">
-        <ListItemAvatar>
+        <ListItemAvatar sx={!addName ? {display:'none'} : {} }>
           {
-            coment.idUser != ID_USER_ANON ?
+            coment.idUser != ID_USER_ANON?
             <NextLink href={`/user/profile/${coment.idUser}`} passHref>
               <Link >
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                <Avatar alt={coment.nombre} src={avatar?.url ? avatar?.url : "/static/images/avatar/1.jpg"} />
               </Link>
             </NextLink>
             :
-            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+            <Avatar alt={coment.nombre} src={avatar?.url ? avatar?.url : "/static/images/avatar/1.jpg"} />
 
           }
         </ListItemAvatar>
@@ -62,7 +68,7 @@ export const BlogComent:FC<Props> = ({coment, addName=true, addActions=true}) =>
           <ListItemText
             primary={coment?.contenido}
             secondary={
-              <Box display={'flex'} mt={1} flexDirection={{xs: 'column', md: 'row' }} gap={{xs:0, md:1}}>
+              <Box display={'flex'} mt={1} flexDirection={{xs: 'column', md: 'row' }} gap={{xs:0, md:1}} >
                 <Typography
                   sx={{ display: 'inline' }}
                   component="span"

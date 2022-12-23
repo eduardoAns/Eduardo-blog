@@ -1,23 +1,13 @@
 import { Box, Grid, Link, Typography } from '@mui/material';
 import { BlogLayout } from '../../components/layouts';
 import { BlogSlideshow, BlogUsePerfil, BlogMain} from '../../components/blog';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
+
 import { Coments } from '../../components/coments';
 import blogApi from '../../api/blogApi';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { Blog, Tag } from '../../interfaces';
 import { BlogsRelacionados } from '../../components/blog/BlogsRelacionados';
 
-
-const sidebar = {
-  social: [
-    { name: 'GitHub', icon: GitHubIcon },
-    { name: 'Twitter', icon: TwitterIcon },
-    { name: 'Facebook', icon: FacebookIcon },
-  ],
-};
 
 interface Props {
   blog: Blog;
@@ -41,7 +31,6 @@ const ProductPage:NextPage<Props> = ({blog, allTags}) => {
             <Typography variant='h5' component='h2' mb={1}>{`Categoria: ${blog.categoria.nombre}`}</Typography>
             <Typography variant='h2' component='h2' mb={3}>{blog.fechaCreacion}, por :</Typography>
               <BlogUsePerfil
-                social={sidebar.social}
                 idUsuario={blog.idUsuario}
               />
           </Box>
