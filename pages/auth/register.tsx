@@ -39,7 +39,7 @@ const crearUsuario = async ({nombre,apellido,email,password}:dataForm) => {
         idRol:2,
         estado:'activo',
         descripcion:"usuario activo de este blog",
-        sexo:""
+        sexo:"",
     }
 
     setShowMsg(false);

@@ -12,6 +12,7 @@ import NextLink from 'next/link';
 
 
 const columns: GridColDef[] = [
+    { field: 'contenido', headerName: 'Contenido',width: 250 },
     { 
         field: 'Blog', 
         headerName: 'Blog', 
@@ -26,8 +27,6 @@ const columns: GridColDef[] = [
             )
         }
     },
-    
-    { field: 'contenido', headerName: 'Contenido',width: 250 },
     { 
         field: 'Actions', 
         headerName: 'Acciones',

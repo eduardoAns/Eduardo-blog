@@ -27,17 +27,19 @@ export interface UserForm {
     fechaCreacion: string,
     idRol: number
     descripcion: string
+    avatar?:AvatarI[],
+    socialMedias?:SocialMedia[]
 }
 
 export interface AvatarI {
     id: string,
     url:string,
-    idUsuario:number,
+    idUsuario?:number,
 }
 
 export interface SocialMedia {
-    id:number,
+    id?:number,
     url:string,
     nombre:string,
-    idUsuario:number,
+    idUsuario?:number,
 }

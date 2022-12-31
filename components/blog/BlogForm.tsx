@@ -216,8 +216,9 @@ export const BlogForm:FC<Props> = ({blog}) => {
                     listStyle: 'none',
                     p: 0,
                     m: 0,
-                }}
-                component="ul">
+                    }}
+                    component="ul"
+                >
                     {
                         getValues('tags').map((tag) => {
 

@@ -21,13 +21,6 @@ interface Props {
     idUsuario: number;
 }
 
-type SocialMediaIcon = ReadonlyArray<
-    {   icon: React.ElementType; 
-        name: string;
-        url?:string
-    }
->
-
 interface SocialMediaIcons {
     icon: React.ElementType; 
     name: string;
