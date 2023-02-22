@@ -34,7 +34,10 @@ const BlogPage:NextPage= () => {
     setIsPermission(true)
   }
   
-  loginAuthorization()
+  useEffect(() => {
+    loginAuthorization()
+  }, [blogData])
+  
 
 
 

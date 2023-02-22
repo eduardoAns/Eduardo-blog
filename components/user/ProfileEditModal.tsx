@@ -1,5 +1,5 @@
 import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, Divider, Card, CardActions, CardMedia, Grid, Box, Chip, Typography, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import React, { ChangeEvent, FC, useContext, useEffect, useRef, useState } from 'react'
+import React, { ChangeEvent, FC, useContext, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { AvatarI, User, UserForm } from '../../interfaces';
 import { Toaster, toast } from 'react-hot-toast'
@@ -122,8 +122,8 @@ export const ProfileEditModal:FC<Props> = ({initialUser}) => {
           socialMedias:user.socialMedias
       }
       console.log(dataUser)
-      await editUser(dataUser)
-      toast('Usuario editado',{position:'bottom-left'})
+      const {message} = await editUser(dataUser)
+      toast(message,{position:'bottom-left'})
 
     }
       

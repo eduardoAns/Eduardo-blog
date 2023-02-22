@@ -1,4 +1,5 @@
 
+import Cookies from 'js-cookie';
 import { FC, useReducer } from 'react';
 import blogApi from '../../api/blogApi';
 import { Coment, User } from '../../interfaces';
@@ -41,27 +42,32 @@ export const ComentProvider:FC = ({ children }) => {
             await blogApi.post('/comentario', dataPost);
             dispatch({ type: '[COMMENT] - updateListComment' });
             return {
-              message:'comentario agregado '
+              message:'Comentario agregado '
             }
       
           } catch (error) {
             console.log(error)
             return {
-              message:'error al agregar comentario'
+              message:'Error al agregar comentario'
             }
           }
 
 
     }
 
-    const deleteComment = async (idComment:number) => {
+    const deleteComment = async (idComment:number):Promise<{message: string}> => {
 
           try {
             await blogApi.delete(`/comentario/${idComment}`);
             dispatch({ type: '[COMMENT] - updateListComment' });
-
+            return {
+              message:'Comentario eliminado '
+            }
           } catch (error) {
             console.log(error)
+            return {
+              message:'Error al eliminar comentario'
+            }
           }
 
     }
@@ -76,16 +82,23 @@ export const ComentProvider:FC = ({ children }) => {
         dispatch({ type: '[COMMENT] - getIdClickComment', payload:Number(id)});
     }
 
-    const editComment = async (comment:Coment) => {
-
+    const editComment = async (comment:Coment):Promise<{message: string}> => {
+      const Authorization= Cookies.get('token')
+      
       try {
-        await blogApi.put('/comentario', comment);
+        await blogApi.put('/comentario', comment, {'headers':{'Authorization': Authorization}});
         console.log('comentario Editado')
         dispatch({ type: '[COMMENT] - updateListComment' });
         dispatch({ type: '[COMMENT] - changeEditComment' });
+        return {
+          message:'Comentario editado '
+        }
   
       } catch (error) {
         console.log(error)
+        return {
+          message:'Error al editar comentario '
+        }
       }
 
     }

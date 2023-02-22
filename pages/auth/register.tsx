@@ -18,7 +18,7 @@ type dataForm = {
 const RegisterPage = () => {
 
 const router = useRouter();
-const { register, handleSubmit, setError, formState: { errors } } = useForm<dataForm>();
+const { register, handleSubmit, formState: { errors } } = useForm<dataForm>();
 const [showMsg, setShowMsg] = useState(false)
 const [msg, setMsg] = useState('')
 const [isRegister, setIsRegister] = useState(false)
@@ -36,7 +36,7 @@ const crearUsuario = async ({nombre,apellido,email,password}:dataForm) => {
         email,
         password,
         fechaCreacion:hoy.toDateString(),
-        idRol:2,
+        idRol:1,
         estado:'activo',
         descripcion:"usuario activo de este blog",
         sexo:"",

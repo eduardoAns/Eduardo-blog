@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const BlogList: FC<Props> = ({ blogs, addMainCard=true }) => {
-    const dataBlogs: Blog[] = [...blogs]
+    const dataBlogs:Blog[] = [...blogs]
     const lastBlogsData:Blog[] = addMainCard ? dataBlogs.reverse().slice(1) : dataBlogs.reverse()
     const [lastBlogs] = useState<Blog[]>(lastBlogsData)
     const [mainBlog] = useState<Blog>(blogs[blogs.length - 1])

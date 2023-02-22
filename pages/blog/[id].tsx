@@ -93,11 +93,13 @@ const ProductPage:NextPage<Props> = ({blog, allTags}) => {
 export const getStaticPaths: GetStaticPaths = async (ctx) => {
   
 
-  const {data} = await blogApi.get('/post/listaId')
-  const productosId = data
+  const {data} = await blogApi.get('/post')
+  const blogs:Blog[] = data
+  let blogsId:string[] = []
+  blogs.map( (blog) => blogsId.push(blog.id!!.toString()) )
 
   return {
-    paths: productosId.map( (id:string) => ({  
+    paths: blogsId.map( (id:string) => ({  
       params: {
         id
       }

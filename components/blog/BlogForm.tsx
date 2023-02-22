@@ -36,8 +36,8 @@ const defectBlog:Blog = {
     fechaCreacion: '',
     estado: '',
     categoria: {
-        id: 0,
-        nombre: '',
+        id: 1,
+        nombre: 'front-end',
     },
     comentarios: [],
     tags: [],

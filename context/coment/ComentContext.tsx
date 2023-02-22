@@ -10,10 +10,10 @@ interface ContextProps {
     //methods
     postComment: (dataPost: Coment) => Promise<{message: string}>;
     getComents: () => Promise<Coment[]>;
-    deleteComment: (idComment: number) => Promise<void>;
+    deleteComment: (idComment: number) => Promise<{message: string}>
     setIsChangeEditComment: () => void;
     getIdClickComment: (idComment: number) => void;
-    editComment: (comment: Coment) => Promise<void>;
+    editComment: (comment: Coment) => Promise<{message: string}>;
 }
 
 

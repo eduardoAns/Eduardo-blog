@@ -23,19 +23,19 @@ export const ActionsComent:FC<Props> = ({comment}) => {
     });
 
     const onDeleteComment = async() => {
-        await deleteComment(comment.id!!)
-        toast('Comentario Eliminado',{position:'bottom-left'})
+        const {message} = await deleteComment(comment.id!!)
+        toast(message,{position:'bottom-left'})
 
     }
 
     const onEditComment = async({contenido}:dataForm) => {
         const dataEdit:Coment = {...comment, contenido:contenido}
-        await editComment(dataEdit);
-        toast('Comentario editado',{position:'bottom-left'})
+        const {message} = await editComment(dataEdit);
+        toast(message,{position:'bottom-left'})
 
     }
 
-    const changeEditComment = () => {
+    const onchangeEditComment = () => {
         setIsChangeEditComment()
         getIdClickComment(comment.id!!)
     }
@@ -74,7 +74,7 @@ export const ActionsComent:FC<Props> = ({comment}) => {
                         <Button 
                             color='secondary' 
                             variant='text' 
-                            onClick={changeEditComment} 
+                            onClick={onchangeEditComment} 
                             sx={{display:'flex', justifyContent:'center'}}
                         > 
                             volver
@@ -93,7 +93,7 @@ export const ActionsComent:FC<Props> = ({comment}) => {
                     <Button 
                         color='success' 
                         variant='text' 
-                        onClick={changeEditComment}  
+                        onClick={onchangeEditComment}  
                         sx={{display:'flex', justifyContent:'center'}} 
                         disabled = {isChangeEditComment && IdClickComment !== comment.id ? true : false} 
                     > 

@@ -3,10 +3,12 @@ import { Blog, BlogFormulario } from '../interfaces';
 
 
 // const fetcher = (...args: [key: string]) => fetch(...args).then(res => res.json());
+const devUrl = "http://localhost:8080/api";
+const prodUrl = "https://blogback-production.up.railway.app/api";
 
 export const useBlogs = (url: string, config: SWRConfiguration = {} ) => {
 
-    const { data, error } = useSWR<Blog[]>(`https://blogback-production.up.railway.app/api${ url }`, config );
+    const { data, error } = useSWR<Blog[]>(prodUrl + url, config );
 
     return {
         blogs: data || [],
@@ -18,7 +20,7 @@ export const useBlogs = (url: string, config: SWRConfiguration = {} ) => {
 
 export const useBlog = (url: string, config: SWRConfiguration = {} ) => {
 
-    const { data, error } = useSWR<Blog>(`https://blogback-production.up.railway.app/api${ url }`, config );
+    const { data, error } = useSWR<Blog>(prodUrl + url, config );
     return {
         blogData: data,
         isLoading: !error && !data,

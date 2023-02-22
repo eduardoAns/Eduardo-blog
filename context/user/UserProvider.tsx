@@ -34,12 +34,19 @@ export const UserProvider:FC = ({ children }) => {
         }
     }
 
-    const editUser = async ( user:UserForm ) => {
+    const editUser = async ( user:UserForm ):Promise<{message: string}> => {
         try {
             await blogApi.put('/usuario', user);
             dispatch({ type: '[USER] - editUser' });
+            return {
+                message:'Usuario editado '
+            }
+
         } catch (error) {
             console.log(error);
+            return {
+                message:'Error al editar usuario'
+              }
         }
     }
     

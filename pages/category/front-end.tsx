@@ -7,13 +7,16 @@ import { initialPosts } from '../../database/blog';
 import { BlogList } from '../../components/blog';
 import { useBlogs } from '../../hooks';
 import { FullScreenLoading } from '../../components/ui';
+import { Error404 } from '../../components/ui/Error404';
 
 
 const FrontEndPage: NextPage = () => {
 
   const { blogs, isLoading } = useBlogs('/post/categoria/front-end');
-
-    return (
+  const foundBlogs = blogs.length > 0;
+  const blogList = foundBlogs ? <BlogList blogs={ blogs} /> : <Error404 message='No se encontraron blogs en esta categoria'/>
+    
+  return (
       
       <BlogLayout title={'Blog - FrontEnd'} pageDescription={'Encuentra los mejores blog sobre Frontend'}>
           <Typography variant='h1' component='h1' mb={2}>Front-End</Typography>
@@ -22,7 +25,7 @@ const FrontEndPage: NextPage = () => {
           {
           isLoading
             ? <FullScreenLoading />
-            : <BlogList blogs={ blogs}/>
+            : blogList
          }
   
     

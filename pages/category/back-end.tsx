@@ -6,12 +6,14 @@ import { BlogList } from '../../components/blog';
 import { initialPosts } from '../../database/blog';
 import { useBlogs } from '../../hooks';
 import { FullScreenLoading } from '../../components/ui';
+import { Error404 } from '../../components/ui/Error404';
 
 
 const BackEndPage: NextPage = ( ) => {
   
   const { blogs, isLoading } = useBlogs('/post/categoria/back-end');
-
+  const foundBlogs = blogs.length > 0;
+  const blogList = foundBlogs ? <BlogList blogs={ blogs} /> : <Error404 message='No se encontraron blogs en esta categoria'/>
 
    return (
     <BlogLayout title={'Blog - BackEnd'} pageDescription={'Encuentra los mejores blog sobre backend'}>
@@ -20,7 +22,7 @@ const BackEndPage: NextPage = ( ) => {
         {
           isLoading
             ? <FullScreenLoading />
-            : <BlogList blogs={ blogs}/>
+            : blogList
         }
             
     </BlogLayout>
