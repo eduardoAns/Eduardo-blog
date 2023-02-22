@@ -4,7 +4,7 @@ import { AuthLayout } from '../../components/layouts'
 import { useForm } from 'react-hook-form';
 import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { UserForm } from '../../interfaces';
+import { userCreateForm, UserForm } from '../../interfaces';
 import { UserContext } from '../../context/user';
 
 
@@ -30,16 +30,11 @@ const hoy = new Date(tiempoTranscurrido);
 
 const crearUsuario = async ({nombre,apellido,email,password}:dataForm) => {
     
-    const dataPost:UserForm = {
+    const dataPost:userCreateForm = {
         nombre,
-        apellidoPaterno:apellido,
+        apellidoPaterno: apellido,
         email,
         password,
-        fechaCreacion:hoy.toDateString(),
-        idRol:1,
-        estado:'activo',
-        descripcion:"usuario activo de este blog",
-        sexo:"",
     }
 
     setShowMsg(false);

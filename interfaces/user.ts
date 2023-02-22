@@ -10,19 +10,20 @@ export interface User {
     fechaCreacion: string,
     idRol: number,
     descripcion: string,
-    posts: Blog[],
     comentarios: Coment[],
     avatar:AvatarI[],
     socialMedias:SocialMedia[]
 }
-
-export interface UserForm {
-    id?: number
+export interface userCreateForm {
     nombre: string,
     apellidoPaterno: string,
     email: string,
-    sexo: string,
     password: string,
+
+}
+export interface UserForm extends userCreateForm  {
+    id?: number
+    sexo: string,
     estado: string,
     fechaCreacion: string,
     idRol: number

@@ -25,7 +25,7 @@ const AddComent:FC<Props> = ({idBlog}) => {
   const { register,handleSubmit, formState: { errors }, setValue } = useForm<dataForm>();
 
   const onPostComent = async ({nombre,contenido}:dataForm) => {
-    const ID_USER_ANON = 3
+    const ID_USER_ANON = 6
     const ID_NOT_LOGIN = 0
     const {idUsuario} = await userAuthorization()
     

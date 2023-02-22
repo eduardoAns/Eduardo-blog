@@ -12,6 +12,8 @@ import { ProfileEditModal } from '../../../components/user'
 import { useUser } from '../../../hooks/useUser'
 import { UserContext } from '../../../context/user'
 import { ProfileBlogList } from '../../../components/user/ProfileBlogList'
+import { useBlog, useBlogs } from '../../../hooks'
+import { FullScreenLoading } from '../../../components/ui'
 
 interface Props {
   user: User
@@ -21,12 +23,23 @@ interface Props {
 const UserPage:NextPage<Props> = ({user}) => {
   const {userId} = useContext(AuthContext)
   const { user:userData, isLoading } = useUser(`/usuario/${user.id}`);
+  const {blogs, isLoading:isLoadingBlog} = useBlogs(`/post/ByUserId/${user.id}`)
+
+  const allblogs =  blogs.length > 0 
+                    ? 
+                    <ProfileBlogList blogs={blogs}/> 
+                    : 
+                    <Typography variant="body1" paragraph>
+                      Este usuario no ha realizado publicaciones
+                    </Typography>;
 
   const lastComents = user.comentarios.length > 2 
                       ? 
                       user.comentarios.slice(user.comentarios.length-3).reverse() 
                       :
                       user.comentarios.reverse()
+
+  
   
                     
   
@@ -48,7 +61,7 @@ const UserPage:NextPage<Props> = ({user}) => {
                   <Grid item xs={12} sm={6} >
                     <Paper elevation={3} sx={{ p: 2, bgcolor: 'background.paper' }}>
                         <Typography variant="h6" gutterBottom component="div">
-                            {user.posts.length} Publicaciones
+                            {blogs.length} Publicaciones
                         </Typography>
                     </Paper>
                   </Grid>
@@ -90,13 +103,11 @@ const UserPage:NextPage<Props> = ({user}) => {
                       publicaciones
                     </Typography>
                     {
-                      user.posts.length > 0
+                      !isLoadingBlog
                       ?
-                        <ProfileBlogList blogs={user.posts}/>
+                        allblogs
                       :
-                        <Typography variant="body1" paragraph>
-                          Este usuario no ha realizado publicaciones
-                        </Typography>
+                        <FullScreenLoading />
                     }
                   </Box>
                 </Grid>

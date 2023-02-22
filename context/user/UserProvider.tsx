@@ -1,6 +1,6 @@
 import { FC, useReducer } from 'react';
 import blogApi from '../../api/blogApi';
-import { UserForm } from '../../interfaces';
+import { userCreateForm, UserForm } from '../../interfaces';
 import { UserContext, userReducer } from './';
 
 export interface UserState {
@@ -17,7 +17,7 @@ export const UserProvider:FC = ({ children }) => {
 
     const [state, dispatch] = useReducer( userReducer, USER_INITIAL_STATE );
 
-    const registerUser = async( dataUser:UserForm ): Promise<{hasRegister:boolean; message: string; }> => {
+    const registerUser = async( dataUser:userCreateForm ): Promise<{hasRegister:boolean; message: string; }> => {
 
         try {
             await blogApi.post('/usuario', dataUser);

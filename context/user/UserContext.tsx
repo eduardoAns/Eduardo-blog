@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { UserForm } from '../../interfaces';
+import { userCreateForm, UserForm } from '../../interfaces';
 
 
 interface ContextProps {
@@ -7,7 +7,7 @@ interface ContextProps {
 
     //methods
 
-    registerUser: (dataUser:UserForm) => Promise<{hasRegister:boolean; message: string; }>;
+    registerUser: (dataUser:userCreateForm) => Promise<{hasRegister:boolean; message: string; }>;
     editUser: (user: UserForm) => Promise<{message: string}>;
     
 
