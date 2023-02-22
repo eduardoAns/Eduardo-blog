@@ -8,7 +8,7 @@ const prodUrl = "https://blogback-production.up.railway.app/api";
 
 export const useComent = (url: string, config: SWRConfiguration = {} ) => {
 
-    const { data, error } = useSWR<Coment[]>(devUrl + url, config );
+    const { data, error } = useSWR<Coment[]>(prodUrl + url, config );
 
     return {
         coments: data || [],

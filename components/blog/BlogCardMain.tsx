@@ -27,7 +27,7 @@ export const BlogCardMain:FC<Props> = ({blog}) => {
         >
             {/* Increase the priority of the hero background image */}
             <Grid container sx={{
-                opacity: 0.4,
+                opacity: 0.7,
                 backgroundColor: 'white',
                 height:{xs: '100%', md:'75%'}
             }}>

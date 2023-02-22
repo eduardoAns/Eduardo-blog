@@ -8,7 +8,7 @@ const prodUrl = "https://blogback-production.up.railway.app/api";
 
 export const useBlogs = (url: string, config: SWRConfiguration = {} ) => {
 
-    const { data, error } = useSWR<Blog[]>(devUrl + url, config );
+    const { data, error } = useSWR<Blog[]>(prodUrl + url, config );
 
     return {
         blogs: data || [],
@@ -20,7 +20,7 @@ export const useBlogs = (url: string, config: SWRConfiguration = {} ) => {
 
 export const useBlog = (url: string, config: SWRConfiguration = {} ) => {
 
-    const { data, error } = useSWR<Blog>(devUrl + url, config );
+    const { data, error } = useSWR<Blog>(prodUrl + url, config );
     return {
         blogData: data,
         isLoading: !error && !data,

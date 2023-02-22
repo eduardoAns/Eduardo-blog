@@ -8,7 +8,7 @@ const prodUrl = "https://blogback-production.up.railway.app/api";
 
 export const useUser = (url: string, config: SWRConfiguration = {} ) => {
 
-    const { data, error } = useSWR<User>(devUrl + url, config );
+    const { data, error } = useSWR<User>(prodUrl + url, config );
 
     return {
         user: data || undefined,
